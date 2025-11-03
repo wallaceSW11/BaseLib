@@ -18,10 +18,16 @@ export default defineConfig({
   },
   build: {
     lib: {
-      entry: resolve(__dirname, "src/index.ts"),
-      name: "BaseLib",
+      entry: {
+        index: resolve(__dirname, "src/index.ts"),
+        "components/index": resolve(__dirname, "src/components/index.ts"),
+        "composables/index": resolve(__dirname, "src/composables/index.ts"),
+        "utils/index": resolve(__dirname, "src/utils/index.ts"),
+        "stores/index": resolve(__dirname, "src/stores/index.ts"),
+        "locales/index": resolve(__dirname, "src/locales/index.ts"),
+        "plugins/index": resolve(__dirname, "src/plugins/index.ts"),
+      },
       formats: ["es", "cjs"],
-      fileName: (format) => `index.${format === "es" ? "js" : "cjs"}`,
     },
     rollupOptions: {
       external: [
@@ -46,6 +52,13 @@ export default defineConfig({
           if (assetInfo.name === "style.css") return "index.css";
           return assetInfo.name || "";
         },
+        entryFileNames: (chunkInfo) => {
+          if (chunkInfo.name === "index") {
+            return "[format]/[name].js";
+          }
+          return "[name].js";
+        },
+        chunkFileNames: "chunks/[name]-[hash].js",
       },
     },
     sourcemap: true,
