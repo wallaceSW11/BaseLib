@@ -1,0 +1,1 @@
+{"version":3,"file":"confirm.d.ts","sourceRoot":"","sources":["../../src/utils/confirm.ts"],"names":[],"mappings":"AACA,OAAO,KAAK,EAAE,uBAAuB,EAAE,MAAM,KAAK,CAAC;AAMnD,eAAO,MAAM,eAAe;gBAEJ,uBAAuB,GAAG,IAAI;;uBAG/B,uBAAuB;EAI5C,CAAC;AAEH,wBAAgB,OAAO,CAAC,KAAK,EAAE,MAAM,EAAE,OAAO,EAAE,MAAM,GAAG,OAAO,CAAC,OAAO,CAAC,CAUxE"}
