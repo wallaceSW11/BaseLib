@@ -1,0 +1,102 @@
+{
+  "name": "@wallacesw11/base-lib",
+  "version": "1.0.0",
+  "description": "Reusable Vue 3 components and utilities library with TypeScript support",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./components": {
+      "types": "./dist/components/index.d.ts",
+      "import": "./dist/components/index.js"
+    },
+    "./composables": {
+      "types": "./dist/composables/index.d.ts",
+      "import": "./dist/composables/index.js"
+    },
+    "./utils": {
+      "types": "./dist/utils/index.d.ts",
+      "import": "./dist/utils/index.js"
+    },
+    "./stores": {
+      "types": "./dist/stores/index.d.ts",
+      "import": "./dist/stores/index.js"
+    },
+    "./locales": {
+      "types": "./dist/locales/index.d.ts",
+      "import": "./dist/locales/index.js"
+    },
+    "./plugins": {
+      "types": "./dist/plugins/index.d.ts",
+      "import": "./dist/plugins/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "dev": "vite build --watch",
+    "build": "vite build && vue-tsc --declaration --emitDeclarationOnly --outDir dist",
+    "prepublishOnly": "npm run build",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "keywords": [
+    "vue",
+    "vue3",
+    "typescript",
+    "components",
+    "library",
+    "vuetify",
+    "i18n",
+    "pinia"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wallaceSW11/BaseLib.git"
+  },
+  "bugs": {
+    "url": "https://github.com/wallaceSW11/BaseLib/issues"
+  },
+  "homepage": "https://github.com/wallaceSW11/BaseLib#readme",
+  "author": "wallaceSW11",
+  "license": "MIT",
+  "peerDependencies": {
+    "vue": "^3.5.0",
+    "vue-i18n": "^11.0.0",
+    "vuetify": "^3.0.0",
+    "pinia": "^3.0.0",
+    "axios": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.9.2",
+    "@vitejs/plugin-vue": "^6.0.1",
+    "@vitest/ui": "^4.0.5",
+    "@vue/test-utils": "^2.4.6",
+    "eslint": "^9.38.0",
+    "eslint-plugin-vue": "^10.5.1",
+    "jsdom": "^27.0.1",
+    "typescript": "^5.9.3",
+    "vite": "^7.1.12",
+    "vite-plugin-dts": "^4.3.0",
+    "vite-plugin-vuetify": "^2.1.2",
+    "vitest": "^4.0.5",
+    "vue": "^3.5.22",
+    "vue-eslint-parser": "^10.2.0",
+    "vue-i18n": "^11.1.12",
+    "vue-router": "^4.6.3",
+    "vue-tsc": "^3.1.2",
+    "vuetify": "^3.10.8",
+    "pinia": "^3.0.3",
+    "axios": "^1.13.1"
+  }
+}
