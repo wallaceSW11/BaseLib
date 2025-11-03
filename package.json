@@ -11,6 +11,7 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
+    "./style.css": "./dist/base-lib.css",
     "./components": {
       "types": "./dist/components/index.d.ts",
       "import": "./dist/components/index.js"
