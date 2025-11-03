@@ -1,2 +1,6 @@
-"use strict";Object.defineProperties(exports,{__esModule:{value:!0},[Symbol.toStringTag]:{value:"Module"}});const l=require("../chunks/globals-C4s3tWv4.js");exports.default=l.globalsPlugin;exports.globalsPlugin=l.globalsPlugin;
+import { g as l, g as o } from "../chunks/globals-1j72WMze.js";
+export {
+  l as default,
+  o as globalsPlugin
+};
 //# sourceMappingURL=index.js.map

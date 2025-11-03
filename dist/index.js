@@ -1,11 +1,11 @@
-import { c as s } from "../chunks/index-2lMjARev.js";
-import { g, F as p, e as d, i as b, L as y, f as L, _ as x, d as S, a as T, b as h, h as B } from "../chunks/index-2lMjARev.js";
-import { g as t } from "../chunks/globals-1j72WMze.js";
-import { c as P, l as v, n as E, b as F, a as M, u as N } from "../chunks/confirm-CThT9jKh.js";
-import { a as j } from "../chunks/api-DufEv4lH.js";
-import { u as D, a as G } from "../chunks/useThemeSync-DGC2nb7E.js";
-import { defaultAvailableLocales as Q, defaultLocale as _, defaultMessages as k } from "../locales/index.js";
-import { u as w } from "../chunks/theme-BdyU2FZ0.js";
+import { c as s } from "./chunks/index-2lMjARev.js";
+import { g, F as p, e as d, i as b, L as y, f as L, _ as x, d as S, a as T, b as h, h as B } from "./chunks/index-2lMjARev.js";
+import { g as t } from "./chunks/globals-1j72WMze.js";
+import { c as P, l as v, n as E, b as F, a as M, u as N } from "./chunks/confirm-CThT9jKh.js";
+import { a as j } from "./chunks/api-DufEv4lH.js";
+import { u as D, a as G } from "./chunks/useThemeSync-DGC2nb7E.js";
+import { defaultAvailableLocales as Q, defaultLocale as _, defaultMessages as k } from "./locales/index.js";
+import { u as w } from "./chunks/theme-BdyU2FZ0.js";
 const r = s;
 function n(o) {
   Object.entries(r).forEach(([a, e]) => {

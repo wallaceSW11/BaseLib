@@ -27,7 +27,7 @@ export default defineConfig({
         "locales/index": resolve(__dirname, "src/locales/index.ts"),
         "plugins/index": resolve(__dirname, "src/plugins/index.ts"),
       },
-      formats: ["es", "cjs"],
+      formats: ["es"],
     },
     rollupOptions: {
       external: [
@@ -52,12 +52,7 @@ export default defineConfig({
           if (assetInfo.name === "style.css") return "index.css";
           return assetInfo.name || "";
         },
-        entryFileNames: (chunkInfo) => {
-          if (chunkInfo.name === "index") {
-            return "[format]/[name].js";
-          }
-          return "[name].js";
-        },
+        entryFileNames: "[name].js",
         chunkFileNames: "chunks/[name]-[hash].js",
       },
     },
