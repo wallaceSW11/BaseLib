@@ -5,6 +5,17 @@
 
 Reusable Vue 3 components and utilities library with TypeScript, Vuetify, i18n, and Pinia support.
 
+## 🎮 Playground
+
+A BaseLib inclui um **Playground interno** para desenvolvimento e testes! Você pode testar todos os componentes sem precisar de projetos externos.
+
+```bash
+# Iniciar o playground
+pnpm dev:playground
+```
+
+Veja mais detalhes em [playground/README.md](./playground/README.md)
+
 ## 🚀 Features
 
 - **Vue 3 Composition API** - Modern and reactive components

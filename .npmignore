@@ -1,5 +1,6 @@
 src
 tests
+playground
 .git
 .gitignore
 .eslintrc.js

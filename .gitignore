@@ -26,3 +26,7 @@ dist-ssr
 .cache
 .temp
 coverage
+
+# Playground
+playground/dist
+playground/node_modules

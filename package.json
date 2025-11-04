@@ -44,7 +44,9 @@
   ],
   "scripts": {
     "dev": "vite build --watch",
+    "dev:playground": "vite --config playground/vite.config.ts",
     "build": "vite build && vue-tsc --declaration --emitDeclarationOnly --outDir dist",
+    "build:playground": "vite build --config playground/vite.config.ts --outDir playground/dist",
     "prepublishOnly": "npm run build",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix",
     "test": "vitest run",
@@ -78,6 +80,7 @@
     "axios": "^1.0.0"
   },
   "devDependencies": {
+    "@mdi/font": "^7.4.47",
     "@types/node": "^24.9.2",
     "@vitejs/plugin-vue": "^6.0.1",
     "@vitest/ui": "^4.0.5",
