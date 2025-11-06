@@ -1,30 +1,40 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
+import type { LoadingComponentRef } from "./types";
 
 export const useLoadingStore = defineStore("loading", () => {
-  const loadingRef = ref<any>(null);
+  const loadingRef = ref<LoadingComponentRef | null>(null);
 
-  const setLoadingRef = (ref: any) => {
+  const setLoadingRef = (ref: LoadingComponentRef) => {
     loadingRef.value = ref;
   };
 
-  const loading = (show: boolean, message?: string) => {
+  const showLoading = (message?: string) => {
     if (loadingRef.value) {
-      if (show) {
-        loadingRef.value.show(message);
-      } else {
-        loadingRef.value.hide();
-      }
+      loadingRef.value.show(message);
+    }
+  };
+
+  const hideLoading = () => {
+    if (loadingRef.value) {
+      loadingRef.value.hide();
     }
   };
 
   return {
     setLoadingRef,
-    loading,
+    showLoading,
+    hideLoading,
   };
 });
 
-export const loading = (show: boolean, message?: string) => {
-  const store = useLoadingStore();
-  store.loading(show, message);
+export const loading = {
+  show: (message?: string) => {
+    const store = useLoadingStore();
+    store.showLoading(message);
+  },
+  hide: () => {
+    const store = useLoadingStore();
+    store.hideLoading();
+  },
 };

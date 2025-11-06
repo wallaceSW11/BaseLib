@@ -5,17 +5,52 @@ import axios, {
 } from "axios";
 import { loading } from "./loading";
 import { notify } from "./notify";
+import { API_TIMEOUT } from "./types";
+
+export interface ApiConfig {
+  baseURL?: string;
+  timeout?: number;
+  showLoadingOnMutations?: boolean;
+  showErrorNotifications?: boolean;
+  authTokenKey?: string;
+  onUnauthorized?: () => void;
+}
+
+const defaultConfig: ApiConfig = {
+  baseURL: import.meta.env.VITE_API_BASE_URL || "/api",
+  timeout: API_TIMEOUT,
+  showLoadingOnMutations: true,
+  showErrorNotifications: true,
+  authTokenKey: "auth_token",
+  onUnauthorized: () => {
+    localStorage.removeItem("auth_token");
+    window.location.href = "/login";
+  },
+};
+
+let currentConfig = { ...defaultConfig };
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || "/api",
-  timeout: 30000,
+  baseURL: currentConfig.baseURL,
+  timeout: currentConfig.timeout,
   headers: {
     "Content-Type": "application/json",
   },
 });
 
+export function configureApi(config: Partial<ApiConfig>) {
+  currentConfig = { ...currentConfig, ...config };
+  
+  if (config.baseURL) {
+    api.defaults.baseURL = config.baseURL;
+  }
+  if (config.timeout) {
+    api.defaults.timeout = config.timeout;
+  }
+}
+
 function addAuthTokenToRequest(config: InternalAxiosRequestConfig) {
-  const token = localStorage.getItem("auth_token");
+  const token = localStorage.getItem(currentConfig.authTokenKey!);
   if (token && config.headers) {
     config.headers.Authorization = `Bearer ${token}`;
   }
@@ -23,8 +58,8 @@ function addAuthTokenToRequest(config: InternalAxiosRequestConfig) {
 }
 
 function showLoadingForMutations(config: InternalAxiosRequestConfig) {
-  if (config.method !== "get") {
-    loading(true, "Processing...");
+  if (currentConfig.showLoadingOnMutations && config.method !== "get") {
+    loading.show("Processing...");
   }
 }
 
@@ -35,23 +70,30 @@ api.interceptors.request.use(
     return config;
   },
   (error: AxiosError) => {
-    loading(false);
+    loading.hide();
     return Promise.reject(error);
   }
 );
 
 function handleUnauthorized() {
-  notify("error", "Unauthorized", "Please log in again");
-  localStorage.removeItem("auth_token");
-  window.location.href = "/login";
+  if (currentConfig.showErrorNotifications) {
+    notify.error("Unauthorized", "Please log in again");
+  }
+  if (currentConfig.onUnauthorized) {
+    currentConfig.onUnauthorized();
+  }
 }
 
 function handleErrorResponse(error: AxiosError) {
+  if (!currentConfig.showErrorNotifications) {
+    return;
+  }
+
   if (!error.response) {
     if (error.request) {
-      notify("error", "Network Error", "Unable to connect to the server");
+      notify.error("Network Error", "Unable to connect to the server");
     } else {
-      notify("error", "Error", error.message);
+      notify.error("Error", error.message);
     }
     return;
   }
@@ -64,34 +106,32 @@ function handleErrorResponse(error: AxiosError) {
       handleUnauthorized();
       break;
     case 403:
-      notify(
-        "error",
+      notify.error(
         "Forbidden",
         "You do not have permission to perform this action"
       );
       break;
     case 404:
-      notify("error", "Not Found", "The requested resource was not found");
+      notify.error("Not Found", "The requested resource was not found");
       break;
     case 500:
-      notify(
-        "error",
+      notify.error(
         "Server Error",
         "Internal server error. Please try again later."
       );
       break;
     default:
-      notify("error", "Error", message);
+      notify.error("Error", message);
   }
 }
 
 api.interceptors.response.use(
   (response: AxiosResponse) => {
-    loading(false);
+    loading.hide();
     return response;
   },
   (error: AxiosError) => {
-    loading(false);
+    loading.hide();
     handleErrorResponse(error);
     return Promise.reject(error);
   }

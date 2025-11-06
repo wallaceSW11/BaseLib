@@ -15,8 +15,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-
-export type NotifyType = 'success' | 'error' | 'warning' | 'info'
+import { NOTIFY_DURATION, type NotifyType } from '../../utils/types'
 
 const isVisible = ref(false)
 const currentType = ref<NotifyType>('info')
@@ -24,7 +23,7 @@ const currentTitle = ref('')
 const currentMessage = ref('')
 let timeoutId: ReturnType<typeof setTimeout> | null = null
 
-const show = (type: NotifyType, title: string, message: string) => {
+const show = (type: NotifyType, title: string, message = '') => {
   // Clear existing timeout if any
   if (timeoutId) {
     clearTimeout(timeoutId)
@@ -35,10 +34,10 @@ const show = (type: NotifyType, title: string, message: string) => {
   currentMessage.value = message
   isVisible.value = true
 
-  // Auto-hide after 3 seconds
+  // Auto-hide after configured duration
   timeoutId = setTimeout(() => {
     hide()
-  }, 3000)
+  }, NOTIFY_DURATION)
 }
 
 const hide = () => {

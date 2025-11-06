@@ -16,6 +16,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { LOADING_CONTENT_DELAY } from '../utils/types'
 
 const { t } = useI18n()
 
@@ -28,10 +29,10 @@ const show = (message?: string) => {
   currentMessage.value = message || t('common.loading')
   isVisible.value = true
 
-  // Show content after 300ms delay
+  // Show content after configured delay
   contentTimeoutId = setTimeout(() => {
     showContent.value = true
-  }, 300)
+  }, LOADING_CONTENT_DELAY)
 }
 
 const hide = () => {

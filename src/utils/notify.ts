@@ -1,15 +1,16 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
+import type { NotifyComponentRef, NotifyType } from "./types";
 
 export const useNotifyStore = defineStore("notify", () => {
-  const notifyRef = ref<any>(null);
+  const notifyRef = ref<NotifyComponentRef | null>(null);
 
-  const setNotifyRef = (ref: any) => {
+  const setNotifyRef = (ref: NotifyComponentRef) => {
     notifyRef.value = ref;
   };
 
   const notify = (
-    type: "success" | "error" | "warning" | "info",
+    type: NotifyType,
     title: string,
     message?: string
   ) => {
@@ -24,11 +25,21 @@ export const useNotifyStore = defineStore("notify", () => {
   };
 });
 
-export const notify = (
-  type: "success" | "error" | "warning" | "info",
-  title: string,
-  message?: string
-) => {
-  const store = useNotifyStore();
-  store.notify(type, title, message);
+export const notify = {
+  success: (title: string, message?: string) => {
+    const store = useNotifyStore();
+    store.notify("success", title, message);
+  },
+  error: (title: string, message?: string) => {
+    const store = useNotifyStore();
+    store.notify("error", title, message);
+  },
+  warning: (title: string, message?: string) => {
+    const store = useNotifyStore();
+    store.notify("warning", title, message);
+  },
+  info: (title: string, message?: string) => {
+    const store = useNotifyStore();
+    store.notify("info", title, message);
+  },
 };

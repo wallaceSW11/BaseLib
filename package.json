@@ -87,7 +87,6 @@
     "@vue/test-utils": "^2.4.6",
     "eslint": "^9.38.0",
     "eslint-plugin-vue": "^10.5.1",
-    "jsdom": "^27.0.1",
     "typescript": "^5.9.3",
     "vite": "^7.1.12",
     "vite-plugin-dts": "^4.3.0",

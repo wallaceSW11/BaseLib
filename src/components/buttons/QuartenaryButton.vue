@@ -1,27 +1,17 @@
 <template>
-  <v-btn :prepend-icon="icon" :disabled="disabled" color="warning" class="text-none" @click="handleClick">
-    {{ text }}
-  </v-btn>
+  <BaseButton color="warning" variant="elevated" v-bind="$props" @click="$emit('click', $event)">
+    <slot />
+  </BaseButton>
 </template>
 
 <script setup lang="ts">
-interface Props {
-  icon?: string
-  text?: string
-  disabled?: boolean
-}
+import BaseButton, { type BaseButtonProps } from './BaseButton.vue'
 
-withDefaults(defineProps<Props>(), {
-  icon: undefined,
-  text: '',
-  disabled: false,
-})
+interface Props extends Omit<BaseButtonProps, 'color' | 'variant'> {}
 
-const emit = defineEmits<{
-  click: []
+defineProps<Props>()
+
+defineEmits<{
+  click: [event: MouseEvent]
 }>()
-
-const handleClick = () => {
-  emit('click')
-}
 </script>

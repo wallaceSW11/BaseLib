@@ -1,3 +1,4 @@
+export { default as BaseButton } from "./buttons/BaseButton.vue";
 export { default as PrimaryButton } from "./buttons/PrimaryButton.vue";
 export { default as SecondaryButton } from "./buttons/SecondaryButton.vue";
 export { default as TertiaryButton } from "./buttons/TertiaryButton.vue";
