@@ -8,17 +8,32 @@ import type { App } from "vue";
  */
 export function ensureVuetify(app: App): void {
   // Acessando propriedades internas do Vue para verificar se Vuetify está registrado
-  const provides = (app as any)._context?.provides;
+  const appContext = (app as any)._context;
+  const provides = appContext?.provides;
+  const globalProperties = app.config.globalProperties;
   
-  // Verifica se há alguma referência ao Vuetify
-  const vuetifyInstance = provides?.vuetify || provides?.$vuetify;
+  // Verifica se há alguma referência ao Vuetify em múltiplos locais
+  const vuetifyInstance = 
+    provides?.vuetify || 
+    provides?.$vuetify ||
+    globalProperties?.$vuetify ||
+    globalProperties?.vuetify;
   
-  // Verifica também se há símbolos do Vuetify (às vezes é registrado como Symbol)
+  // Verifica também se há símbolos do Vuetify (Vuetify 3 usa Symbol para injeção)
   const hasVuetifySymbol = provides && Object.getOwnPropertySymbols(provides).some(
-    sym => sym.toString().includes('vuetify')
+    sym => {
+      const symbolStr = sym.toString();
+      return symbolStr.includes('vuetify') || symbolStr.includes('Vuetify');
+    }
   );
 
-  if (!vuetifyInstance && !hasVuetifySymbol) {
+  // Verifica se os componentes do Vuetify estão registrados
+  const hasVuetifyComponents = appContext?.components && 
+    Object.keys(appContext.components).some(name => name.startsWith('V'));
+
+  const hasVuetify = vuetifyInstance || hasVuetifySymbol || hasVuetifyComponents;
+
+  if (!hasVuetify) {
     console.warn(
       "[BaseLib] ⚠️ Vuetify não detectado!\n" +
         "Certifique-se de chamar app.use(vuetify) ANTES de setupLib(app).\n" +
@@ -28,6 +43,8 @@ export function ensureVuetify(app: App): void {
         "  app.use(vuetify)\n" +
         "  setupLib(app)"
     );
+  } else {
+    console.log("[BaseLib] ✅ Vuetify detectado com sucesso");
   }
 }
 

@@ -34,15 +34,25 @@ The playground includes live examples of all components and utilities. See [play
 
 ## 📦 Installation
 
-### From GitHub (Main Branch)
+### From GitHub (Recommended)
+
+Install directly from the GitHub repository:
 
 ```bash
-npm install wallacesw11/BaseLib#main
-# or
-pnpm add wallacesw11/BaseLib#main
-# or
-yarn add wallacesw11/BaseLib#main
+# Install from main branch
+pnpm add github:wallacesw11/BaseLib#main
+
+# Or install from a specific commit/tag
+pnpm add github:wallacesw11/BaseLib#v1.0.1
+
+# Using npm
+npm install github:wallacesw11/BaseLib#main
+
+# Using yarn
+yarn add github:wallacesw11/BaseLib#main
 ```
+
+> **Note**: This library is distributed via GitHub, not npm. Always install from the repository.
 
 ### Peer Dependencies
 
