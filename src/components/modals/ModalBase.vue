@@ -1,6 +1,5 @@
 <template>
-  <v-dialog v-model="isOpen" :max-width="maxWidth" :persistent="persistent" scrollable contained>
-    <!-- so pra gerar build -->
+  <v-dialog v-model="isOpen" :max-width="maxWidth" :persistent="persistent" scrollable>
     <v-card>
       <v-card-title v-if="title" class="text-h5">
         {{ title }}
