@@ -3,12 +3,11 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![GitHub](https://img.shields.io/badge/Source-GitHub-blue.svg)](https://github.com/wallaceSW11/BaseLib)
 
-A comprehensive, production-ready Vue 3 component library with TypeScript, Vuetify, i18n, and state management. Built to centralize common patterns across multiple projects including modals, notifications, loading states, internationalization, theme switching, and white-label support.
+Vue 3 + Vuetify 3 component library with standardized UI patterns: notifications, confirmations, modals, theme switching, and internationalization.
 
-> **⚠️ Installation**: This library is distributed via GitHub, not npm. Install with:
-> ```bash
-> pnpm add github:wallacesw11/BaseLib#main
-> ```
+```bash
+pnpm add github:wallacesw11/BaseLib#main
+```
 
 ## 🚨 Common Issues & Quick Fixes
 
@@ -17,116 +16,36 @@ A comprehensive, production-ready Vue 3 component library with TypeScript, Vueti
 | `Failed to resolve component: v-card-title` | Register Vuetify **BEFORE** `setupLib()` in `main.ts` |
 | Notifications not showing | Add `<FloatingNotify ref="notifyRef" />` to `App.vue` and register ref |
 | Theme not loading | Create `public/theme.json` and call `loadTheme()` |
-| API auth token not sent | Store token in localStorage: `localStorage.setItem('auth_token', token)` |
-| Console shows Vuetify warning | Check setup order: Pinia → Vuetify → i18n → BaseLib |
+| v-select overlay not showing in modal | Add `attach` prop: `<ModalBase attach="body">` |
+| API auth token missing | Store in localStorage: `localStorage.setItem('auth_token', token)` |
 
-## 📋 Quick Start Checklist
+## ✨ What's Included
 
-Before integrating BaseLib into your project, ensure:
-
-- ✅ Pinia is installed and registered
-- ✅ Vuetify 3 is installed and registered **BEFORE** `setupLib()`
-- ✅ Vue-i18n is installed and configured
-- ✅ BaseLib styles are imported (`@wallacesw11/base-lib/style.css`)
-- ✅ Required components are added to `App.vue` (FloatingNotify, LoadingOverlay, ConfirmDialog)
-
-## 🎮 Playground
-
-BaseLib includes a **built-in playground** for development and testing! Test all components without needing external projects.
-
-```bash
-# Start the playground
-pnpm dev:playground
-
-# Build the playground
-pnpm build:playground
-```
-
-The playground includes live examples of all components and utilities. See [playground/README.md](./playground/README.md) for details.
-
-## 🚀 Features
-
-- **Vue 3 Composition API** - Modern and reactive components
-- **TypeScript** - Full type safety and IntelliSense support
-- **Vuetify 3** - Material Design components integration
-- **i18n** - Internationalization support with vue-i18n
-- **Pinia** - State management stores
-- **Theme System** - Dynamic theme switching with persistence and white-label support
-- **Modular Exports** - Tree-shakeable imports for optimal bundle size
-- **Utilities** - Loading overlays, toast notifications, confirmation dialogs, and configured API client
-- **Unit Tests** - Comprehensive test coverage with Vitest
-- **Development Playground** - Built-in testing environment
+- **🔔 Notifications** - Toast messages (success, error, warning, info)
+- **❓ Confirmations** - Yes/No dialog with async/await
+- **🪟 Modal Base** - Customizable modal with actions
+- **🎨 Theme Toggle** - Light/dark mode with persistence
+- **🌍 i18n** - Multi-language support (pt-BR, en-US)
+- **🎯 Buttons** - PrimaryButton, SecondaryButton, TertiaryButton, QuartenaryButton
+- **⏳ Loading Overlay** - Full-screen loading state
+- **🔧 API Client** - Axios with auth and interceptors
 
 ## 📦 Installation
 
-### From GitHub (Recommended)
-
-Install directly from the GitHub repository:
-
 ```bash
-# Install from main branch
 pnpm add github:wallacesw11/BaseLib#main
-
-# Or install from a specific commit/tag
-pnpm add github:wallacesw11/BaseLib#v1.0.1
-
-# Using npm
-npm install github:wallacesw11/BaseLib#main
-
-# Using yarn
-yarn add github:wallacesw11/BaseLib#main
 ```
 
-> **Note**: This library is distributed via GitHub, not npm. Always install from the repository.
-
-### Peer Dependencies
-
-Ensure you have the following peer dependencies installed:
-
+**Peer Dependencies**:
 ```bash
-npm install vue@^3.5.0 vue-i18n@^11.0.0 vuetify@^3.0.0 pinia@^3.0.0 axios@^1.0.0
+pnpm add vue@^3.5.0 vuetify@^3.0.0 pinia@^3.0.0 vue-i18n@^11.0.0 axios@^1.0.0
 ```
 
 ## 🔧 Setup
 
-### 1. Configure Path Aliases (Optional but Recommended)
-
-**tsconfig.json**:
-
-```json
-{
-  "compilerOptions": {
-    "paths": {
-      "@/*": ["./src/*"]
-    }
-  }
-}
-```
-
-**vite.config.ts**:
-
-```typescript
-import { fileURLToPath, URL } from "node:url";
-
-export default defineConfig({
-  resolve: {
-    alias: {
-      "@": fileURLToPath(new URL("./src", import.meta.url)),
-    },
-  },
-});
-```
-
-### 2. Register in main.ts
+### 1. Register in main.ts
 
 **⚠️ CRITICAL: Vuetify MUST be registered BEFORE BaseLib!**
-
-BaseLib automatically detects Vuetify during setup. If Vuetify is not properly registered before calling `setupLib()`, you will see errors like:
-- `Failed to resolve component: v-card-title`
-- `Failed to resolve component: v-btn`
-- Other Vuetify component resolution errors
-
-**Correct Setup Order:**
 
 ```typescript
 import { createApp } from "vue";
@@ -135,24 +54,19 @@ import { createI18n } from "vue-i18n";
 import { createVuetify } from "vuetify";
 import "vuetify/styles";
 import { setupLib, defaultMessages, defaultLocale } from "@wallacesw11/base-lib";
-import "@wallacesw11/base-lib/style.css"; // Import BaseLib styles
+import "@wallacesw11/base-lib/style.css";
 import App from "./App.vue";
 
 const app = createApp(App);
 
-// 1. Setup Pinia (required for BaseLib stores)
+// 1. Pinia
 app.use(createPinia());
 
-// 2. Setup Vuetify (MUST be before BaseLib!)
-const vuetify = createVuetify({
-  // Your Vuetify configuration
-  theme: {
-    defaultTheme: "light",
-  },
-});
+// 2. Vuetify (BEFORE BaseLib!)
+const vuetify = createVuetify({ theme: { defaultTheme: "light" } });
 app.use(vuetify);
 
-// 3. Setup i18n (required for internationalization)
+// 3. i18n
 const i18n = createI18n({
   legacy: false,
   locale: defaultLocale,
@@ -161,32 +75,18 @@ const i18n = createI18n({
 });
 app.use(i18n);
 
-// 4. Setup BaseLib (LAST - after Vuetify and i18n)
-// This will automatically detect Vuetify and register all components
+// 4. BaseLib (LAST!)
 setupLib(app);
 
 app.mount("#app");
 ```
 
-**What happens during `setupLib(app)`:**
-- ✅ Detects if Vuetify is properly registered
-- ✅ Registers all BaseLib components globally
-- ✅ Registers global utilities ($notify, $loading, $confirm)
-- ❌ Shows a warning if Vuetify is not detected
-
-If you see `[BaseLib] ⚠️ Vuetify não detectado!` in the console, check your setup order.
-
-### 3. Add Required Components to Your App
-
-For notifications, loading, and confirmations to work, add these components to your root `App.vue`:
+### 2. Add Required Components to App.vue
 
 ```vue
 <template>
   <v-app>
-    <!-- Your app content -->
     <router-view />
-    
-    <!-- Required global components -->
     <FloatingNotify ref="notifyRef" />
     <LoadingOverlay ref="loadingRef" />
     <ConfirmDialog ref="confirmRef" />
@@ -210,197 +110,58 @@ onMounted(() => {
 </script>
 ```
 
-### 4. Import Styles
-
-```typescript
-// In your main.ts (as shown in step 2)
-import "@wallacesw11/base-lib/style.css";
-```
-
-> **Note**: The style import path is `style.css`, not `dist/index.css`.
-
 ## 📚 Usage
 
-### Importing Components
-
-```vue
-<script setup lang="ts">
-import { PrimaryButton, SecondaryButton, ThemeToggle } from "@wallacesw11/base-lib";
-// or from specific path
-import { PrimaryButton } from "@wallacesw11/base-lib/components";
-</script>
-
-<template>
-  <PrimaryButton text="Click me" @click="handleClick" />
-  <ThemeToggle />
-</template>
-```
-
-### Using Utilities
-
-**New Fluent API (Recommended)**:
+### Notifications
 
 ```typescript
-import { notify, loading, confirm } from "@wallacesw11/base-lib";
+import { notify } from "@wallacesw11/base-lib";
 
-// Notifications
-notify.success("Success!", "Operation completed successfully");
+notify.success("Success!", "Operation completed");
 notify.error("Error!", "Something went wrong");
-notify.info("Info", "This is an information message");
-notify.warning("Warning", "Please be careful");
+notify.warning("Warning", "Be careful");
+notify.info("Info", "Just so you know");
+```
 
-// Loading overlay
-loading.show("Processing your request...");
-// ... perform async operation
-loading.hide();
+### Confirmation Dialog
 
-// Confirmation dialog
-const confirmed = await confirm.show(
-  "Confirm Action",
-  "Are you sure you want to proceed?"
-);
+```typescript
+import { confirm } from "@wallacesw11/base-lib";
 
+const confirmed = await confirm.show("Delete Item", "Are you sure?");
 if (confirmed) {
   // User clicked "Yes"
-} else {
-  // User clicked "No"
 }
-
-// API calls with pre-configured axios instance
-import { api } from "@wallacesw11/base-lib";
-
-const response = await api.get("/users");
-const newUser = await api.post("/users", { name: "John" });
 ```
 
-### Configuring the API Client
-
-The library provides a pre-configured Axios instance with automatic loading states and error notifications. You can customize its behavior:
+### Loading Overlay
 
 ```typescript
-import { configureApi } from "@wallacesw11/base-lib";
+import { loading } from "@wallacesw11/base-lib";
 
-configureApi({
-  baseURL: "https://api.example.com",
-  timeout: 15000,
-  showLoadingOnMutations: true, // Show loading for POST/PUT/DELETE
-  showErrorNotifications: true, // Auto-show error notifications
-  authTokenKey: "auth_token", // LocalStorage key for auth token
-  onUnauthorized: () => {
-    // Custom handler for 401 errors
-    window.location.href = "/login";
-  },
-});
+loading.show("Processing...");
+await someAsyncOperation();
+loading.hide();
 ```
-
-### Using Composables
-
-```typescript
-import { useGlobals, useThemeSync } from "@wallacesw11/base-lib/composables";
-
-const { notify, loading, confirm } = useGlobals();
-
-// Use utilities via composables
-notify.success("Success!", "It works!");
-loading.show();
-
-// Sync theme with Vuetify
-const { syncTheme } = useThemeSync();
-syncTheme(); // Syncs current theme with Vuetify
-```
-
-### Using Stores
-
-```typescript
-import { useThemeStore } from "@wallacesw11/base-lib/stores";
-
-const themeStore = useThemeStore();
-
-// Toggle theme
-themeStore.toggleTheme();
-
-// Set specific theme
-themeStore.setTheme("light");
-
-// Get current theme
-console.log(themeStore.currentTheme);
-```
-
-### Internationalization
-
-```typescript
-import {
-  defaultMessages,
-  defaultAvailableLocales,
-  defaultLocale,
-} from "@wallacesw11/base-lib/locales";
-
-// Use with vue-i18n
-import { createI18n } from "vue-i18n";
-
-const i18n = createI18n({
-  legacy: false,
-  locale: defaultLocale,
-  fallbackLocale: "en-US",
-  messages: defaultMessages,
-});
-```
-
-## 🧩 Available Components
 
 ### Buttons
 
-All buttons extend from `BaseButton` with consistent API:
-
-#### BaseButton
 ```vue
-<BaseButton 
-  text="Click me"
-  prepend-icon="mdi-check"
-  append-icon="mdi-arrow-right"
-  color="primary"
-  variant="elevated"
-  size="default"
-  :disabled="false"
-  :loading="false"
-  @click="handleClick"
-/>
-```
+<script setup lang="ts">
+import { PrimaryButton, SecondaryButton, TertiaryButton, QuartenaryButton } from "@wallacesw11/base-lib";
+</script>
 
-**Props**:
-- `text?: string` - Button text
-- `prependIcon?: string` - Icon before text
-- `appendIcon?: string` - Icon after text
-- `color?: string` - Vuetify color (primary, secondary, error, etc.)
-- `variant?: 'flat' | 'text' | 'elevated' | 'tonal' | 'outlined' | 'plain'`
-- `size?: 'x-small' | 'small' | 'default' | 'large' | 'x-large'`
-- `disabled?: boolean`
-- `loading?: boolean`
-- `block?: boolean`
-
-**Events**:
-- `@click` - Click event with MouseEvent
-
-#### Pre-styled Buttons
-
-- `PrimaryButton` - Primary color, elevated variant
-- `SecondaryButton` - Secondary color, elevated variant
-- `TertiaryButton` - Info color, elevated variant
-- `QuartenaryButton` - Warning color, elevated variant
-- `IconToolTip` - Icon button with tooltip
-
-```vue
 <template>
   <PrimaryButton text="Save" prepend-icon="mdi-content-save" @click="save" />
   <SecondaryButton text="Cancel" @click="cancel" />
+  <TertiaryButton text="Info" />
+  <QuartenaryButton text="Warning" />
 </template>
 ```
 
-### Dialogs & Modals
+**Props**: `text`, `prependIcon`, `appendIcon`, `disabled`, `loading`, `block`, `size`, `color`, `variant`
 
-#### ModalBase
-
-Customizable base modal with action buttons.
+### Modal Base
 
 ```vue
 <script setup lang="ts">
@@ -409,62 +170,37 @@ import { ModalBase } from '@wallacesw11/base-lib'
 import type { ModalAction } from '@wallacesw11/base-lib/components'
 
 const isOpen = ref(false)
-
 const actions: ModalAction[] = [
-  {
-    text: 'Confirm',
-    color: 'primary',
-    variant: 'elevated',
-    icon: 'mdi-check',
-    handler: () => {
-      console.log('Confirmed!')
-    }
-  },
-  {
-    text: 'Cancel',
-    color: 'grey',
-    variant: 'text',
-    handler: () => {
-      isOpen.value = false
-    }
-  }
+  { text: 'Confirm', color: 'primary', handler: () => console.log('OK') },
+  { text: 'Cancel', color: 'grey', handler: () => isOpen.value = false }
 ]
 </script>
 
 <template>
-  <ModalBase
-    v-model="isOpen"
-    title="Confirmation"
-    message="Are you sure?"
-    :actions="actions"
-  />
+  <ModalBase v-model="isOpen" title="Title" message="Message" :actions="actions" />
 </template>
 ```
 
-#### ConfirmDialog
-
-Simple yes/no confirmation dialog.
-
-```typescript
-const confirmed = await confirm.show("Delete Item", "This cannot be undone");
-if (confirmed) {
-  // Delete the item
-}
-```
-
-### UI Components
-
-#### ThemeToggle
+### Theme Switching
 
 ```vue
+<script setup lang="ts">
+import { ThemeToggle } from '@wallacesw11/base-lib'
+import { useThemeStore } from '@wallacesw11/base-lib/stores'
+
+const themeStore = useThemeStore()
+
+// Programmatic
+themeStore.toggleTheme()
+themeStore.setTheme('dark')
+</script>
+
 <template>
   <ThemeToggle />
 </template>
 ```
 
-Automatically toggles between light and dark mode with icon change.
-
-#### LanguageSelector
+### Internationalization
 
 ```vue
 <script setup lang="ts">
@@ -477,199 +213,41 @@ import { defaultAvailableLocales } from '@wallacesw11/base-lib/locales'
 </template>
 ```
 
-Shows a dropdown with country flags for language selection.
-
-#### LoadingOverlay
-
-Full-screen loading overlay with spinner and message.
-
-```vue
-<template>
-  <LoadingOverlay ref="loadingRef" />
-</template>
-
-<script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import { LoadingOverlay } from '@wallacesw11/base-lib'
-import { useLoadingStore } from '@wallacesw11/base-lib/utils'
-
-const loadingRef = ref()
-
-onMounted(() => {
-  useLoadingStore().setLoadingRef(loadingRef.value)
-})
-</script>
-```
-
-#### FloatingNotify
-
-Toast notification that appears in the top-right corner.
-
-```vue
-<template>
-  <FloatingNotify ref="notifyRef" />
-</template>
-
-<script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import { FloatingNotify } from '@wallacesw11/base-lib'
-import { useNotifyStore } from '@wallacesw11/base-lib/utils'
-
-const notifyRef = ref()
-
-onMounted(() => {
-  useNotifyStore().setNotifyRef(notifyRef.value)
-})
-</script>
-```
-
-## 🛠️ Utilities & TypeScript Interfaces
-
-### Notify
-
-**Methods**:
-- `notify.success(title: string, message?: string): void`
-- `notify.error(title: string, message?: string): void`
-- `notify.warning(title: string, message?: string): void`
-- `notify.info(title: string, message?: string): void`
-
-**Store**: `useNotifyStore()`
-
-**Types**:
-```typescript
-import type { NotifyType, NotifyComponentRef } from '@wallacesw11/base-lib/utils'
-
-type NotifyType = 'success' | 'error' | 'warning' | 'info'
-```
-
-### Loading
-
-**Methods**:
-- `loading.show(message?: string): void`
-- `loading.hide(): void`
-
-**Store**: `useLoadingStore()`
-
-**Types**:
-```typescript
-import type { LoadingComponentRef } from '@wallacesw11/base-lib/utils'
-```
-
-### Confirm
-
-**Methods**:
-- `confirm.show(title: string, message: string): Promise<boolean>`
-
-**Store**: `useConfirmStore()`
-
-**Types**:
-```typescript
-import type { ConfirmComponentRef } from '@wallacesw11/base-lib/utils'
-```
+**Supported locales**: `pt-BR` (default), `en-US`
 
 ### API Client
 
-Pre-configured Axios instance with interceptors for:
-- Automatic Bearer token injection from localStorage
-- Loading states on mutations (POST, PUT, DELETE, PATCH)
-- Error notification handling
-- Configurable behavior
-
-**Usage**:
 ```typescript
-import { api, configureApi } from '@wallacesw11/base-lib'
+import { api, configureApi } from "@wallacesw11/base-lib";
 
 // Configure (optional)
 configureApi({
-  baseURL: 'https://api.example.com',
-  timeout: 30000,
-  showLoadingOnMutations: true,
-  showErrorNotifications: true,
-  authTokenKey: 'auth_token',
-  onUnauthorized: () => {
-    // Custom 401 handler
-  }
-})
+  baseURL: "https://api.example.com",
+  authTokenKey: "auth_token",
+  onUnauthorized: () => window.location.href = "/login"
+});
 
 // Use
-const { data } = await api.get('/users')
+const users = await api.get("/users");
+await api.post("/users", { name: "John" });
 ```
 
-**Types**:
-```typescript
-import type { ApiConfig } from '@wallacesw11/base-lib/utils'
+## 🎨 Theme & White-Label
 
-interface ApiConfig {
-  baseURL?: string
-  timeout?: number
-  showLoadingOnMutations?: boolean
-  showErrorNotifications?: boolean
-  authTokenKey?: string
-  onUnauthorized?: () => void
-}
-```
-
-### Constants
-
-```typescript
-import { 
-  NOTIFY_DURATION,      // 3000ms - Auto-hide duration for notifications
-  LOADING_DELAY,        // 300ms - Delay before showing loading spinner
-  API_TIMEOUT,          // 30000ms - Default API timeout
-  LOADING_CONTENT_DELAY // 300ms - Delay before showing loading content
-} from '@wallacesw11/base-lib/utils'
-```
-
-## 🎨 Theming & White-Label Support
-
-The library includes a powerful theme system with white-label capabilities.
-
-### Theme Configuration
-
-Create a `public/theme.json` file in your project:
+Create `public/theme.json`:
 
 ```json
 {
-  "name": "My Custom Theme",
-  "version": "1.0.0",
-  "logo": {
-    "light": "/logo-light.svg",
-    "dark": "/logo-dark.svg",
-    "favicon": "/favicon.ico"
-  },
+  "logo": { "light": "/logo-light.svg", "dark": "/logo-dark.svg" },
   "colors": {
-    "light": {
-      "primary": "#1976D2",
-      "secondary": "#424242",
-      "accent": "#82B1FF",
-      "error": "#FF5252",
-      "info": "#2196F3",
-      "success": "#4CAF50",
-      "warning": "#FB8C00"
-    },
-    "dark": {
-      "primary": "#2196F3",
-      "secondary": "#616161",
-      "accent": "#FF4081",
-      "error": "#FF5252",
-      "info": "#2196F3",
-      "success": "#4CAF50",
-      "warning": "#FFC107"
-    }
+    "light": { "primary": "#1976D2", "secondary": "#424242" },
+    "dark": { "primary": "#2196F3", "secondary": "#616161" }
   },
-  "fonts": {
-    "primary": "Roboto, sans-serif",
-    "monospace": "Roboto Mono, monospace"
-  },
-  "customization": {
-    "appName": "My Application",
-    "appDescription": "Custom white-label application",
-    "copyrightText": "© 2025 My Company"
-  }
+  "customization": { "appName": "My App" }
 }
 ```
 
-### Using the Theme Store
+Load in App.vue:
 
 ```vue
 <script setup lang="ts">
@@ -677,730 +255,56 @@ import { onMounted } from 'vue'
 import { useThemeStore } from '@wallacesw11/base-lib/stores'
 import { useThemeSync } from '@wallacesw11/base-lib/composables'
 
-const themeStore = useThemeStore()
-const { syncTheme } = useThemeSync()
-
 onMounted(async () => {
-  // Load theme from public/theme.json
+  const themeStore = useThemeStore()
+  const { syncTheme } = useThemeSync()
   await themeStore.loadTheme()
-  
-  // Sync with Vuetify
   syncTheme()
 })
-
-// Toggle between light and dark
-const toggleTheme = () => {
-  themeStore.toggleTheme()
-}
-
-// Set specific theme
-const setLightTheme = () => {
-  themeStore.setTheme('light')
-}
-
-// Update colors dynamically
-const updateColors = () => {
-  themeStore.updateThemeColors({
-    primary: '#FF0000',
-    secondary: '#00FF00'
-  })
-}
 </script>
-
-<template>
-  <div>
-    <img :src="themeStore.currentLogo" :alt="themeStore.appName" />
-    <h1>{{ themeStore.appName }}</h1>
-    <p>Current mode: {{ themeStore.currentMode }}</p>
-    <button @click="toggleTheme">Toggle Theme</button>
-  </div>
-</template>
 ```
 
-### Theme Store API
+## 📚 TypeScript Types
 
-**State**:
-- `themeConfig: ThemeConfig | null` - Current theme configuration
-- `isDark: boolean` - Whether dark mode is active
-- `isLoading: boolean` - Loading state while fetching theme
-
-**Getters**:
-- `currentMode: 'light' | 'dark'` - Current theme mode
-- `currentLogo: string` - Logo URL for current mode
-- `currentColors: Record<string, string>` - Colors for current mode
-- `appName: string` - Application name from config
-
-**Actions**:
-- `loadTheme(): Promise<void>` - Load theme from `/theme.json`
-- `toggleTheme(): void` - Toggle between light/dark
-- `setTheme(mode: 'light' | 'dark'): void` - Set specific theme
-- `updateThemeColors(colors: Record<string, string>): void` - Update colors
-
-**Types**:
 ```typescript
+import type { NotifyType, LoadingComponentRef, ConfirmComponentRef, ApiConfig } from '@wallacesw11/base-lib/utils'
+import type { ModalAction } from '@wallacesw11/base-lib/components'
 import type { ThemeConfig } from '@wallacesw11/base-lib/stores'
-
-interface ThemeConfig {
-  name: string
-  version: string
-  logo: {
-    light: string
-    dark: string
-    favicon: string
-  }
-  colors: {
-    light: Record<string, string>
-    dark: Record<string, string>
-  }
-  fonts: {
-    primary: string
-    monospace: string
-  }
-  customization: {
-    appName: string
-    appDescription: string
-    copyrightText: string
-  }
-}
-```
-
-### Theme Persistence
-
-Theme preference is automatically saved to `localStorage` with key `app-theme`.
-
-### Theme Events
-
-The theme system emits a custom event when the theme changes:
-
-```typescript
-window.addEventListener('theme-changed', (event: CustomEvent) => {
-  console.log('New theme mode:', event.detail.mode)
-  console.log('New colors:', event.detail.colors)
-})
-```
-
-## 🌍 Internationalization (i18n)
-
-### Default Locales
-
-The library includes built-in support for:
-- `pt-BR` - Portuguese (Brazil) - Default
-- `en-US` - English (United States)
-
-### Setup
-
-```typescript
-import { createI18n } from 'vue-i18n'
-import { defaultMessages, defaultLocale, defaultAvailableLocales } from '@wallacesw11/base-lib/locales'
-
-const i18n = createI18n({
-  legacy: false,
-  locale: defaultLocale, // 'pt-BR'
-  fallbackLocale: 'en-US',
-  messages: defaultMessages,
-})
-
-app.use(i18n)
-```
-
-### Using the Locale Composable
-
-```vue
-<script setup lang="ts">
-import { useLocale } from '@wallacesw11/base-lib/composables'
-import { defaultAvailableLocales } from '@wallacesw11/base-lib/locales'
-
-const { locale, locales, setLocale, currentFlag, currentCurrency } = useLocale(
-  defaultAvailableLocales
-)
-
-// Change language
-setLocale('en-US')
-</script>
-
-<template>
-  <div>
-    <p>Current locale: {{ locale }}</p>
-    <p>Flag: {{ currentFlag }}</p>
-    <p>Currency: {{ currentCurrency }}</p>
-    
-    <select v-model="locale" @change="setLocale($event.target.value)">
-      <option v-for="loc in locales" :key="loc.code" :value="loc.code">
-        {{ loc.name }}
-      </option>
-    </select>
-  </div>
-</template>
-```
-
-### Adding Custom Locales
-
-```typescript
 import type { LocaleOption } from '@wallacesw11/base-lib/locales'
-
-const customMessages = {
-  'pt-BR': {
-    common: {
-      hello: 'Olá',
-      goodbye: 'Tchau'
-    }
-  },
-  'en-US': {
-    common: {
-      hello: 'Hello',
-      goodbye: 'Goodbye'
-    }
-  },
-  'es-ES': {
-    common: {
-      hello: 'Hola',
-      goodbye: 'Adiós'
-    }
-  }
-}
-
-const customLocales: LocaleOption[] = [
-  { code: 'pt-BR', name: 'Português', countryCode: 'BR' },
-  { code: 'en-US', name: 'English', countryCode: 'US' },
-  { code: 'es-ES', name: 'Español', countryCode: 'ES' }
-]
-
-const i18n = createI18n({
-  legacy: false,
-  locale: 'pt-BR',
-  fallbackLocale: 'en-US',
-  messages: customMessages,
-})
 ```
 
-### Built-in Translation Keys
-
-```typescript
-// Common translations available in all locales
-{
-  common: {
-    loading: string
-    save: string
-    cancel: string
-    confirm: string
-    delete: string
-    edit: string
-    close: string
-    back: string
-    next: string
-    yes: string
-    no: string
-  }
-}
-```
-
-### Language Selector Component
-
-```vue
-<script setup lang="ts">
-import { LanguageSelector } from '@wallacesw11/base-lib'
-import { defaultAvailableLocales } from '@wallacesw11/base-lib/locales'
-</script>
-
-<template>
-  <LanguageSelector :available-locales="defaultAvailableLocales" />
-</template>
-```
-
-The component shows country flags and automatically updates the app locale.
-
-## 📖 API Reference
-
-### setupLib(app: App)
-
-Main setup function that registers all components and plugins.
-
-```typescript
-import { setupLib } from "@wallacesw11/base-lib";
-
-setupLib(app);
-```
-
-### registerLibComponents(app: App)
-
-Register only components (without plugins).
-
-```typescript
-import { registerLibComponents } from "@wallacesw11/base-lib";
-
-registerLibComponents(app);
-```
-
-### registerLibPlugins(app: App)
-
-Register only plugins (without components).
-
-```typescript
-import { registerLibPlugins } from "@wallacesw11/base-lib";
-
-registerLibPlugins(app);
-```
-
-## 🔄 Updating
-
-Since the library is installed from GitHub's main branch, you can update it by running:
+## 🔄 Update Library
 
 ```bash
-npm update @wallacesw11/base-lib
-# or
 pnpm update @wallacesw11/base-lib
-# or
-yarn upgrade @wallacesw11/base-lib
+# or force reinstall
+pnpm add github:wallacesw11/BaseLib#main --force
 ```
-
-Or reinstall to get the latest version:
-
-```bash
-npm install wallacesw11/BaseLib#main --force
-```
-
-## 🧪 Testing
-
-The library includes comprehensive unit tests using Vitest.
-
-### Running Tests
-
-```bash
-# Run all tests
-pnpm test
-
-# Run tests in watch mode
-pnpm test:watch
-
-# Run with UI
-pnpm vitest --ui
-```
-
-### Test Coverage
-
-Tests cover:
-- ✅ Notify utilities (success, error, warning, info)
-- ✅ Loading utilities (show, hide)
-- ✅ Confirm utilities (show dialog, return boolean)
-- ✅ Button components (render, props, events)
-
-## 🐛 Troubleshooting
-
-### ⚠️ Vuetify Component Resolution Errors
-
-**Problem**: You see errors like:
-```
-[Vue warn]: Failed to resolve component: v-card-title
-[Vue warn]: Failed to resolve component: v-btn
-[Vue warn]: Failed to resolve component: v-dialog
-```
-
-**Root Cause**: BaseLib components depend on Vuetify, but Vuetify was not registered before `setupLib()` was called.
-
-**Solution**: 
-1. Ensure Vuetify is registered **BEFORE** calling `setupLib()` in your `main.ts`:
-
-```typescript
-// ✅ Correct order
-app.use(createPinia());
-app.use(vuetify);        // Register Vuetify FIRST
-app.use(i18n);
-setupLib(app);           // BaseLib LAST
-
-// ❌ Wrong order
-app.use(createPinia());
-setupLib(app);           // BaseLib before Vuetify = ERROR
-app.use(vuetify);
-```
-
-2. Check console for BaseLib detection message:
-   - ✅ `[BaseLib] ✅ Vuetify detectado com sucesso` - OK
-   - ❌ `[BaseLib] ⚠️ Vuetify não detectado!` - Fix your setup order
-
-3. Verify Vuetify is properly imported:
-
-```typescript
-import { createVuetify } from 'vuetify'
-import 'vuetify/styles'
-
-const vuetify = createVuetify({
-  theme: {
-    defaultTheme: 'light',
-  },
-})
-```
-
-### Notifications/Loading/Confirm not working
-
-**Problem**: Calling `notify.success()`, `loading.show()`, or `confirm.show()` doesn't display anything.
-
-**Solution**: Make sure you've added the required components to your `App.vue` and registered the refs:
-
-```vue
-<template>
-  <FloatingNotify ref="notifyRef" />
-  <LoadingOverlay ref="loadingRef" />
-  <ConfirmDialog ref="confirmRef" />
-</template>
-
-<script setup lang="ts">
-import { onMounted, ref } from 'vue'
-import { useNotifyStore, useLoadingStore, useConfirmStore } from '@wallacesw11/base-lib/utils'
-
-const notifyRef = ref()
-const loadingRef = ref()
-const confirmRef = ref()
-
-onMounted(() => {
-  useNotifyStore().setNotifyRef(notifyRef.value)
-  useLoadingStore().setLoadingRef(loadingRef.value)
-  useConfirmStore().setConfirmRef(confirmRef.value)
-})
-</script>
-```
-
-### Theme not loading
-
-**Problem**: Theme colors and logo don't appear.
-
-**Solution**: 
-1. Ensure you have a `public/theme.json` file in your project
-2. Call `themeStore.loadTheme()` in your App.vue
-3. Make sure Pinia is installed before loading the theme
-
-```vue
-<script setup lang="ts">
-import { onMounted } from 'vue'
-import { useThemeStore } from '@wallacesw11/base-lib/stores'
-import { useThemeSync } from '@wallacesw11/base-lib/composables'
-
-const themeStore = useThemeStore()
-const { syncTheme } = useThemeSync()
-
-onMounted(async () => {
-  await themeStore.loadTheme()
-  syncTheme()
-})
-</script>
-```
-
-### TypeScript errors with imports
-
-**Problem**: TypeScript can't find module declarations.
-
-**Solution**: Make sure you're importing from the correct paths:
-
-```typescript
-// ✅ Correct
-import { notify } from '@wallacesw11/base-lib'
-import { PrimaryButton } from '@wallacesw11/base-lib/components'
-import { useThemeStore } from '@wallacesw11/base-lib/stores'
-
-// ❌ Wrong
-import { notify } from '@wallacesw11/base-lib/dist/utils/notify'
-```
-
-### Icons not showing
-
-**Problem**: Material Design Icons (mdi) don't appear.
-
-**Solution**: Install and import @mdi/font:
-
-```bash
-npm install @mdi/font
-```
-
-```typescript
-// main.ts
-import '@mdi/font/css/materialdesignicons.css'
-```
-
-### API requests not including auth token
-
-**Problem**: Bearer token is not being sent with requests.
-
-**Solution**: Store your token in localStorage with the configured key (default: `auth_token`):
-
-```typescript
-// After login
-localStorage.setItem('auth_token', 'your-jwt-token')
-
-// Or configure a custom key
-import { configureApi } from '@wallacesw11/base-lib'
-
-configureApi({
-  authTokenKey: 'my_custom_token_key'
-})
-```
-
-### Loading overlay not hiding after API call
-
-**Problem**: Loading state persists after request completes.
-
-**Solution**: The API client automatically manages loading states. If you need to manually control it:
-
-```typescript
-import { configureApi } from '@wallacesw11/base-lib'
-
-// Disable automatic loading for all requests
-configureApi({
-  showLoadingOnMutations: false
-})
-
-// Then manually control when needed
-import { loading } from '@wallacesw11/base-lib'
-
-loading.show('Custom message')
-await someAsyncOperation()
-loading.hide()
-```
-
-## 🚀 Development
-
-### Setting up the development environment
-
-```bash
-# Clone the repository
-git clone https://github.com/wallaceSW11/BaseLib.git
-cd BaseLib
-
-# Install dependencies
-pnpm install
-
-# Start the playground for live development
-pnpm dev:playground
-
-# Build the library
-pnpm build
-
-# Run tests
-pnpm test
-
-# Lint code
-pnpm lint
-```
-
-### Project Structure
-
-```
-BaseLib/
-├── src/                    # Library source code
-│   ├── components/         # Vue components
-│   ├── composables/        # Vue composables
-│   ├── locales/           # i18n translations
-│   ├── plugins/           # Vue plugins
-│   ├── stores/            # Pinia stores
-│   ├── utils/             # Utilities (notify, loading, api, etc.)
-│   └── index.ts           # Main entry point
-├── playground/            # Development playground
-│   ├── src/
-│   │   ├── views/         # Example views
-│   │   └── App.vue        # Playground app
-│   └── public/
-│       └── theme.json     # Example theme config
-├── tests/                 # Unit tests
-└── dist/                  # Built library (generated)
-```
-
-### Using the Playground
-
-The playground is a full Vue 3 application where you can:
-- Test all components in real-time
-- Preview theme changes instantly
-- Test utilities (notify, loading, confirm)
-- Experiment with different configurations
-- View component examples
-
-To add new examples to the playground, edit `playground/src/views/ComponentsView.vue`.
 
 ## 🤖 For Developers & AI Assistants
 
-### Making Changes to BaseLib
+**Internal Playground**: Test components during development with `pnpm dev:playground`
 
-When modifying BaseLib, follow this workflow:
+**Key Workflow**:
+1. Make changes in `src/`
+2. Test in playground: `pnpm dev:playground`
+3. Run tests: `pnpm test`
+4. Build: `pnpm build`
+5. Commit and push to GitHub
+6. Users update: `pnpm update @wallacesw11/base-lib`
 
-1. **Make your changes** in the `src/` directory
-2. **Test in the playground**: `pnpm dev:playground`
-3. **Run tests**: `pnpm test`
-4. **Build the library**: `pnpm build`
-5. **Update version** in `package.json` (optional, for tracking)
-6. **Commit and push** to GitHub
-7. **Update in consuming projects**: 
-   ```bash
-   pnpm update @wallacesw11/base-lib
-   # or force reinstall
-   pnpm add github:wallacesw11/BaseLib#main --force
-   ```
+**Key Files**:
+- `src/index.ts` - Main exports
+- `src/utils/vuetify-check.ts` - Vuetify detection
+- `src/plugins/globals.ts` - Global utilities
+- `package.json` - Dependencies & exports
 
-### Key Files to Know
-
-- **`src/index.ts`**: Main entry point, exports all public APIs
-- **`src/utils/vuetify-check.ts`**: Vuetify detection logic (CRITICAL for proper integration)
-- **`src/plugins/globals.ts`**: Global properties ($notify, $loading, $confirm)
-- **`package.json`**: Dependencies and exports configuration
-- **`vite.config.ts`**: Build configuration
-- **`tsconfig.json`**: TypeScript configuration
-
-### Common Development Tasks
-
-**Adding a new component:**
-```typescript
-// 1. Create component in src/components/
-// 2. Export it in src/components/index.ts
-export { default as MyNewComponent } from './MyNewComponent.vue'
-
-// 3. Add to playground for testing
-// 4. Build and test
-pnpm build
-```
-
-**Adding a new utility:**
-```typescript
-// 1. Create utility in src/utils/
-// 2. Export it in src/utils/index.ts
-export { myNewUtil } from './my-new-util'
-
-// 3. Add tests in tests/
-// 4. Update TypeScript types if needed
-```
-
-**Modifying Vuetify detection:**
-- Edit `src/utils/vuetify-check.ts`
-- The `ensureVuetify()` function checks multiple locations:
-  - `app._context.provides` (Symbol-based injection)
-  - `app.config.globalProperties` (global properties)
-  - `app._context.components` (registered components)
-- Always test with the playground after changes
-
-**Troubleshooting build issues:**
-```bash
-# Clean build artifacts
-rm -rf dist/
-
-# Reinstall dependencies
-rm -rf node_modules/ pnpm-lock.yaml
-pnpm install
-
-# Rebuild
-pnpm build
-```
-
-### Distribution Model
-
-⚠️ **Important**: This library is NOT published to npm. It's distributed via GitHub.
-
-**Why GitHub instead of npm?**
-- Easier for private/internal projects
-- No need for npm account management
-- Direct version control integration
-- Simpler CI/CD for mono-repo setups
-
-**How users install:**
-```bash
-pnpm add github:wallacesw11/BaseLib#main
-```
-
-**How to "publish" updates:**
-1. Commit and push to GitHub
-2. Users run `pnpm update @wallacesw11/base-lib` or reinstall
-
-### Testing Checklist Before Commit
-
-- [ ] All tests pass: `pnpm test`
-- [ ] No TypeScript errors: `pnpm build`
-- [ ] No lint errors: `pnpm lint`
-- [ ] Playground works: `pnpm dev:playground`
-- [ ] Vuetify detection works (check console for `✅ Vuetify detectado`)
-- [ ] All utilities work (notify, loading, confirm)
-- [ ] Theme switching works
-- [ ] Components render correctly with Vuetify styles
-
-## 📄 License
-
-MIT License - see [LICENSE](LICENSE) file for details.
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## 📞 Support
-
-For issues and questions, please use the [GitHub Issues](https://github.com/wallaceSW11/BaseLib/issues) page.
-
-```bash
-npm install wallacesw11/BaseLib#main
-```
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
+**Distribution**: GitHub-based (not npm). Updates via git push.
 
 ## 📄 License
 
 MIT © [wallaceSW11](https://github.com/wallaceSW11)
 
-## 🔗 Links
+---
 
-- [GitHub Repository](https://github.com/wallaceSW11/BaseLib)
-- [Issues](https://github.com/wallaceSW11/BaseLib/issues)
-
-## 💡 Best Practices
-
-1. **Tree Shaking**: Import only what you need for optimal bundle size
-   ```typescript
-   import { PrimaryButton } from "@wallacesw11/base-lib/components";
-   ```
-
-2. **Type Safety**: Use TypeScript for better IntelliSense and error checking
-
-3. **Theme Consistency**: Use the built-in theme system for consistent UI
-
-4. **Lazy Loading**: Consider lazy loading components when appropriate
-   ```typescript
-   const PrimaryButton = defineAsyncComponent(() =>
-     import("@wallacesw11/base-lib/components").then(m => m.PrimaryButton)
-   );
-   ```
-
-## 🐛 Troubleshooting
-
-### v-select (ou outros overlays) não aparecem dentro do ModalBase
-
-Este é um problema comum com componentes que usam overlays. **Solução rápida:**
-
-```vue
-<ModalBase v-model="show" attach="body">
-  <v-select :items="items" v-model="selected" />
-</ModalBase>
-```
-
-Ou adicione `attach` diretamente no v-select:
-
-```vue
-<v-select :items="items" v-model="selected" attach />
-```
-
-Para diagnóstico completo e outras soluções, veja **[TROUBLESHOOTING.md](./TROUBLESHOOTING.md)**.
-
-### Debug de múltiplas instâncias do Vuetify
-
-Use o helper de debug para verificar se há múltiplas instâncias:
-
-```typescript
-import { debugVuetifyInstances } from '@wallacesw11/base-lib'
-
-// No console do navegador ou no mounted()
-debugVuetifyInstances()
-```
-
-### Module not found
-
-Make sure you have installed all peer dependencies and the library is properly installed.
-
-### Type errors
-
-Ensure your `tsconfig.json` is properly configured and TypeScript version is compatible (^5.0.0).
-
-### Theme not persisting
-
-The theme system uses localStorage. Make sure your browser allows localStorage access.
+**Links**: [Repository](https://github.com/wallaceSW11/BaseLib) | [Issues](https://github.com/wallaceSW11/BaseLib/issues) | [Troubleshooting](./TROUBLESHOOTING.md)
