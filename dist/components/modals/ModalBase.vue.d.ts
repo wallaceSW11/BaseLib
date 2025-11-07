@@ -10,6 +10,7 @@ interface Props {
     title?: string;
     message?: string;
     maxWidth?: string | number;
+    persistent?: boolean;
     actions?: ModalAction[];
 }
 declare var __VLS_22: {};
@@ -24,6 +25,7 @@ declare const __VLS_base: import("vue").DefineComponent<Props, {}, {}, {}, {}, i
     "onUpdate:modelValue"?: ((value: boolean) => any) | undefined;
 }>, {
     maxWidth: string | number;
+    persistent: boolean;
     title: string;
     message: string;
     actions: ModalAction[];

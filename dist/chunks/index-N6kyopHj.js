@@ -4721,6 +4721,7 @@ const yi = S({
     title: { default: void 0 },
     message: { default: "" },
     maxWidth: { default: 500 },
+    persistent: { type: Boolean, default: !0 },
     actions: { default: () => [] }
   },
   emits: ["update:modelValue", "close"],
@@ -4738,7 +4739,8 @@ const yi = S({
       modelValue: I.value,
       "onUpdate:modelValue": i[0] || (i[0] = (A) => I.value = A),
       "max-width": M.maxWidth,
-      persistent: ""
+      persistent: M.persistent,
+      contained: ""
     }, {
       default: v(() => [
         L(Ai, null, {
@@ -4784,7 +4786,7 @@ const yi = S({
         })
       ]),
       _: 3
-    }, 8, ["modelValue", "max-width"]));
+    }, 8, ["modelValue", "max-width", "persistent"]));
   }
 }), ei = /* @__PURE__ */ YM({
   __name: "ConfirmDialog",
@@ -6670,4 +6672,4 @@ export {
   ni as i,
   wA as j
 };
-//# sourceMappingURL=index-Cuwno84m.js.map
+//# sourceMappingURL=index-N6kyopHj.js.map

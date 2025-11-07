@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="isOpen" :max-width="maxWidth" persistent>
+  <v-dialog v-model="isOpen" :max-width="maxWidth" :persistent="persistent" contained>
     <v-card>
       <v-card-title v-if="title" class="text-h5">
         {{ title }}
@@ -45,6 +45,7 @@ interface Props {
   title?: string
   message?: string
   maxWidth?: string | number
+  persistent?: boolean
   actions?: ModalAction[]
 }
 
@@ -52,6 +53,7 @@ const props = withDefaults(defineProps<Props>(), {
   title: undefined,
   message: '',
   maxWidth: 500,
+  persistent: true,
   actions: () => [],
 })
 
