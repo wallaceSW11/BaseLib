@@ -1,4 +1,4 @@
-import { defineComponent as x, resolveComponent as T, createBlock as y, openBlock as A, mergeProps as Q, withCtx as g, renderSlot as E, createTextVNode as c, toDisplayString as Z, normalizeProps as H, ref as G, watch as P, createVNode as S, createCommentVNode as l, createElementBlock as a, Fragment as B, renderList as X, computed as b, Transition as p, createElementVNode as F, unref as m } from "vue";
+import { defineComponent as x, resolveComponent as T, createBlock as y, openBlock as A, mergeProps as Q, withCtx as g, renderSlot as E, createTextVNode as c, toDisplayString as Z, normalizeProps as H, ref as G, watch as P, createVNode as S, createCommentVNode as s, createElementBlock as a, Fragment as B, renderList as X, computed as b, Transition as p, createElementVNode as F, unref as m } from "vue";
 import { useI18n as R } from "vue-i18n";
 import { N as J, a as v } from "./types-CDzRHMYF.js";
 import { u as h } from "./theme-CCYjaYW3.js";
@@ -17,26 +17,26 @@ const U = /* @__PURE__ */ x({
     block: { type: Boolean, default: !1 }
   },
   emits: ["click"],
-  setup(N, { emit: M }) {
-    const z = M, j = (D) => {
+  setup(M, { emit: N }) {
+    const z = N, j = (D) => {
       z("click", D);
     };
     return (D, w) => {
       const I = T("v-btn");
       return A(), y(I, Q({
-        "prepend-icon": N.prependIcon,
-        "append-icon": N.appendIcon,
-        disabled: N.disabled,
-        loading: N.loading,
-        color: N.color,
-        variant: N.variant,
-        size: N.size,
-        block: N.block,
+        "prepend-icon": M.prependIcon,
+        "append-icon": M.appendIcon,
+        disabled: M.disabled,
+        loading: M.loading,
+        color: M.color,
+        variant: M.variant,
+        size: M.size,
+        block: M.block,
         class: "text-none"
       }, D.$attrs, { onClick: j }), {
         default: g(() => [
           E(D.$slots, "default", {}, () => [
-            c(Z(N.text), 1)
+            c(Z(M.text), 1)
           ])
         ]),
         _: 3
@@ -55,15 +55,15 @@ const U = /* @__PURE__ */ x({
     block: { type: Boolean }
   },
   emits: ["click"],
-  setup(N) {
-    return (M, z) => (A(), y(U, Q({
+  setup(M) {
+    return (N, z) => (A(), y(U, Q({
       color: "primary",
       variant: "elevated"
-    }, M.$props, {
-      onClick: z[0] || (z[0] = (j) => M.$emit("click", j))
+    }, N.$props, {
+      onClick: z[0] || (z[0] = (j) => N.$emit("click", j))
     }), {
       default: g(() => [
-        E(M.$slots, "default")
+        E(N.$slots, "default")
       ]),
       _: 3
     }, 16));
@@ -80,15 +80,15 @@ const U = /* @__PURE__ */ x({
     block: { type: Boolean }
   },
   emits: ["click"],
-  setup(N) {
-    return (M, z) => (A(), y(U, Q({
+  setup(M) {
+    return (N, z) => (A(), y(U, Q({
       color: "secondary",
       variant: "outlined"
-    }, M.$props, {
-      onClick: z[0] || (z[0] = (j) => M.$emit("click", j))
+    }, N.$props, {
+      onClick: z[0] || (z[0] = (j) => N.$emit("click", j))
     }), {
       default: g(() => [
-        E(M.$slots, "default")
+        E(N.$slots, "default")
       ]),
       _: 3
     }, 16));
@@ -105,15 +105,15 @@ const U = /* @__PURE__ */ x({
     block: { type: Boolean }
   },
   emits: ["click"],
-  setup(N) {
-    return (M, z) => (A(), y(U, Q({
+  setup(M) {
+    return (N, z) => (A(), y(U, Q({
       color: "info",
       variant: "flat"
-    }, M.$props, {
-      onClick: z[0] || (z[0] = (j) => M.$emit("click", j))
+    }, N.$props, {
+      onClick: z[0] || (z[0] = (j) => N.$emit("click", j))
     }), {
       default: g(() => [
-        E(M.$slots, "default")
+        E(N.$slots, "default")
       ]),
       _: 3
     }, 16));
@@ -130,15 +130,15 @@ const U = /* @__PURE__ */ x({
     block: { type: Boolean }
   },
   emits: ["click"],
-  setup(N) {
-    return (M, z) => (A(), y(U, Q({
+  setup(M) {
+    return (N, z) => (A(), y(U, Q({
       color: "warning",
       variant: "text"
-    }, M.$props, {
-      onClick: z[0] || (z[0] = (j) => M.$emit("click", j))
+    }, N.$props, {
+      onClick: z[0] || (z[0] = (j) => N.$emit("click", j))
     }), {
       default: g(() => [
-        E(M.$slots, "default")
+        E(N.$slots, "default")
       ]),
       _: 3
     }, 16));
@@ -150,21 +150,21 @@ const U = /* @__PURE__ */ x({
     text: { default: void 0 },
     asButton: { type: Boolean, default: !1 }
   },
-  setup(N) {
-    return (M, z) => {
+  setup(M) {
+    return (N, z) => {
       const j = T("v-btn"), D = T("v-icon"), w = T("v-tooltip");
       return A(), y(w, {
-        text: N.text,
+        text: M.text,
         location: "top",
-        disabled: !N.text
+        disabled: !M.text
       }, {
         activator: g(({ props: I }) => [
-          N.asButton ? (A(), y(j, Q({ key: 0 }, I, {
-            icon: N.icon,
+          M.asButton ? (A(), y(j, Q({ key: 0 }, I, {
+            icon: M.icon,
             variant: "text"
           }), null, 16, ["icon"])) : (A(), y(D, H(Q({ key: 1 }, I)), {
             default: g(() => [
-              c(Z(N.icon), 1)
+              c(Z(M.icon), 1)
             ]),
             _: 1
           }, 16))
@@ -181,11 +181,13 @@ const U = /* @__PURE__ */ x({
     message: { default: "" },
     maxWidth: { default: 500 },
     persistent: { type: Boolean, default: !0 },
-    actions: { default: () => [] }
+    actions: { default: () => [] },
+    attach: { type: [String, Boolean], default: void 0 },
+    contentClass: { default: void 0 }
   },
   emits: ["update:modelValue", "close"],
-  setup(N, { emit: M }) {
-    const z = N, j = M, D = G(z.modelValue);
+  setup(M, { emit: N }) {
+    const z = M, j = N, D = G(z.modelValue);
     P(() => z.modelValue, (I) => {
       D.value = I;
     }), P(D, (I) => {
@@ -195,38 +197,40 @@ const U = /* @__PURE__ */ x({
       I.handler && await I.handler(), D.value = !1, j("close");
     };
     return (I, L) => {
-      const O = T("v-card-title"), u = T("v-card-text"), Y = T("v-spacer"), i = T("v-btn"), s = T("v-card-actions"), W = T("v-card"), d = T("v-dialog");
+      const O = T("v-card-title"), u = T("v-card-text"), Y = T("v-spacer"), i = T("v-btn"), l = T("v-card-actions"), W = T("v-card"), d = T("v-dialog");
       return A(), y(d, {
         modelValue: D.value,
         "onUpdate:modelValue": L[0] || (L[0] = (k) => D.value = k),
-        "max-width": N.maxWidth,
-        persistent: N.persistent,
+        "max-width": M.maxWidth,
+        persistent: M.persistent,
+        attach: M.attach,
+        "content-class": M.contentClass,
         scrollable: ""
       }, {
         default: g(() => [
           S(W, null, {
             default: g(() => [
-              N.title ? (A(), y(O, {
+              M.title ? (A(), y(O, {
                 key: 0,
                 class: "text-h5"
               }, {
                 default: g(() => [
-                  c(Z(N.title), 1)
+                  c(Z(M.title), 1)
                 ]),
                 _: 1
-              })) : l("", !0),
+              })) : s("", !0),
               S(u, null, {
                 default: g(() => [
                   E(I.$slots, "default", {}, () => [
-                    c(Z(N.message), 1)
+                    c(Z(M.message), 1)
                   ])
                 ]),
                 _: 3
               }),
-              S(s, null, {
+              S(l, null, {
                 default: g(() => [
                   S(Y),
-                  (A(!0), a(B, null, X(N.actions, (k, o) => (A(), y(i, {
+                  (A(!0), a(B, null, X(M.actions, (k, o) => (A(), y(i, {
                     key: o,
                     color: k.color || "primary",
                     "prepend-icon": k.icon,
@@ -247,12 +251,12 @@ const U = /* @__PURE__ */ x({
           })
         ]),
         _: 3
-      }, 8, ["modelValue", "max-width", "persistent"]);
+      }, 8, ["modelValue", "max-width", "persistent", "attach", "content-class"]);
     };
   }
 }), $ = /* @__PURE__ */ x({
   __name: "ConfirmDialog",
-  setup(N, { expose: M }) {
+  setup(M, { expose: N }) {
     const { t: z } = R(), j = G(!1), D = G(""), w = G("");
     let I = null;
     const L = b(() => [
@@ -273,7 +277,7 @@ const U = /* @__PURE__ */ x({
         }
       }
     ]);
-    return M({
+    return N({
       ConfirmDialog: (u, Y) => (D.value = u, w.value = Y, j.value = !0, new Promise((i) => {
         I = i;
       }))
@@ -287,7 +291,7 @@ const U = /* @__PURE__ */ x({
   }
 }), q = /* @__PURE__ */ x({
   __name: "FloatingNotify",
-  setup(N, { expose: M }) {
+  setup(M, { expose: N }) {
     const z = G(!1), j = G("info"), D = G(""), w = G("");
     let I = null;
     const L = (u, Y, i = "") => {
@@ -297,7 +301,7 @@ const U = /* @__PURE__ */ x({
     }, O = () => {
       z.value = !1, I && (clearTimeout(I), I = null);
     };
-    return M({
+    return N({
       show: L,
       hide: O
     }), (u, Y) => {
@@ -313,15 +317,15 @@ const U = /* @__PURE__ */ x({
             closable: "",
             elevation: "6",
             "onClick:close": O
-          }, null, 8, ["type", "title", "text"])) : l("", !0)
+          }, null, 8, ["type", "title", "text"])) : s("", !0)
         ]),
         _: 1
       });
     };
   }
-}), t = (N, M) => {
-  const z = N.__vccOpts || N;
-  for (const [j, D] of M)
+}), t = (M, N) => {
+  const z = M.__vccOpts || M;
+  for (const [j, D] of N)
     z[j] = D;
   return z;
 }, MM = /* @__PURE__ */ t(q, [["__scopeId", "data-v-b1bae76b"]]), NM = {
@@ -332,10 +336,10 @@ const U = /* @__PURE__ */ x({
   class: "loading-content"
 }, jM = ["src"], IM = { class: "loading-text mt-3" }, DM = /* @__PURE__ */ x({
   __name: "LoadingOverlay",
-  setup(N, { expose: M }) {
+  setup(M, { expose: N }) {
     const { t: z } = R(), j = h(), D = G(!1), w = G(!1), I = G(z("common.loading"));
     let L = null;
-    return M({
+    return N({
       show: (Y) => {
         I.value = Y || z("common.loading"), D.value = !0, L = setTimeout(() => {
           w.value = !0;
@@ -345,7 +349,7 @@ const U = /* @__PURE__ */ x({
         L && (clearTimeout(L), L = null), w.value = !1, D.value = !1;
       }
     }), (Y, i) => {
-      const s = T("v-progress-circular");
+      const l = T("v-progress-circular");
       return A(), y(p, { name: "fade" }, {
         default: g(() => [
           D.value ? (A(), a("div", NM, [
@@ -357,19 +361,19 @@ const U = /* @__PURE__ */ x({
                     src: m(j).currentLogo,
                     alt: "Logo",
                     class: "loading-logo mb-4"
-                  }, null, 8, jM)) : l("", !0),
-                  S(s, {
+                  }, null, 8, jM)) : s("", !0),
+                  S(l, {
                     indeterminate: "",
                     color: "primary",
                     size: 30,
                     width: 5
                   }),
                   F("div", IM, Z(I.value), 1)
-                ])) : l("", !0)
+                ])) : s("", !0)
               ]),
               _: 1
             })
-          ])) : l("", !0)
+          ])) : s("", !0)
         ]),
         _: 1
       });
@@ -377,14 +381,14 @@ const U = /* @__PURE__ */ x({
   }
 }), gM = /* @__PURE__ */ t(DM, [["__scopeId", "data-v-7fa56b75"]]), AM = /* @__PURE__ */ x({
   __name: "ThemeToggle",
-  setup(N) {
-    const M = h(), z = b(
-      () => M.isDark ? "mdi-weather-sunny" : "mdi-weather-night"
+  setup(M) {
+    const N = h(), z = b(
+      () => N.isDark ? "mdi-weather-sunny" : "mdi-weather-night"
     ), j = b(
-      () => M.isDark ? "Switch to Light Mode" : "Switch to Dark Mode"
+      () => N.isDark ? "Switch to Light Mode" : "Switch to Dark Mode"
     );
     function D() {
-      M.toggleTheme();
+      N.toggleTheme();
     }
     return (w, I) => {
       const L = T("v-icon"), O = T("v-btn");
@@ -407,20 +411,20 @@ const U = /* @__PURE__ */ x({
     };
   }
 });
-function TM(N) {
-  const M = localStorage.getItem("locale");
-  return M && N.some((z) => z.code === M) ? M : null;
+function TM(M) {
+  const N = localStorage.getItem("locale");
+  return N && M.some((z) => z.code === N) ? N : null;
 }
-function wM(N) {
-  const { locale: M, t: z } = R(), j = N || n, D = b({
-    get: () => M.value,
+function wM(M) {
+  const { locale: N, t: z } = R(), j = M || n, D = b({
+    get: () => N.value,
     set: (O) => {
-      M.value = O, localStorage.setItem("locale", O);
+      N.value = O, localStorage.setItem("locale", O);
     }
   }), w = j, I = (O) => {
     D.value = O;
   }, L = TM(j);
-  return L && (M.value = L), {
+  return L && (N.value = L), {
     locale: D,
     locales: w,
     setLocale: I,
@@ -432,17 +436,17 @@ const YM = /* @__PURE__ */ JSON.parse(`[{"code":"AED","name":"UAE Dirham","count
   props: {
     availableLocales: {}
   },
-  setup(N) {
-    const M = N, { locale: z, locales: j, setLocale: D } = wM(M.availableLocales), w = b(() => j.find((u) => u.code === z.value) || j[0]), I = b(() => w.value.name), L = b(() => O(w.value.countryCode));
+  setup(M) {
+    const N = M, { locale: z, locales: j, setLocale: D } = wM(N.availableLocales), w = b(() => j.find((u) => u.code === z.value) || j[0]), I = b(() => w.value.name), L = b(() => O(w.value.countryCode));
     function O(u) {
       const Y = YM.find((i) => i.countryCode === u);
       return Y ? Y.flag : void 0;
     }
     return (u, Y) => {
-      const i = T("v-icon"), s = T("v-btn"), W = T("v-list-item-title"), d = T("v-list-item"), k = T("v-list"), o = T("v-menu");
+      const i = T("v-icon"), l = T("v-btn"), W = T("v-list-item-title"), d = T("v-list-item"), k = T("v-list"), o = T("v-menu");
       return A(), y(o, null, {
         activator: g(({ props: C }) => [
-          S(s, Q(C, {
+          S(l, Q(C, {
             variant: "text",
             icon: ""
           }), {
@@ -534,4 +538,4 @@ export {
   AM as i,
   OM as j
 };
-//# sourceMappingURL=index-Bk1Elnrc.js.map
+//# sourceMappingURL=index-Cr1PhWmm.js.map

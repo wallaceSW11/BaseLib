@@ -58,9 +58,38 @@ export function ensureVuetify(app: App): void {
     );
   }
 }
+
+export function debugVuetifyInstances(): void {
+  // Verifica múltiplos overlay containers, v-apps, overlays ativos, etc.
+  // Use no console ou mounted() para diagnosticar problemas
+}
 ```
 
-### 3. Integrada verificação no `setupLib`
+### 3. Adicionadas props `attach` e `contentClass` ao ModalBase
+
+```typescript
+interface Props {
+  // ... outras props
+  /** 
+   * Elemento onde o dialog será anexado.
+   * Use 'body' para forçar anexação ao body (resolve problemas de overlay)
+   */
+  attach?: string | boolean | Element
+  /**
+   * Classes CSS customizadas para o conteúdo do dialog
+   */
+  contentClass?: string
+}
+```
+
+**Uso:**
+```vue
+<ModalBase v-model="show" attach="body">
+  <v-select :items="items" v-model="selected" />
+</ModalBase>
+```
+
+### 4. Integrada verificação no `setupLib`
 
 O `src/index.ts` agora verifica automaticamente:
 
@@ -74,21 +103,12 @@ export function setupLib(app: App) {
 }
 ```
 
-### 4. Atualizada documentação
+### 5. Atualizada documentação
 
-O README agora enfatiza a ordem correta de registro:
-
-```typescript
-// ⚠️ IMPORTANTE: Vuetify DEVE ser registrado ANTES do BaseLib!
-
-import { createVuetify } from "vuetify";
-import "vuetify/styles";
-
-const vuetify = createVuetify({ /* config */ });
-app.use(vuetify);  // ← ANTES
-app.use(i18n);
-setupLib(app);     // ← DEPOIS
-```
+- ✅ README com seção de troubleshooting
+- ✅ Arquivo TROUBLESHOOTING.md dedicado com soluções completas
+- ✅ Exemplos de uso com attach
+- ✅ Debug helpers documentados
 
 ## 🧪 Como Testar
 
@@ -103,12 +123,12 @@ Para verificar se o problema está resolvido:
 
 2. **Instalar em outro projeto:**
    ```bash
-   pnpm add wallacesw11/BaseLib#main
+   pnpm add wallacesw11/BaseLib#main --force
    ```
 
-3. **Usar componente com v-select dentro de ModalBase:**
+3. **Usar ModalBase com attach:**
    ```vue
-   <ModalBase v-model="showModal">
+   <ModalBase v-model="showModal" attach="body">
      <v-select
        v-model="selected"
        :items="items"
@@ -122,6 +142,26 @@ Para verificar se o problema está resolvido:
    - ✅ Console não deve mostrar warnings sobre Vuetify
    - ✅ Overlays funcionam corretamente
 
+### Teste de Debug
+
+Execute no console do navegador ou no `mounted()`:
+
+```typescript
+import { debugVuetifyInstances } from '@wallacesw11/base-lib'
+
+debugVuetifyInstances()
+```
+
+Isso mostrará:
+- Quantos `.v-overlay-container` existem (deve ser **1**)
+- Quantos overlays ativos
+- Se há múltiplas instâncias do Vuetify
+
+**Interpretação:**
+- ✅ 1 overlay container = OK
+- ⚠️ 0 overlay containers = Vuetify não inicializado
+- ❌ 2+ overlay containers = Múltiplas instâncias (problema grave!)
+
 ### Teste de Diagnóstico Rápido
 
 Se ainda houver problemas, adicione temporariamente:
@@ -130,7 +170,7 @@ Se ainda houver problemas, adicione temporariamente:
 <v-select attach="body" ... />
 ```
 
-- Se funcionar com `attach="body"` → confirma duas instâncias (problema não resolvido)
+- Se funcionar com `attach="body"` → confirma problema de contexto (use attach no ModalBase)
 - Se funcionar sem `attach` → problema resolvido ✅
 
 ## 📋 Checklist de Verificação

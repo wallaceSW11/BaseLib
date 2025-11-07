@@ -12,6 +12,16 @@ interface Props {
     maxWidth?: string | number;
     persistent?: boolean;
     actions?: ModalAction[];
+    /**
+     * Elemento onde o dialog será anexado.
+     * Use 'body' para forçar anexação ao body (resolve problemas de overlay)
+     * @default undefined (padrão do Vuetify)
+     */
+    attach?: string | boolean | Element;
+    /**
+     * Classes CSS customizadas para o conteúdo do dialog
+     */
+    contentClass?: string;
 }
 declare var __VLS_22: {};
 type __VLS_Slots = {} & {
@@ -26,6 +36,8 @@ declare const __VLS_base: import("vue").DefineComponent<Props, {}, {}, {}, {}, i
 }>, {
     maxWidth: string | number;
     persistent: boolean;
+    attach: string | boolean | Element;
+    contentClass: string;
     title: string;
     message: string;
     actions: ModalAction[];

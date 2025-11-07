@@ -1164,6 +1164,35 @@ MIT © [wallaceSW11](https://github.com/wallaceSW11)
 
 ## 🐛 Troubleshooting
 
+### v-select (ou outros overlays) não aparecem dentro do ModalBase
+
+Este é um problema comum com componentes que usam overlays. **Solução rápida:**
+
+```vue
+<ModalBase v-model="show" attach="body">
+  <v-select :items="items" v-model="selected" />
+</ModalBase>
+```
+
+Ou adicione `attach` diretamente no v-select:
+
+```vue
+<v-select :items="items" v-model="selected" attach />
+```
+
+Para diagnóstico completo e outras soluções, veja **[TROUBLESHOOTING.md](./TROUBLESHOOTING.md)**.
+
+### Debug de múltiplas instâncias do Vuetify
+
+Use o helper de debug para verificar se há múltiplas instâncias:
+
+```typescript
+import { debugVuetifyInstances } from '@wallacesw11/base-lib'
+
+// No console do navegador ou no mounted()
+debugVuetifyInstances()
+```
+
 ### Module not found
 
 Make sure you have installed all peer dependencies and the library is properly installed.

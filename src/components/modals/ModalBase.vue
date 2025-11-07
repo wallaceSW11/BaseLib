@@ -1,5 +1,12 @@
 <template>
-  <v-dialog v-model="isOpen" :max-width="maxWidth" :persistent="persistent" scrollable>
+  <v-dialog 
+    v-model="isOpen" 
+    :max-width="maxWidth" 
+    :persistent="persistent" 
+    :attach="attach"
+    :content-class="contentClass"
+    scrollable
+  >
     <v-card>
       <v-card-title v-if="title" class="text-h5">
         {{ title }}
@@ -47,6 +54,16 @@ interface Props {
   maxWidth?: string | number
   persistent?: boolean
   actions?: ModalAction[]
+  /** 
+   * Elemento onde o dialog será anexado.
+   * Use 'body' para forçar anexação ao body (resolve problemas de overlay)
+   * @default undefined (padrão do Vuetify)
+   */
+  attach?: string | boolean | Element
+  /**
+   * Classes CSS customizadas para o conteúdo do dialog
+   */
+  contentClass?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -55,6 +72,8 @@ const props = withDefaults(defineProps<Props>(), {
   maxWidth: 500,
   persistent: true,
   actions: () => [],
+  attach: undefined,
+  contentClass: undefined,
 })
 
 const emit = defineEmits<{
