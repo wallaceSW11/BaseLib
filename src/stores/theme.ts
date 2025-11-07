@@ -39,6 +39,7 @@ export const useThemeStore = defineStore("theme", () => {
   const appName = computed(
     () => themeConfig.value?.customization.appName || "Vue3 Base"
   );
+  const favicon = computed(() => themeConfig.value?.logo.favicon || "");
 
   function loadSavedThemePreference() {
     const savedTheme = localStorage.getItem("app-theme");
@@ -51,6 +52,9 @@ export const useThemeStore = defineStore("theme", () => {
     const html = document.documentElement;
     html.setAttribute("data-theme", currentMode.value);
 
+    // Update favicon
+    updateFavicon();
+
     window.dispatchEvent(
       new CustomEvent("theme-changed", {
         detail: {
@@ -59,6 +63,18 @@ export const useThemeStore = defineStore("theme", () => {
         },
       })
     );
+  }
+
+  function updateFavicon() {
+    if (!favicon.value) return;
+
+    const existingLinks = document.querySelectorAll("link[rel*='icon']");
+    existingLinks.forEach((link) => link.remove());
+
+    const link = document.createElement("link");
+    link.rel = "icon";
+    link.href = favicon.value;
+    document.head.appendChild(link);
   }
 
   async function loadTheme() {
@@ -109,6 +125,7 @@ export const useThemeStore = defineStore("theme", () => {
     currentLogo,
     currentColors,
     appName,
+    favicon,
     loadTheme,
     toggleTheme,
     setTheme,

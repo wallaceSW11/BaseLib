@@ -19,6 +19,7 @@
           :color="action.color || 'primary'"
           :prepend-icon="action.icon"
           :variant="action.variant || 'text'"
+          class="text-none"
           @click="handleAction(action)"
         >
           {{ action.text }}
