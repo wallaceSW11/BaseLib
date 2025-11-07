@@ -4740,7 +4740,8 @@ const yi = S({
       "onUpdate:modelValue": i[0] || (i[0] = (A) => I.value = A),
       "max-width": M.maxWidth,
       persistent: M.persistent,
-      scrollable: ""
+      scrollable: "",
+      contained: ""
     }, {
       default: v(() => [
         L(Ai, null, {
@@ -6672,4 +6673,4 @@ export {
   ni as i,
   wA as j
 };
-//# sourceMappingURL=index-BIOiCEGS.js.map
+//# sourceMappingURL=index-Bj0j4RKx.js.map
