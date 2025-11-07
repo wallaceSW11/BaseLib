@@ -1,0 +1,1 @@
+{"version":3,"file":"LanguageSelector.vue.d.ts","sourceRoot":"","sources":["../../src/components/LanguageSelector.vue"],"names":[],"mappings":"AAuDA,OAAO,KAAK,EAAE,YAAY,EAAE,MAAM,YAAY,CAAA;AAG9C,UAAU,KAAK;IACb,gBAAgB,CAAC,EAAE,SAAS,YAAY,EAAE,CAAA;CAC3C;AA4LD,QAAA,MAAM,YAAY,sRAEhB,CAAC;wBACkB,OAAO,YAAY;AAAxC,wBAAyC"}
