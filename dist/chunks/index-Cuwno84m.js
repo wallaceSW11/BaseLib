@@ -2475,7 +2475,7 @@ const tN = {
   setup(M) {
     return (N, z) => (h(), $(ZN, W({
       color: "secondary",
-      variant: "elevated"
+      variant: "outlined"
     }, N.$props, {
       onClick: z[0] || (z[0] = (j) => N.$emit("click", j))
     }), {
@@ -2500,7 +2500,7 @@ const tN = {
   setup(M) {
     return (N, z) => (h(), $(ZN, W({
       color: "info",
-      variant: "elevated"
+      variant: "flat"
     }, N.$props, {
       onClick: z[0] || (z[0] = (j) => N.$emit("click", j))
     }), {
@@ -2525,7 +2525,7 @@ const tN = {
   setup(M) {
     return (N, z) => (h(), $(ZN, W({
       color: "warning",
-      variant: "elevated"
+      variant: "text"
     }, N.$props, {
       onClick: z[0] || (z[0] = (j) => N.$emit("click", j))
     }), {
@@ -6670,4 +6670,4 @@ export {
   ni as i,
   wA as j
 };
-//# sourceMappingURL=index-Bk2wl7q0.js.map
+//# sourceMappingURL=index-Cuwno84m.js.map

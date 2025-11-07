@@ -1,5 +1,5 @@
 <template>
-  <BaseButton color="secondary" variant="elevated" v-bind="$props" @click="$emit('click', $event)">
+  <BaseButton color="secondary" variant="outlined" v-bind="$props" @click="$emit('click', $event)">
     <slot />
   </BaseButton>
 </template>

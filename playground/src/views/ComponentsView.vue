@@ -201,16 +201,24 @@
           <v-card-text>
             <p class="mb-3">Test the customizable modal component:</p>
             <v-btn color="primary" prepend-icon="mdi-open-in-new" @click="openModal">
-              Open Modal
+              Open Modal with Form
             </v-btn>
             
             <ModalBase 
               v-model="showModal" 
-              title="Example Modal" 
-              message="This is a customizable modal with actions"
+              title="Add Observation" 
               max-width="600"
               :actions="modalActions"
-            />
+            >
+              <v-textarea
+                v-model="observationText"
+                label="Observation"
+                placeholder="Enter your observation here..."
+                rows="4"
+                variant="outlined"
+                class="mt-2"
+              />
+            </ModalBase>
           </v-card-text>
         </v-card>
       </v-col>
@@ -282,6 +290,7 @@ import {
 const { notify, loading, confirm } = useGlobals()
 const themeStore = useThemeStore()
 const showModal = ref(false)
+const observationText = ref('')
 const lastConfirmResult = ref<boolean | null>(null)
 const apiResponse = ref<{ success: boolean; message: string } | null>(null)
 
@@ -289,20 +298,27 @@ const currentTheme = computed(() => themeStore.currentMode)
 
 const modalActions: ModalAction[] = [
   {
-    text: 'Confirm',
+    text: 'Save',
     color: 'primary',
     variant: 'elevated',
-    icon: 'mdi-check',
+    icon: 'mdi-content-save',
     handler: () => {
-      notify.success('Modal Action', 'You clicked Confirm!')
+      if (observationText.value.trim()) {
+        notify.success('Saved!', `Observation saved: ${observationText.value}`)
+        observationText.value = ''
+      } else {
+        notify.warning('Empty Field', 'Please enter an observation')
+      }
     }
   },
   {
     text: 'Cancel',
-    color: 'grey',
-    variant: 'text',
+    color: 'secondary',
+    variant: 'outlined',
+    icon: 'mdi-close',
     handler: () => {
-      notify.info('Modal Action', 'You clicked Cancel')
+      observationText.value = ''
+      notify.info('Cancelled', 'No changes were made')
     }
   }
 ]
