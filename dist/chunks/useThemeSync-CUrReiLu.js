@@ -1,6 +1,6 @@
 import { getCurrentInstance as u, onMounted as f, watch as s } from "vue";
 import { useTheme as a } from "vuetify";
-import { u as l } from "./theme-BdyU2FZ0.js";
+import { u as l } from "./theme-CCYjaYW3.js";
 function g() {
   const e = u();
   if (!e)
@@ -48,4 +48,4 @@ export {
   d as a,
   g as u
 };
-//# sourceMappingURL=useThemeSync-DGC2nb7E.js.map
+//# sourceMappingURL=useThemeSync-CUrReiLu.js.map
