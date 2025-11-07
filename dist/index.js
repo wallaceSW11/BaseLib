@@ -1,58 +1,60 @@
-import { c as s } from "./chunks/index-BIOiCEGS.js";
-import { _ as g, h as p, F as L, f as T, j as d, L as b, g as x, a as y, e as N, b as A, d as O, i as B } from "./chunks/index-BIOiCEGS.js";
+import { c as s } from "./chunks/index-Bk1Elnrc.js";
+import { _ as L, h as T, F as d, f as y, j as b, L as x, g as N, a as A, e as O, b as B, d as I, i as S } from "./chunks/index-Bk1Elnrc.js";
 import { g as t } from "./chunks/globals-B4s2Vnzp.js";
-import { c as S, l as D, n as E, b as _, a as h, u as C } from "./chunks/confirm-C2_0K_cX.js";
-import { a as F } from "./chunks/api-BsR2dtOX.js";
-import { A as M, a as Y, L as j, N as v } from "./chunks/types-CDzRHMYF.js";
-import { u as Q, a as R } from "./chunks/useThemeSync-CUrReiLu.js";
-import { defaultAvailableLocales as q, defaultLocale as w, defaultMessages as z } from "./locales/index.js";
-import { u as J } from "./chunks/theme-CCYjaYW3.js";
-const r = s;
-function n(o) {
-  Object.entries(r).forEach(([a, e]) => {
+import { e as r } from "./chunks/api-CTlbc0CG.js";
+import { a as E } from "./chunks/api-CTlbc0CG.js";
+import { c as h, l as C, n as P, b as F, a as G, u as M } from "./chunks/confirm-C2_0K_cX.js";
+import { A as j, a as v, L as U, N as Q } from "./chunks/types-CDzRHMYF.js";
+import { u as V, a as k } from "./chunks/useThemeSync-CUrReiLu.js";
+import { defaultAvailableLocales as w, defaultLocale as z, defaultMessages as H } from "./locales/index.js";
+import { u as K } from "./chunks/theme-CCYjaYW3.js";
+const n = s;
+function i(o) {
+  Object.entries(n).forEach(([a, e]) => {
     o.component(a, e);
   });
 }
-function i(o) {
+function u(o) {
   o.use(t);
 }
-function l(o) {
-  n(o), i(o);
+function c(o) {
+  r(o), i(o), u(o);
 }
 export {
-  M as API_TIMEOUT,
-  g as BaseButton,
-  p as ConfirmDialog,
-  L as FloatingNotify,
-  T as IconToolTip,
-  Y as LOADING_CONTENT_DELAY,
-  j as LOADING_DELAY,
-  d as LanguageSelector,
-  b as LoadingOverlay,
-  x as ModalBase,
-  v as NOTIFY_DURATION,
-  y as PrimaryButton,
-  N as QuartenaryButton,
-  A as SecondaryButton,
-  O as TertiaryButton,
-  B as ThemeToggle,
-  F as api,
-  r as components,
-  S as confirm,
-  n as default,
-  q as defaultAvailableLocales,
-  w as defaultLocale,
-  z as defaultMessages,
+  j as API_TIMEOUT,
+  L as BaseButton,
+  T as ConfirmDialog,
+  d as FloatingNotify,
+  y as IconToolTip,
+  v as LOADING_CONTENT_DELAY,
+  U as LOADING_DELAY,
+  b as LanguageSelector,
+  x as LoadingOverlay,
+  N as ModalBase,
+  Q as NOTIFY_DURATION,
+  A as PrimaryButton,
+  O as QuartenaryButton,
+  B as SecondaryButton,
+  I as TertiaryButton,
+  S as ThemeToggle,
+  E as api,
+  n as components,
+  h as confirm,
+  i as default,
+  w as defaultAvailableLocales,
+  z as defaultLocale,
+  H as defaultMessages,
+  r as ensureVuetify,
   t as globalsPlugin,
-  D as loading,
-  E as notify,
-  i as registerLibPlugins,
-  l as setupLib,
-  _ as useConfirmStore,
-  Q as useGlobals,
-  h as useLoadingStore,
-  C as useNotifyStore,
-  J as useThemeStore,
-  R as useThemeSync
+  C as loading,
+  P as notify,
+  u as registerLibPlugins,
+  c as setupLib,
+  F as useConfirmStore,
+  V as useGlobals,
+  G as useLoadingStore,
+  M as useNotifyStore,
+  K as useThemeStore,
+  k as useThemeSync
 };
 //# sourceMappingURL=index.js.map

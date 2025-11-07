@@ -1,15 +1,13 @@
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
-import vuetify from "vite-plugin-vuetify";
 import { fileURLToPath, URL } from "node:url";
 import { resolve } from "path";
 
 export default defineConfig({
   plugins: [
     vue(),
-    vuetify({
-      autoImport: true,
-    }),
+    // vite-plugin-vuetify removido do build da lib
+    // O Vuetify deve ser fornecido pelo projeto host
   ],
   resolve: {
     alias: {

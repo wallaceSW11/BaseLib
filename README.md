@@ -84,10 +84,14 @@ export default defineConfig({
 
 ### 2. Register in main.ts
 
+**⚠️ IMPORTANT: Vuetify must be registered BEFORE BaseLib!**
+
 ```typescript
 import { createApp } from "vue";
 import { createPinia } from "pinia";
 import { createI18n } from "vue-i18n";
+import { createVuetify } from "vuetify";
+import "vuetify/styles";
 import { setupLib, defaultMessages, defaultLocale } from "@wallacesw11/base-lib";
 import App from "./App.vue";
 
@@ -95,6 +99,15 @@ const app = createApp(App);
 
 // Setup Pinia (required for stores)
 app.use(createPinia());
+
+// Setup Vuetify (MUST be before BaseLib)
+const vuetify = createVuetify({
+  // Your Vuetify configuration
+  theme: {
+    defaultTheme: "light",
+  },
+});
+app.use(vuetify);
 
 // Setup i18n (required for internationalization)
 const i18n = createI18n({

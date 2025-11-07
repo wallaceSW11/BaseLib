@@ -1,6 +1,7 @@
 import type { App } from "vue";
 import * as componentExports from "./components";
 import globalsPlugin from "./plugins";
+import { ensureVuetify } from "./utils/vuetify-check";
 
 export const components = componentExports;
 export * from "./components";
@@ -21,6 +22,9 @@ export function registerLibPlugins(app: App) {
 }
 
 export function setupLib(app: App) {
+  // Verifica se o Vuetify está registrado antes de configurar a lib
+  ensureVuetify(app);
+
   registerLibComponents(app);
   registerLibPlugins(app);
 }
