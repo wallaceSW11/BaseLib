@@ -1,9 +1,34 @@
 # @wallacesw11/base-lib
 
-[![npm version](https://img.shields.io/npm/v/@wallacesw11/base-lib.svg)](https://www.npmjs.com/package/@wallacesw11/base-lib)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![GitHub](https://img.shields.io/badge/Source-GitHub-blue.svg)](https://github.com/wallaceSW11/BaseLib)
 
 A comprehensive, production-ready Vue 3 component library with TypeScript, Vuetify, i18n, and state management. Built to centralize common patterns across multiple projects including modals, notifications, loading states, internationalization, theme switching, and white-label support.
+
+> **⚠️ Installation**: This library is distributed via GitHub, not npm. Install with:
+> ```bash
+> pnpm add github:wallacesw11/BaseLib#main
+> ```
+
+## 🚨 Common Issues & Quick Fixes
+
+| Problem | Solution |
+|---------|----------|
+| `Failed to resolve component: v-card-title` | Register Vuetify **BEFORE** `setupLib()` in `main.ts` |
+| Notifications not showing | Add `<FloatingNotify ref="notifyRef" />` to `App.vue` and register ref |
+| Theme not loading | Create `public/theme.json` and call `loadTheme()` |
+| API auth token not sent | Store token in localStorage: `localStorage.setItem('auth_token', token)` |
+| Console shows Vuetify warning | Check setup order: Pinia → Vuetify → i18n → BaseLib |
+
+## 📋 Quick Start Checklist
+
+Before integrating BaseLib into your project, ensure:
+
+- ✅ Pinia is installed and registered
+- ✅ Vuetify 3 is installed and registered **BEFORE** `setupLib()`
+- ✅ Vue-i18n is installed and configured
+- ✅ BaseLib styles are imported (`@wallacesw11/base-lib/style.css`)
+- ✅ Required components are added to `App.vue` (FloatingNotify, LoadingOverlay, ConfirmDialog)
 
 ## 🎮 Playground
 
@@ -94,7 +119,14 @@ export default defineConfig({
 
 ### 2. Register in main.ts
 
-**⚠️ IMPORTANT: Vuetify must be registered BEFORE BaseLib!**
+**⚠️ CRITICAL: Vuetify MUST be registered BEFORE BaseLib!**
+
+BaseLib automatically detects Vuetify during setup. If Vuetify is not properly registered before calling `setupLib()`, you will see errors like:
+- `Failed to resolve component: v-card-title`
+- `Failed to resolve component: v-btn`
+- Other Vuetify component resolution errors
+
+**Correct Setup Order:**
 
 ```typescript
 import { createApp } from "vue";
@@ -103,14 +135,15 @@ import { createI18n } from "vue-i18n";
 import { createVuetify } from "vuetify";
 import "vuetify/styles";
 import { setupLib, defaultMessages, defaultLocale } from "@wallacesw11/base-lib";
+import "@wallacesw11/base-lib/style.css"; // Import BaseLib styles
 import App from "./App.vue";
 
 const app = createApp(App);
 
-// Setup Pinia (required for stores)
+// 1. Setup Pinia (required for BaseLib stores)
 app.use(createPinia());
 
-// Setup Vuetify (MUST be before BaseLib)
+// 2. Setup Vuetify (MUST be before BaseLib!)
 const vuetify = createVuetify({
   // Your Vuetify configuration
   theme: {
@@ -119,7 +152,7 @@ const vuetify = createVuetify({
 });
 app.use(vuetify);
 
-// Setup i18n (required for internationalization)
+// 3. Setup i18n (required for internationalization)
 const i18n = createI18n({
   legacy: false,
   locale: defaultLocale,
@@ -128,11 +161,20 @@ const i18n = createI18n({
 });
 app.use(i18n);
 
-// Setup the library (registers components and plugins)
+// 4. Setup BaseLib (LAST - after Vuetify and i18n)
+// This will automatically detect Vuetify and register all components
 setupLib(app);
 
 app.mount("#app");
 ```
+
+**What happens during `setupLib(app)`:**
+- ✅ Detects if Vuetify is properly registered
+- ✅ Registers all BaseLib components globally
+- ✅ Registers global utilities ($notify, $loading, $confirm)
+- ❌ Shows a warning if Vuetify is not detected
+
+If you see `[BaseLib] ⚠️ Vuetify não detectado!` in the console, check your setup order.
 
 ### 3. Add Required Components to Your App
 
@@ -171,9 +213,11 @@ onMounted(() => {
 ### 4. Import Styles
 
 ```typescript
-// In your main.ts or main CSS file
-import "@wallacesw11/base-lib/dist/index.css";
+// In your main.ts (as shown in step 2)
+import "@wallacesw11/base-lib/style.css";
 ```
+
+> **Note**: The style import path is `style.css`, not `dist/index.css`.
 
 ## 📚 Usage
 
@@ -942,6 +986,50 @@ Tests cover:
 
 ## 🐛 Troubleshooting
 
+### ⚠️ Vuetify Component Resolution Errors
+
+**Problem**: You see errors like:
+```
+[Vue warn]: Failed to resolve component: v-card-title
+[Vue warn]: Failed to resolve component: v-btn
+[Vue warn]: Failed to resolve component: v-dialog
+```
+
+**Root Cause**: BaseLib components depend on Vuetify, but Vuetify was not registered before `setupLib()` was called.
+
+**Solution**: 
+1. Ensure Vuetify is registered **BEFORE** calling `setupLib()` in your `main.ts`:
+
+```typescript
+// ✅ Correct order
+app.use(createPinia());
+app.use(vuetify);        // Register Vuetify FIRST
+app.use(i18n);
+setupLib(app);           // BaseLib LAST
+
+// ❌ Wrong order
+app.use(createPinia());
+setupLib(app);           // BaseLib before Vuetify = ERROR
+app.use(vuetify);
+```
+
+2. Check console for BaseLib detection message:
+   - ✅ `[BaseLib] ✅ Vuetify detectado com sucesso` - OK
+   - ❌ `[BaseLib] ⚠️ Vuetify não detectado!` - Fix your setup order
+
+3. Verify Vuetify is properly imported:
+
+```typescript
+import { createVuetify } from 'vuetify'
+import 'vuetify/styles'
+
+const vuetify = createVuetify({
+  theme: {
+    defaultTheme: 'light',
+  },
+})
+```
+
 ### Notifications/Loading/Confirm not working
 
 **Problem**: Calling `notify.success()`, `loading.show()`, or `confirm.show()` doesn't display anything.
@@ -1124,6 +1212,108 @@ The playground is a full Vue 3 application where you can:
 - View component examples
 
 To add new examples to the playground, edit `playground/src/views/ComponentsView.vue`.
+
+## 🤖 For Developers & AI Assistants
+
+### Making Changes to BaseLib
+
+When modifying BaseLib, follow this workflow:
+
+1. **Make your changes** in the `src/` directory
+2. **Test in the playground**: `pnpm dev:playground`
+3. **Run tests**: `pnpm test`
+4. **Build the library**: `pnpm build`
+5. **Update version** in `package.json` (optional, for tracking)
+6. **Commit and push** to GitHub
+7. **Update in consuming projects**: 
+   ```bash
+   pnpm update @wallacesw11/base-lib
+   # or force reinstall
+   pnpm add github:wallacesw11/BaseLib#main --force
+   ```
+
+### Key Files to Know
+
+- **`src/index.ts`**: Main entry point, exports all public APIs
+- **`src/utils/vuetify-check.ts`**: Vuetify detection logic (CRITICAL for proper integration)
+- **`src/plugins/globals.ts`**: Global properties ($notify, $loading, $confirm)
+- **`package.json`**: Dependencies and exports configuration
+- **`vite.config.ts`**: Build configuration
+- **`tsconfig.json`**: TypeScript configuration
+
+### Common Development Tasks
+
+**Adding a new component:**
+```typescript
+// 1. Create component in src/components/
+// 2. Export it in src/components/index.ts
+export { default as MyNewComponent } from './MyNewComponent.vue'
+
+// 3. Add to playground for testing
+// 4. Build and test
+pnpm build
+```
+
+**Adding a new utility:**
+```typescript
+// 1. Create utility in src/utils/
+// 2. Export it in src/utils/index.ts
+export { myNewUtil } from './my-new-util'
+
+// 3. Add tests in tests/
+// 4. Update TypeScript types if needed
+```
+
+**Modifying Vuetify detection:**
+- Edit `src/utils/vuetify-check.ts`
+- The `ensureVuetify()` function checks multiple locations:
+  - `app._context.provides` (Symbol-based injection)
+  - `app.config.globalProperties` (global properties)
+  - `app._context.components` (registered components)
+- Always test with the playground after changes
+
+**Troubleshooting build issues:**
+```bash
+# Clean build artifacts
+rm -rf dist/
+
+# Reinstall dependencies
+rm -rf node_modules/ pnpm-lock.yaml
+pnpm install
+
+# Rebuild
+pnpm build
+```
+
+### Distribution Model
+
+⚠️ **Important**: This library is NOT published to npm. It's distributed via GitHub.
+
+**Why GitHub instead of npm?**
+- Easier for private/internal projects
+- No need for npm account management
+- Direct version control integration
+- Simpler CI/CD for mono-repo setups
+
+**How users install:**
+```bash
+pnpm add github:wallacesw11/BaseLib#main
+```
+
+**How to "publish" updates:**
+1. Commit and push to GitHub
+2. Users run `pnpm update @wallacesw11/base-lib` or reinstall
+
+### Testing Checklist Before Commit
+
+- [ ] All tests pass: `pnpm test`
+- [ ] No TypeScript errors: `pnpm build`
+- [ ] No lint errors: `pnpm lint`
+- [ ] Playground works: `pnpm dev:playground`
+- [ ] Vuetify detection works (check console for `✅ Vuetify detectado`)
+- [ ] All utilities work (notify, loading, confirm)
+- [ ] Theme switching works
+- [ ] Components render correctly with Vuetify styles
 
 ## 📄 License
 
