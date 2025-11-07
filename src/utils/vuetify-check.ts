@@ -8,17 +8,25 @@ import type { App } from "vue";
  */
 export function ensureVuetify(app: App): void {
   // Acessando propriedades internas do Vue para verificar se Vuetify está registrado
-  const vuetifyInstance = (app as any)._context?.provides?.vuetify;
+  const provides = (app as any)._context?.provides;
+  
+  // Verifica se há alguma referência ao Vuetify
+  const vuetifyInstance = provides?.vuetify || provides?.$vuetify;
+  
+  // Verifica também se há símbolos do Vuetify (às vezes é registrado como Symbol)
+  const hasVuetifySymbol = provides && Object.getOwnPropertySymbols(provides).some(
+    sym => sym.toString().includes('vuetify')
+  );
 
-  if (!vuetifyInstance) {
+  if (!vuetifyInstance && !hasVuetifySymbol) {
     console.warn(
       "[BaseLib] ⚠️ Vuetify não detectado!\n" +
-        "Certifique-se de chamar app.use(vuetify) ANTES de app.use(BaseLib).\n" +
+        "Certifique-se de chamar app.use(vuetify) ANTES de setupLib(app).\n" +
         "Exemplo:\n" +
         "  import { createVuetify } from 'vuetify'\n" +
         "  const vuetify = createVuetify()\n" +
         "  app.use(vuetify)\n" +
-        "  app.use(BaseLib)"
+        "  setupLib(app)"
     );
   }
 }

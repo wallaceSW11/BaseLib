@@ -1,39 +1,42 @@
 import f from "axios";
-import { l as i, n as s } from "./confirm-C2_0K_cX.js";
+import { l as u, n as s } from "./confirm-C2_0K_cX.js";
 import { A as h } from "./types-CDzRHMYF.js";
-function T(e) {
-  e._context?.provides?.vuetify || console.warn(
+function w(e) {
+  const o = e._context?.provides, a = o?.vuetify || o?.$vuetify, i = o && Object.getOwnPropertySymbols(o).some(
+    (c) => c.toString().includes("vuetify")
+  );
+  !a && !i && console.warn(
     `[BaseLib] ⚠️ Vuetify não detectado!
-Certifique-se de chamar app.use(vuetify) ANTES de app.use(BaseLib).
+Certifique-se de chamar app.use(vuetify) ANTES de setupLib(app).
 Exemplo:
   import { createVuetify } from 'vuetify'
   const vuetify = createVuetify()
   app.use(vuetify)
-  app.use(BaseLib)`
+  setupLib(app)`
   );
 }
-function b() {
+function O() {
   console.group("🔍 Vuetify Debug Info");
   const e = document.querySelectorAll(".v-overlay-container");
-  console.log(`📦 Overlay containers encontrados: ${e.length}`), e.forEach((o, t) => {
-    console.log(`  [${t}]`, o);
+  console.log(`📦 Overlay containers encontrados: ${e.length}`), e.forEach((t, n) => {
+    console.log(`  [${n}]`, t);
   });
-  const n = document.querySelectorAll(".v-application");
-  console.log(`🎨 v-application encontrados: ${n.length}`), n.forEach((o, t) => {
-    console.log(`  [${t}]`, o);
+  const o = document.querySelectorAll(".v-application");
+  console.log(`🎨 v-application encontrados: ${o.length}`), o.forEach((t, n) => {
+    console.log(`  [${n}]`, t);
   });
   const a = document.querySelectorAll(".v-overlay");
-  console.log(`📊 Overlays ativos: ${a.length}`), a.forEach((o, t) => {
-    const d = o.classList.contains("v-overlay--active");
-    console.log(`  [${t}] Active: ${d}`, o);
+  console.log(`📊 Overlays ativos: ${a.length}`), a.forEach((t, n) => {
+    const d = t.classList.contains("v-overlay--active");
+    console.log(`  [${n}] Active: ${d}`, t);
   });
-  const c = document.querySelectorAll(".v-menu");
-  console.log(`🍔 Menus encontrados: ${c.length}`), c.forEach((o, t) => {
-    console.log(`  [${t}]`, o);
+  const i = document.querySelectorAll(".v-menu");
+  console.log(`🍔 Menus encontrados: ${i.length}`), i.forEach((t, n) => {
+    console.log(`  [${n}]`, t);
   });
-  const u = document.querySelectorAll(".v-select");
-  console.log(`📋 v-select encontrados: ${u.length}`), u.forEach((o, t) => {
-    console.log(`  [${t}]`, o);
+  const c = document.querySelectorAll(".v-select");
+  console.log(`📋 v-select encontrados: ${c.length}`), c.forEach((t, n) => {
+    console.log(`  [${n}]`, t);
   }), e.length > 1 && console.warn(
     `⚠️ MÚLTIPLOS OVERLAY CONTAINERS DETECTADOS!
 Isso indica que pode haver múltiplas instâncias do Vuetify.
@@ -62,31 +65,31 @@ const l = f.create({
     "Content-Type": "application/json"
   }
 });
-function g(e) {
-  const n = localStorage.getItem(r.authTokenKey);
-  return n && e.headers && (e.headers.Authorization = `Bearer ${n}`), e;
-}
 function m(e) {
-  r.showLoadingOnMutations && e.method !== "get" && i.show("Processing...");
+  const o = localStorage.getItem(r.authTokenKey);
+  return o && e.headers && (e.headers.Authorization = `Bearer ${o}`), e;
+}
+function g(e) {
+  r.showLoadingOnMutations && e.method !== "get" && u.show("Processing...");
 }
 l.interceptors.request.use(
-  (e) => (g(e), m(e), e),
-  (e) => (i.hide(), Promise.reject(e))
+  (e) => (m(e), g(e), e),
+  (e) => (u.hide(), Promise.reject(e))
 );
-function v() {
+function y() {
   r.showErrorNotifications && s.error("Unauthorized", "Please log in again"), r.onUnauthorized && r.onUnauthorized();
 }
-function y(e) {
+function v(e) {
   if (!r.showErrorNotifications)
     return;
   if (!e.response) {
     e.request ? s.error("Network Error", "Unable to connect to the server") : s.error("Error", e.message);
     return;
   }
-  const n = e.response.status, a = e.response.data?.message || "An error occurred";
-  switch (n) {
+  const o = e.response.status, a = e.response.data?.message || "An error occurred";
+  switch (o) {
     case 401:
-      v();
+      y();
       break;
     case 403:
       s.error(
@@ -108,12 +111,12 @@ function y(e) {
   }
 }
 l.interceptors.response.use(
-  (e) => (i.hide(), e),
-  (e) => (i.hide(), y(e), Promise.reject(e))
+  (e) => (u.hide(), e),
+  (e) => (u.hide(), v(e), Promise.reject(e))
 );
 export {
   l as a,
-  b as d,
-  T as e
+  O as d,
+  w as e
 };
-//# sourceMappingURL=api-cUIETq7y.js.map
+//# sourceMappingURL=api-DF3QCKGF.js.map

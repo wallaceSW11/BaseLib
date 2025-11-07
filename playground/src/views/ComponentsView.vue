@@ -208,6 +208,7 @@
               v-model="showModal" 
               title="Add Observation" 
               max-width="600"
+              attach="body"
               :actions="modalActions"
             >
               <v-textarea
@@ -218,6 +219,20 @@
                 variant="outlined"
                 class="mt-2"
               />
+
+              <v-select 
+                v-model="selectedOption" 
+                :items="options"
+                item-title="text"
+                item-value="value"
+                label="Select an Option"
+                variant="outlined"
+                class="mt-2"
+              />
+              
+              <div v-if="selectedOption" class="mt-2 text-caption text-grey">
+                Selected: {{ selectedOption }}
+              </div>
             </ModalBase>
           </v-card-text>
         </v-card>
@@ -406,6 +421,14 @@ const testApiError = async () => {
   notify.error('API Error', 'Failed to retrieve data')
   apiResponse.value = { success: false, message: 'Server returned error 500' }
 }
+
+const options = ref([
+  { text: 'Option 1', value: 'option1' },
+  { text: 'Option 2', value: 'option2' },
+  { text: 'Option 3', value: 'option3' }
+])
+
+const selectedOption = ref<string | null>(null)
 </script>
 
 <style scoped>
