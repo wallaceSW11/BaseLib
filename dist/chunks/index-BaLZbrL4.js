@@ -183,7 +183,8 @@ const U = /* @__PURE__ */ x({
     persistent: { type: Boolean, default: !0 },
     actions: { default: () => [] },
     attach: { type: [String, Boolean], default: void 0 },
-    contentClass: { default: void 0 }
+    contentClass: { default: void 0 },
+    fullscreen: { type: Boolean, default: !1 }
   },
   emits: ["update:modelValue", "close"],
   setup(M, { emit: N }) {
@@ -205,6 +206,7 @@ const U = /* @__PURE__ */ x({
         persistent: M.persistent,
         attach: M.attach,
         "content-class": M.contentClass,
+        fullscreen: M.fullscreen,
         scrollable: ""
       }, {
         default: g(() => [
@@ -251,7 +253,7 @@ const U = /* @__PURE__ */ x({
           })
         ]),
         _: 3
-      }, 8, ["modelValue", "max-width", "persistent", "attach", "content-class"]);
+      }, 8, ["modelValue", "max-width", "persistent", "attach", "content-class", "fullscreen"]);
     };
   }
 }), $ = /* @__PURE__ */ x({
@@ -286,7 +288,8 @@ const U = /* @__PURE__ */ x({
       "onUpdate:modelValue": Y[0] || (Y[0] = (i) => j.value = i),
       title: D.value,
       message: w.value,
-      actions: L.value
+      actions: L.value,
+      "max-width": 600
     }, null, 8, ["modelValue", "title", "message", "actions"]));
   }
 }), q = /* @__PURE__ */ x({
@@ -538,4 +541,4 @@ export {
   AM as i,
   OM as j
 };
-//# sourceMappingURL=index-Cr1PhWmm.js.map
+//# sourceMappingURL=index-BaLZbrL4.js.map

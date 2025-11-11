@@ -22,6 +22,11 @@ interface Props {
      * Classes CSS customizadas para o conteúdo do dialog
      */
     contentClass?: string;
+    /**
+     * Se true, o dialog ocupará toda a tela
+     * @default false
+     */
+    fullscreen?: boolean;
 }
 declare var __VLS_22: {};
 type __VLS_Slots = {} & {
@@ -41,6 +46,7 @@ declare const __VLS_base: import("vue").DefineComponent<Props, {}, {}, {}, {}, i
     title: string;
     message: string;
     actions: ModalAction[];
+    fullscreen: boolean;
 }, {}, {}, {}, string, import("vue").ComponentProvideOptions, false, {}, any>;
 declare const __VLS_export: __VLS_WithSlots<typeof __VLS_base, __VLS_Slots>;
 declare const _default: typeof __VLS_export;
