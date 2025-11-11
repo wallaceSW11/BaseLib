@@ -9,11 +9,12 @@
     scrollable
   >
     <v-card>
-      <v-card-title v-if="title" class="text-h5">
-        {{ title }}
+      <v-card-title v-if="title" class="text-h5 d-flex align-center px-6 pt-6" style="word-break: break-word; white-space: normal;">
+        <v-icon v-if="titleIcon" class="mr-2">{{ titleIcon }}</v-icon>
+        <span>{{ title }}</span>
       </v-card-title>
 
-      <v-card-text>
+      <v-card-text class="px-6 pt-4">
         <slot>
           {{ message }}
         </slot>
@@ -70,6 +71,11 @@ interface Props {
    * @default false
    */
   fullscreen?: boolean
+  /**
+   * Ícone a ser exibido ao lado do título
+   * @default undefined
+   */
+  titleIcon?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -81,6 +87,7 @@ const props = withDefaults(defineProps<Props>(), {
   attach: undefined,
   contentClass: undefined,
   fullscreen: false,
+  titleIcon: undefined,
 })
 
 const emit = defineEmits<{

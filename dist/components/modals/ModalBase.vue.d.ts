@@ -27,10 +27,15 @@ interface Props {
      * @default false
      */
     fullscreen?: boolean;
+    /**
+     * Ícone a ser exibido ao lado do título
+     * @default undefined
+     */
+    titleIcon?: string;
 }
-declare var __VLS_22: {};
+declare var __VLS_27: {};
 type __VLS_Slots = {} & {
-    default?: (props: typeof __VLS_22) => any;
+    default?: (props: typeof __VLS_27) => any;
 };
 declare const __VLS_base: import("vue").DefineComponent<Props, {}, {}, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {
     close: () => any;
@@ -47,6 +52,7 @@ declare const __VLS_base: import("vue").DefineComponent<Props, {}, {}, {}, {}, i
     message: string;
     actions: ModalAction[];
     fullscreen: boolean;
+    titleIcon: string;
 }, {}, {}, {}, string, import("vue").ComponentProvideOptions, false, {}, any>;
 declare const __VLS_export: __VLS_WithSlots<typeof __VLS_base, __VLS_Slots>;
 declare const _default: typeof __VLS_export;

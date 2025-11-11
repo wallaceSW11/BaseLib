@@ -4,7 +4,8 @@
     :title="currentTitle" 
     :message="currentMessage" 
     :actions="dialogActions"
-    :max-width="600"
+    :min-width="600"
+    title-icon="mdi-help-circle"
   />
 </template>
 
