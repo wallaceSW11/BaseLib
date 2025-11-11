@@ -209,6 +209,7 @@
               title="Add Observation" 
               max-width="600"
               attach="body"
+              :fullscreen="isMobileOrTablet"
               :actions="modalActions"
             >
               <v-textarea
@@ -289,7 +290,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { useThemeStore } from '@/stores'
-import { useGlobals } from '@/composables'
+import { useGlobals, useBreakpoint } from '@/composables'
 import {
   BaseButton,
   PrimaryButton,
@@ -303,6 +304,7 @@ import {
 } from '@/components'
 
 const { notify, loading, confirm } = useGlobals()
+const { isMobileOrTablet } = useBreakpoint()
 const themeStore = useThemeStore()
 const showModal = ref(false)
 const observationText = ref('')

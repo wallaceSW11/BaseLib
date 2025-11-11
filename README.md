@@ -166,10 +166,12 @@ import { PrimaryButton, SecondaryButton, TertiaryButton, QuartenaryButton } from
 ```vue
 <script setup lang="ts">
 import { ref } from 'vue'
-import { ModalBase } from '@wallacesw11/base-lib'
+import { ModalBase, useBreakpoint } from '@wallacesw11/base-lib'
 import type { ModalAction } from '@wallacesw11/base-lib/components'
 
 const isOpen = ref(false)
+const { isMobileOrTablet } = useBreakpoint()
+
 const actions: ModalAction[] = [
   { text: 'Confirm', color: 'primary', handler: () => console.log('OK') },
   { text: 'Cancel', color: 'grey', handler: () => isOpen.value = false }
@@ -177,8 +179,38 @@ const actions: ModalAction[] = [
 </script>
 
 <template>
-  <ModalBase v-model="isOpen" title="Title" message="Message" :actions="actions" />
+  <ModalBase 
+    v-model="isOpen" 
+    title="Title" 
+    message="Message" 
+    :actions="actions"
+    :max-width="600"
+    :fullscreen="isMobileOrTablet"
+    attach="body"
+  />
 </template>
+```
+
+**Props**:
+- `modelValue` (boolean) - Controls modal visibility (v-model)
+- `title` (string) - Modal title
+- `message` (string) - Modal message content
+- `maxWidth` (string | number) - Maximum width (default: 500)
+- `persistent` (boolean) - Prevents closing on outside click (default: true)
+- `actions` (ModalAction[]) - Array of action buttons
+- `attach` (string | boolean | Element) - Where to attach modal (use 'body' to fix overlay issues)
+- `contentClass` (string) - Custom CSS classes for dialog content
+- `fullscreen` (boolean) - Makes modal fullscreen (default: false)
+
+**ModalAction Interface**:
+```typescript
+{
+  text: string
+  icon?: string
+  color?: string
+  variant?: 'text' | 'flat' | 'elevated' | 'tonal' | 'outlined' | 'plain'
+  handler?: () => void | Promise<void>
+}
 ```
 
 ### Theme Switching
@@ -199,6 +231,33 @@ themeStore.setTheme('dark')
   <ThemeToggle />
 </template>
 ```
+
+### Breakpoint Detection
+
+Detect screen size for responsive behavior using Vuetify's breakpoint system:
+
+```vue
+<script setup lang="ts">
+import { useBreakpoint } from '@wallacesw11/base-lib'
+
+const { isMobile, isMobileOrTablet } = useBreakpoint()
+
+// isMobile.value -> true on xs screens (< 600px)
+// isMobileOrTablet.value -> true on xs and sm screens (< 960px)
+</script>
+
+<template>
+  <div>
+    <p v-if="isMobile">Mobile view</p>
+    <p v-else-if="isMobileOrTablet">Tablet view</p>
+    <p v-else>Desktop view</p>
+  </div>
+</template>
+```
+
+**Composable Returns**:
+- `isMobile` - Returns `true` for extra small screens (xs, < 600px)
+- `isMobileOrTablet` - Returns `true` for small and down (sm and xs, < 960px)
 
 ### Internationalization
 

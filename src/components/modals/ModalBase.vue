@@ -5,6 +5,7 @@
     :persistent="persistent" 
     :attach="attach"
     :content-class="contentClass"
+    :fullscreen="fullscreen"
     scrollable
   >
     <v-card>
@@ -64,6 +65,11 @@ interface Props {
    * Classes CSS customizadas para o conteúdo do dialog
    */
   contentClass?: string
+  /**
+   * Se true, o dialog ocupará toda a tela
+   * @default false
+   */
+  fullscreen?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -74,6 +80,7 @@ const props = withDefaults(defineProps<Props>(), {
   actions: () => [],
   attach: undefined,
   contentClass: undefined,
+  fullscreen: false,
 })
 
 const emit = defineEmits<{

@@ -1,5 +1,11 @@
 <template>
-  <ModalBase v-model="isOpen" :title="currentTitle" :message="currentMessage" :actions="dialogActions" />
+  <ModalBase 
+    v-model="isOpen" 
+    :title="currentTitle" 
+    :message="currentMessage" 
+    :actions="dialogActions"
+    :max-width="600"
+  />
 </template>
 
 <script setup lang="ts">
