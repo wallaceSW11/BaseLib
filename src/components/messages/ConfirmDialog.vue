@@ -28,6 +28,7 @@ const dialogActions = computed<ModalAction[]>(() => [
     variant: 'elevated',
     handler: () => {
       if (resolvePromise) resolvePromise(true)
+      isOpen.value = false
     },
   },
   {
@@ -36,6 +37,7 @@ const dialogActions = computed<ModalAction[]>(() => [
     variant: 'text',
     handler: () => {
       if (resolvePromise) resolvePromise(false)
+      isOpen.value = false
     },
   },
 ])

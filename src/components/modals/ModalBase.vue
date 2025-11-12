@@ -3,7 +3,7 @@
     v-model="isOpen" 
     :max-width="maxWidth" 
     :persistent="persistent" 
-    :attach="attach"
+    attach="body"
     :content-class="contentClass"
     :fullscreen="fullscreen"
     scrollable
@@ -56,12 +56,6 @@ interface Props {
   maxWidth?: string | number
   persistent?: boolean
   actions?: ModalAction[]
-  /** 
-   * Elemento onde o dialog será anexado.
-   * Use 'body' para forçar anexação ao body (resolve problemas de overlay)
-   * @default undefined (padrão do Vuetify)
-   */
-  attach?: string | boolean | Element
   /**
    * Classes CSS customizadas para o conteúdo do dialog
    */
@@ -84,7 +78,6 @@ const props = withDefaults(defineProps<Props>(), {
   maxWidth: 500,
   persistent: true,
   actions: () => [],
-  attach: undefined,
   contentClass: undefined,
   fullscreen: false,
   titleIcon: undefined,
@@ -109,7 +102,5 @@ const handleAction = async (action: ModalAction) => {
   if (action.handler) {
     await action.handler()
   }
-  isOpen.value = false
-  emit('close')
 }
 </script>

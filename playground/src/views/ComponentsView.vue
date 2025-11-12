@@ -323,6 +323,7 @@ const modalActions: ModalAction[] = [
       if (observationText.value.trim()) {
         notify.success('Saved!', `Observation saved: ${observationText.value}`)
         observationText.value = ''
+        showModal.value = false
       } else {
         notify.warning('Empty Field', 'Please enter an observation')
       }
@@ -335,6 +336,7 @@ const modalActions: ModalAction[] = [
     icon: 'mdi-close',
     handler: () => {
       observationText.value = ''
+      showModal.value = false
       notify.info('Cancelled', 'No changes were made')
     }
   }

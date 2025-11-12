@@ -9,6 +9,14 @@ Vue 3 + Vuetify 3 component library with standardized UI patterns: notifications
 pnpm add github:wallacesw11/BaseLib#main
 ```
 
+## 🆕 Recent Changes
+
+**v1.1.0** - Modal improvements:
+- ✅ `attach="body"` is now default in ModalBase (no configuration needed)
+- ✅ Manual modal close control - handlers decide when to close
+- ✅ ConfirmDialog auto-closes on Yes/No clicks
+- ✅ Better support for multi-step workflows (e.g., "Save & Continue" vs "Save & Close")
+
 ## 🚨 Common Issues & Quick Fixes
 
 | Problem | Solution |
@@ -16,7 +24,6 @@ pnpm add github:wallacesw11/BaseLib#main
 | `Failed to resolve component: v-card-title` | Register Vuetify **BEFORE** `setupLib()` in `main.ts` |
 | Notifications not showing | Add `<FloatingNotify ref="notifyRef" />` to `App.vue` and register ref |
 | Theme not loading | Create `public/theme.json` and call `loadTheme()` |
-| v-select overlay not showing in modal | Add `attach` prop: `<ModalBase attach="body">` |
 | API auth token missing | Store in localStorage: `localStorage.setItem('auth_token', token)` |
 
 ## ✨ What's Included
@@ -130,9 +137,13 @@ import { confirm } from "@wallacesw11/base-lib";
 
 const confirmed = await confirm.show("Delete Item", "Are you sure?");
 if (confirmed) {
-  // User clicked "Yes"
+  // User clicked "Yes" - modal closes automatically
+} else {
+  // User clicked "No" - modal closes automatically
 }
 ```
+
+**Note**: ConfirmDialog automatically closes when user clicks Yes or No.
 
 ### Loading Overlay
 
@@ -173,8 +184,27 @@ const isOpen = ref(false)
 const { isMobileOrTablet } = useBreakpoint()
 
 const actions: ModalAction[] = [
-  { text: 'Confirm', color: 'primary', handler: () => console.log('OK') },
-  { text: 'Cancel', color: 'grey', handler: () => isOpen.value = false }
+  { 
+    text: 'Save & Continue', 
+    color: 'primary', 
+    handler: async () => {
+      await save()
+      clearFields() // Modal stays open
+    }
+  },
+  { 
+    text: 'Save & Close', 
+    color: 'primary', 
+    handler: async () => {
+      await save()
+      isOpen.value = false // Close modal
+    }
+  },
+  { 
+    text: 'Cancel', 
+    color: 'grey', 
+    handler: () => isOpen.value = false 
+  }
 ]
 </script>
 
@@ -186,7 +216,6 @@ const actions: ModalAction[] = [
     :actions="actions"
     :max-width="600"
     :fullscreen="isMobileOrTablet"
-    attach="body"
   />
 </template>
 ```
@@ -194,11 +223,11 @@ const actions: ModalAction[] = [
 **Props**:
 - `modelValue` (boolean) - Controls modal visibility (v-model)
 - `title` (string) - Modal title
+- `titleIcon` (string) - Icon to display next to title
 - `message` (string) - Modal message content
 - `maxWidth` (string | number) - Maximum width (default: 500)
 - `persistent` (boolean) - Prevents closing on outside click (default: true)
 - `actions` (ModalAction[]) - Array of action buttons
-- `attach` (string | boolean | Element) - Where to attach modal (use 'body' to fix overlay issues)
 - `contentClass` (string) - Custom CSS classes for dialog content
 - `fullscreen` (boolean) - Makes modal fullscreen (default: false)
 
@@ -212,6 +241,8 @@ const actions: ModalAction[] = [
   handler?: () => void | Promise<void>
 }
 ```
+
+**Important**: Modal does NOT close automatically when buttons are clicked. You must explicitly close it in the handler by setting `isOpen.value = false` if needed. This allows flexible workflows like "save and continue" vs "save and close".
 
 ### Theme Switching
 
