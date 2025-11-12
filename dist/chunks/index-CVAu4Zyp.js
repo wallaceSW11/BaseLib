@@ -182,7 +182,6 @@ const U = /* @__PURE__ */ x({
     maxWidth: { default: 500 },
     persistent: { type: Boolean, default: !0 },
     actions: { default: () => [] },
-    attach: { type: [String, Boolean], default: void 0 },
     contentClass: { default: void 0 },
     fullscreen: { type: Boolean, default: !1 },
     titleIcon: { default: void 0 }
@@ -196,7 +195,7 @@ const U = /* @__PURE__ */ x({
       j("update:modelValue", I);
     });
     const Y = async (I) => {
-      I.handler && await I.handler(), D.value = !1, j("close");
+      I.handler && await I.handler();
     };
     return (I, L) => {
       const O = T("v-icon"), u = T("v-card-title"), y = T("v-card-text"), i = T("v-spacer"), s = T("v-btn"), W = T("v-card-actions"), d = T("v-card"), o = T("v-dialog");
@@ -205,7 +204,7 @@ const U = /* @__PURE__ */ x({
         "onUpdate:modelValue": L[0] || (L[0] = (k) => D.value = k),
         "max-width": M.maxWidth,
         persistent: M.persistent,
-        attach: M.attach,
+        attach: "body",
         "content-class": M.contentClass,
         fullscreen: M.fullscreen,
         scrollable: ""
@@ -264,7 +263,7 @@ const U = /* @__PURE__ */ x({
           })
         ]),
         _: 3
-      }, 8, ["modelValue", "max-width", "persistent", "attach", "content-class", "fullscreen"]);
+      }, 8, ["modelValue", "max-width", "persistent", "content-class", "fullscreen"]);
     };
   }
 }), q = /* @__PURE__ */ x({
@@ -278,7 +277,7 @@ const U = /* @__PURE__ */ x({
         color: "primary",
         variant: "elevated",
         handler: () => {
-          I && I(!0);
+          I && I(!0), j.value = !1;
         }
       },
       {
@@ -286,7 +285,7 @@ const U = /* @__PURE__ */ x({
         color: "grey",
         variant: "text",
         handler: () => {
-          I && I(!1);
+          I && I(!1), j.value = !1;
         }
       }
     ]);
@@ -553,4 +552,4 @@ export {
   TM as i,
   iM as j
 };
-//# sourceMappingURL=index-B0VNxmIR.js.map
+//# sourceMappingURL=index-CVAu4Zyp.js.map
