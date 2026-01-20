@@ -257,6 +257,281 @@
       </v-col>
     </v-row>
 
+    <!-- Money Field Section -->
+    <v-row>
+      <v-col cols="12">
+        <v-card class="mb-6">
+          <v-card-title class="d-flex align-center">
+            <v-icon class="mr-2">mdi-currency-usd</v-icon>
+            Money Field
+          </v-card-title>
+          <v-card-text>
+            <p class="mb-3">Test the money input field with different currencies:</p>
+            
+            <v-row>
+              <v-col cols="12" md="6">
+                <MoneyField 
+                  v-model="moneyBRL" 
+                  label="Valor em Reais (BRL)"
+                  hint="Digite o valor em reais"
+                  persistent-hint
+                  currency="BRL"
+                  locale="pt-BR"
+                />
+                <p class="mt-2 text-caption">Valor: R$ {{ moneyBRL.toFixed(2) }}</p>
+              </v-col>
+
+              <v-col cols="12" md="6">
+                <MoneyField 
+                  v-model="moneyUSD" 
+                  label="Amount in Dollars (USD)"
+                  hint="Enter amount in dollars"
+                  persistent-hint
+                  currency="USD"
+                  locale="en-US"
+                />
+                <p class="mt-2 text-caption">Value: $ {{ moneyUSD.toFixed(2) }}</p>
+              </v-col>
+
+              <v-col cols="12" md="6">
+                <MoneyField 
+                  v-model="moneyEUR" 
+                  label="Montant en Euros (EUR)"
+                  currency="EUR"
+                  locale="fr-FR"
+                />
+                <p class="mt-2 text-caption">Valeur: € {{ moneyEUR.toFixed(2) }}</p>
+              </v-col>
+
+              <v-col cols="12" md="6">
+                <MoneyField 
+                  v-model="moneyDisabled" 
+                  label="Disabled Field"
+                  :disabled="true"
+                  currency="BRL"
+                />
+              </v-col>
+            </v-row>
+
+            <v-divider class="my-4" />
+
+            <div class="d-flex gap-2">
+              <v-btn color="primary" prepend-icon="mdi-plus" @click="addMoney">
+                Add R$ 100,00
+              </v-btn>
+              <v-btn color="secondary" prepend-icon="mdi-minus" @click="subtractMoney">
+                Subtract R$ 50,00
+              </v-btn>
+              <v-btn color="warning" prepend-icon="mdi-refresh" @click="resetMoney">
+                Reset All
+              </v-btn>
+            </div>
+
+            <v-alert v-if="totalMoney > 0" type="info" class="mt-4" density="compact">
+              Total (BRL): R$ {{ totalMoney.toFixed(2) }}
+            </v-alert>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+
+    <!-- Email Field Section -->
+    <v-row>
+      <v-col cols="12">
+        <v-card class="mb-6">
+          <v-card-title class="d-flex align-center">
+            <v-icon class="mr-2">mdi-email</v-icon>
+            Email Field
+          </v-card-title>
+          <v-card-text>
+            <p class="mb-3">Test the email input field with validation:</p>
+            
+            <v-row>
+              <v-col cols="12" md="6">
+                <EmailField 
+                  v-model="email1" 
+                  label="Email Address"
+                  hint="Enter a valid email address"
+                  persistent-hint
+                  required
+                  @valid="(isValid) => handleEmailValidation('email1', isValid)"
+                />
+                <v-chip 
+                  v-if="email1" 
+                  :color="isEmail1Valid ? 'success' : 'error'" 
+                  size="small" 
+                  class="mt-2"
+                >
+                  {{ isEmail1Valid ? 'Valid' : 'Invalid' }}
+                </v-chip>
+              </v-col>
+
+              <v-col cols="12" md="6">
+                <EmailField 
+                  v-model="email2" 
+                  label="Email with + sign (pre-filled)"
+                  hint="Supports email+tag@domain.com format"
+                  persistent-hint
+                  @valid="(isValid) => handleEmailValidation('email2', isValid)"
+                />
+                <p class="mt-2 text-caption">Value: {{ email2 }}</p>
+              </v-col>
+
+              <v-col cols="12" md="6">
+                <EmailField 
+                  v-model="email3" 
+                  label="Optional Email"
+                  hint="This field is optional"
+                  persistent-hint
+                  :required="false"
+                  @valid="(isValid) => handleEmailValidation('email3', isValid)"
+                />
+              </v-col>
+
+              <v-col cols="12" md="6">
+                <EmailField 
+                  label="Disabled Email"
+                  model-value="disabled@example.com"
+                  :disabled="true"
+                />
+              </v-col>
+            </v-row>
+
+            <v-divider class="my-4" />
+
+            <div class="d-flex gap-2">
+              <v-btn 
+                color="primary" 
+                prepend-icon="mdi-send" 
+                @click="testEmailSubmit"
+                :disabled="!email1 || !isEmail1Valid"
+              >
+                Test Submit
+              </v-btn>
+            </div>
+
+            <v-alert v-if="email1 && isEmail1Valid" type="success" class="mt-4" density="compact">
+              ✓ Email format is valid and ready to use
+            </v-alert>
+
+            <v-alert v-if="email1 && !isEmail1Valid" type="error" class="mt-4" density="compact">
+              ✗ Please enter a valid email address
+            </v-alert>
+
+            <div class="mt-4">
+              <p class="text-subtitle-2 mb-2">Valid email examples:</p>
+              <ul class="text-caption">
+                <li>user@example.com</li>
+                <li>user.name@example.com</li>
+                <li>user+tag@example.com</li>
+                <li>user_name@example.co.uk</li>
+                <li>user123@sub.example.com</li>
+              </ul>
+            </div>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+
+    <!-- Number Field Section -->
+    <v-row>
+      <v-col cols="12">
+        <v-card class="mb-6">
+          <v-card-title class="d-flex align-center">
+            <v-icon class="mr-2">mdi-numeric</v-icon>
+            Number Field
+          </v-card-title>
+          <v-card-text>
+            <p class="mb-3">Test the number input field with configurable decimal places:</p>
+            
+            <v-row>
+              <v-col cols="12" md="6">
+                <NumberField 
+                  v-model="numberInteger" 
+                  label="Integer (0 decimal places)"
+                  hint="Only whole numbers"
+                  persistent-hint
+                  :decimal-places="0"
+                />
+                <p class="mt-2 text-caption">Value: {{ numberInteger }}</p>
+              </v-col>
+
+              <v-col cols="12" md="6">
+                <NumberField 
+                  v-model="numberDecimal1" 
+                  label="Decimal (2 places)"
+                  hint="Two decimal places"
+                  persistent-hint
+                  :decimal-places="2"
+                />
+                <p class="mt-2 text-caption">Value: {{ numberDecimal1.toFixed(2) }}</p>
+              </v-col>
+
+              <v-col cols="12" md="6">
+                <NumberField 
+                  v-model="numberDecimal2" 
+                  label="Decimal (3 places)"
+                  hint="Three decimal places"
+                  persistent-hint
+                  :decimal-places="3"
+                />
+                <p class="mt-2 text-caption">Value: {{ numberDecimal2.toFixed(3) }}</p>
+              </v-col>
+
+              <v-col cols="12" md="6">
+                <NumberField 
+                  v-model="numberDecimal3" 
+                  label="Decimal (4 places)"
+                  hint="Four decimal places"
+                  persistent-hint
+                  :decimal-places="4"
+                />
+                <p class="mt-2 text-caption">Value: {{ numberDecimal3.toFixed(4) }}</p>
+              </v-col>
+
+              <v-col cols="12" md="6">
+                <NumberField 
+                  v-model="numberDisabled" 
+                  label="Disabled Field"
+                  :disabled="true"
+                  :decimal-places="0"
+                />
+              </v-col>
+
+              <v-col cols="12" md="6">
+                <NumberField 
+                  v-model="numberInteger" 
+                  label="No Negative Numbers"
+                  hint="Only positive values allowed"
+                  persistent-hint
+                  :decimal-places="0"
+                  :allow-negative="false"
+                />
+              </v-col>
+            </v-row>
+
+            <v-divider class="my-4" />
+
+            <div class="d-flex gap-2">
+              <v-btn color="primary" prepend-icon="mdi-plus" @click="incrementNumber">
+                Add 10
+              </v-btn>
+              <v-btn color="secondary" prepend-icon="mdi-minus" @click="decrementNumber">
+                Subtract 5
+              </v-btn>
+              <v-btn color="warning" prepend-icon="mdi-refresh" @click="resetNumbers">
+                Reset All
+              </v-btn>
+            </div>
+
+            <v-alert v-if="numberInteger > 0" type="info" class="mt-4" density="compact">
+              Integer value: {{ numberInteger.toLocaleString('pt-BR') }}
+            </v-alert>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+
     <!-- API Testing Section -->
     <v-row>
       <v-col cols="12">
@@ -300,6 +575,9 @@ import {
   IconToolTip,
   ModalBase,
   LanguageSelector,
+  MoneyField,
+  EmailField,
+  NumberField,
   type ModalAction
 } from '@/components'
 
@@ -310,6 +588,29 @@ const showModal = ref(false)
 const observationText = ref('')
 const lastConfirmResult = ref<boolean | null>(null)
 const apiResponse = ref<{ success: boolean; message: string } | null>(null)
+
+// Money Field states
+const moneyBRL = ref(1250.50)
+const moneyUSD = ref(500.00)
+const moneyEUR = ref(750.00)
+const moneyDisabled = ref(999.99)
+
+const totalMoney = computed(() => moneyBRL.value + moneyUSD.value + moneyEUR.value)
+
+// Email Field states
+const email1 = ref('')
+const email2 = ref('user+tag@example.com')
+const email3 = ref('')
+const isEmail1Valid = ref(false)
+const isEmail2Valid = ref(true)
+const isEmail3Valid = ref(false)
+
+// Number Field states
+const numberInteger = ref(1234)
+const numberDecimal1 = ref(123.45)
+const numberDecimal2 = ref(9.876)
+const numberDecimal3 = ref(1234.5678)
+const numberDisabled = ref(999)
 
 const currentTheme = computed(() => themeStore.currentMode)
 
@@ -433,6 +734,55 @@ const options = ref([
 ])
 
 const selectedOption = ref<string | null>(null)
+
+const addMoney = () => {
+  moneyBRL.value += 100
+  notify.success('Added!', 'R$ 100,00 added to BRL field')
+}
+
+const subtractMoney = () => {
+  moneyBRL.value = Math.max(0, moneyBRL.value - 50)
+  notify.info('Subtracted', 'R$ 50,00 subtracted from BRL field')
+}
+
+const resetMoney = () => {
+  moneyBRL.value = 0
+  moneyUSD.value = 0
+  moneyEUR.value = 0
+  notify.warning('Reset', 'All money fields reset to zero')
+}
+
+const handleEmailValidation = (fieldName: string, isValid: boolean) => {
+  if (fieldName === 'email1') isEmail1Valid.value = isValid
+  if (fieldName === 'email2') isEmail2Valid.value = isValid
+  if (fieldName === 'email3') isEmail3Valid.value = isValid
+}
+
+const testEmailSubmit = () => {
+  if (isEmail1Valid.value && email1.value) {
+    notify.success('Valid Email', `Email ${email1.value} is valid and ready to submit!`)
+  } else {
+    notify.error('Invalid Email', 'Please enter a valid email address')
+  }
+}
+
+const incrementNumber = () => {
+  numberInteger.value += 10
+  notify.info('Incremented', `Added 10 to integer field`)
+}
+
+const decrementNumber = () => {
+  numberInteger.value = Math.max(0, numberInteger.value - 5)
+  notify.info('Decremented', `Subtracted 5 from integer field`)
+}
+
+const resetNumbers = () => {
+  numberInteger.value = 0
+  numberDecimal1.value = 0
+  numberDecimal2.value = 0
+  numberDecimal3.value = 0
+  notify.warning('Reset', 'All number fields reset to zero')
+}
 </script>
 
 <style scoped>
