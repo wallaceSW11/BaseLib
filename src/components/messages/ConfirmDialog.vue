@@ -1,55 +1,31 @@
 <template>
-  <ModalBase 
-    v-model="isOpen" 
-    :title="currentTitle" 
-    :message="currentMessage" 
-    :actions="dialogActions"
-    :min-width="600"
-    title-icon="mdi-help-circle"
-  />
+  <CustomConfirmDialog ref="customDialogRef" />
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-import { useI18n } from 'vue-i18n'
-import ModalBase, { type ModalAction } from '../modals/ModalBase.vue'
+import { ref } from 'vue'
+import CustomConfirmDialog from './CustomConfirmDialog.vue'
 
-const { t } = useI18n()
+export interface ConfirmOptions {
+  persistent?: boolean
+  confirmText?: string
+  cancelText?: string
+  confirmColor?: string
+  cancelColor?: string
+}
 
-const isOpen = ref(false)
-const currentTitle = ref('')
-const currentMessage = ref('')
-let resolvePromise: ((value: boolean) => void) | null = null
+const customDialogRef = ref<InstanceType<typeof CustomConfirmDialog> | null>(null)
 
-const dialogActions = computed<ModalAction[]>(() => [
-  {
-    text: t('common.yes'),
-    color: 'primary',
-    variant: 'elevated',
-    handler: () => {
-      if (resolvePromise) resolvePromise(true)
-      isOpen.value = false
-    },
-  },
-  {
-    text: t('common.no'),
-    color: 'grey',
-    variant: 'text',
-    handler: () => {
-      if (resolvePromise) resolvePromise(false)
-      isOpen.value = false
-    },
-  },
-])
-
-const ConfirmDialog = (title: string, message: string): Promise<boolean> => {
-  currentTitle.value = title
-  currentMessage.value = message
-  isOpen.value = true
-
-  return new Promise((resolve) => {
-    resolvePromise = resolve
-  })
+const ConfirmDialog = (
+  title: string, 
+  message: string, 
+  options?: ConfirmOptions
+): Promise<boolean> => {
+  if (!customDialogRef.value) {
+    console.error('ConfirmDialog: customDialogRef is not available')
+    return Promise.resolve(false)
+  }
+  return customDialogRef.value.ConfirmDialog(title, message, options)
 }
 
 defineExpose({

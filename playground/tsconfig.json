@@ -1,12 +1,12 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
-    "composite": true,
     "baseUrl": ".",
+    "rootDir": "..",
     "paths": {
       "@/*": ["../src/*"]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.vue"],
+  "include": ["src/**/*.ts", "src/**/*.vue", "../src/**/*.ts", "../src/**/*.vue"],
   "exclude": ["node_modules", "dist"]
 }

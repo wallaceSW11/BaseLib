@@ -1,4 +1,4 @@
-import { g as l, g as o } from "../chunks/globals-B4s2Vnzp.js";
+import { g as l, g as o } from "../chunks/globals-BmnXyfJP.js";
 export {
   l as default,
   o as globalsPlugin

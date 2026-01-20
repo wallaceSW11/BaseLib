@@ -107,9 +107,17 @@
           </v-card-title>
           <v-card-text>
             <p class="mb-3">Test the confirmation dialog:</p>
-            <v-btn color="primary" prepend-icon="mdi-help-circle" @click="showConfirmDialog">
-              Show Confirmation
-            </v-btn>
+            <div class="d-flex flex-wrap gap-2">
+              <v-btn color="primary" prepend-icon="mdi-help-circle" @click="showConfirmDialog">
+                Show Confirmation
+              </v-btn>
+              <v-btn color="error" prepend-icon="mdi-delete" @click="showDeleteConfirm">
+                Delete Confirmation
+              </v-btn>
+              <v-btn color="info" prepend-icon="mdi-information" @click="showOkConfirm">
+                OK Dialog
+              </v-btn>
+            </div>
             <p v-if="lastConfirmResult !== null" class="mt-3">
               Last result: <v-chip :color="lastConfirmResult ? 'success' : 'error'">
                 {{ lastConfirmResult ? 'Confirmed' : 'Cancelled' }}
@@ -688,6 +696,42 @@ const showConfirmDialog = async () => {
   }
 }
 
+const showDeleteConfirm = async () => {
+  const confirmed = await confirm.show(
+    'Delete Item',
+    'This action cannot be undone. Are you sure?',
+    {
+      confirmText: 'Delete',
+      cancelText: 'Cancel',
+      confirmColor: 'error',
+      cancelColor: 'grey'
+    }
+  )
+  
+  lastConfirmResult.value = confirmed
+
+  if (confirmed) {
+    notify.success('Deleted', 'Item was deleted')
+  } else {
+    notify.info('Cancelled', 'Delete cancelled')
+  }
+}
+
+const showOkConfirm = async () => {
+  const confirmed = await confirm.show(
+    'Information',
+    'This is an informational message.',
+    {
+      confirmText: 'OK',
+      cancelText: 'Close',
+      confirmColor: 'primary',
+      cancelColor: 'grey'
+    }
+  )
+  
+  lastConfirmResult.value = confirmed
+}
+
 const openModal = () => {
   showModal.value = true
 }
@@ -695,9 +739,9 @@ const openModal = () => {
 const getContrastColor = (hexColor: string): string => {
   // Convert hex to RGB
   const hex = hexColor.replace('#', '')
-  const r = parseInt(hex.substr(0, 2), 16)
-  const g = parseInt(hex.substr(2, 2), 16)
-  const b = parseInt(hex.substr(4, 2), 16)
+  const r = parseInt(hex.substring(0, 2), 16)
+  const g = parseInt(hex.substring(2, 4), 16)
+  const b = parseInt(hex.substring(4, 6), 16)
   
   // Calculate luminance
   const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255

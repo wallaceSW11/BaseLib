@@ -2,6 +2,14 @@ import { defineStore } from "pinia";
 import type { ComponentPublicInstance } from "vue";
 import type { ConfirmComponentRef } from "./types";
 
+export interface ConfirmOptions {
+  persistent?: boolean
+  confirmText?: string
+  cancelText?: string
+  confirmColor?: string
+  cancelColor?: string
+}
+
 export const useConfirmStore = defineStore("confirm", {
   state: () => ({
     confirmRef: null as ComponentPublicInstance | null,
@@ -14,7 +22,11 @@ export const useConfirmStore = defineStore("confirm", {
 });
 
 export const confirm = {
-  show: (title: string, message: string): Promise<boolean> => {
+  show: (
+    title: string, 
+    message: string, 
+    options?: ConfirmOptions
+  ): Promise<boolean> => {
     const store = useConfirmStore();
     const confirmInstance = store.confirmRef as ConfirmComponentRef | null;
 
@@ -23,6 +35,6 @@ export const confirm = {
       return Promise.resolve(false);
     }
 
-    return confirmInstance.ConfirmDialog(title, message);
+    return confirmInstance.ConfirmDialog(title, message, options);
   },
 };

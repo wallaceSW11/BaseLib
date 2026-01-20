@@ -133,18 +133,62 @@ notify.info("Info", "Just so you know");
 
 ### Confirmation Dialog
 
+Custom confirmation dialog with full control over button text and colors:
+
 ```typescript
 import { confirm } from "@wallacesw11/base-lib";
 
-const confirmed = await confirm.show("Delete Item", "Are you sure?");
+// Default (Yes/No)
+const confirmed = await confirm.show("Confirm Action", "Are you sure?");
 if (confirmed) {
-  // User clicked "Yes" - modal closes automatically
+  // User clicked "Yes"
 } else {
-  // User clicked "No" - modal closes automatically
+  // User clicked "No"
+}
+
+// Custom buttons (Delete/Cancel)
+const deleted = await confirm.show(
+  "Delete Item", 
+  "This action cannot be undone.",
+  {
+    confirmText: "Delete",
+    cancelText: "Cancel",
+    confirmColor: "error",
+    cancelColor: "grey"
+  }
+);
+
+// OK dialog
+await confirm.show(
+  "Information",
+  "Operation completed successfully.",
+  {
+    confirmText: "OK",
+    cancelText: "Close"
+  }
+);
+```
+
+**Options**:
+```typescript
+interface ConfirmOptions {
+  persistent?: boolean        // Prevent closing on outside click (default: true)
+  confirmText?: string        // Confirm button text (default: "Yes")
+  cancelText?: string         // Cancel button text (default: "No")
+  confirmColor?: string       // Confirm button color (default: "primary")
+  cancelColor?: string        // Cancel button color (default: "grey")
 }
 ```
 
-**Note**: ConfirmDialog automatically closes when user clicks Yes or No.
+**Features**:
+- ✅ Custom overlay with proper z-index
+- ✅ Always respects screen width (16px margin on mobile)
+- ✅ Buttons wrap on small screens
+- ✅ Smooth animations
+- ✅ Fully customizable button text and colors
+- ✅ Auto-closes on button click
+
+**Note**: ConfirmDialog automatically closes when user clicks any button.
 
 ### Loading Overlay
 
