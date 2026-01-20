@@ -1,1 +1,0 @@
-{"version":3,"file":"useGlobals.d.ts","sourceRoot":"","sources":["../../src/composables/useGlobals.ts"],"names":[],"mappings":"AACA,OAAO,KAAK,EAAE,MAAM,IAAI,QAAQ,EAAE,MAAM,iBAAiB,CAAC;AAC1D,OAAO,KAAK,EAAE,OAAO,IAAI,SAAS,EAAE,MAAM,kBAAkB,CAAC;AAC7D,OAAO,KAAK,EAAE,OAAO,IAAI,SAAS,EAAE,MAAM,kBAAkB,CAAC;AAE7D,wBAAgB,UAAU;YAYH,OAAO,QAAQ;aACb,OAAO,SAAS;aAChB,OAAO,SAAS;EAExC"}
