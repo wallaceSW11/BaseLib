@@ -29,14 +29,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted } from 'vue'
 import {
   useNotifyStore,
   useLoadingStore,
   useConfirmStore
 } from '@/utils'
 import { useThemeSync } from '@/composables'
-import { useThemeStore } from '@/stores'
 import {
   FloatingNotify,
   LoadingOverlay,
@@ -49,10 +48,9 @@ const floatingNotifyRef = ref()
 const loadingOverlayRef = ref()
 const confirmDialogRef = ref()
 
-const themeStore = useThemeStore()
 const availableLocales = [
-  { code: 'pt-BR', name: 'Português (BR)', flag: '🇧🇷' },
-  { code: 'en-US', name: 'English (US)', flag: '🇺🇸' }
+  { code: 'pt-BR', name: 'Português (BR)', countryCode: 'BR' },
+  { code: 'en-US', name: 'English (US)', countryCode: 'US' }
 ]
 
 useThemeSync()
