@@ -3,11 +3,11 @@ import { ref as a } from "vue";
 const i = r("notify", () => {
   const o = a(null);
   return {
-    setNotifyRef: (e) => {
-      o.value = e;
+    setNotifyRef: (t) => {
+      o.value = t;
     },
-    notify: (e, t, c) => {
-      o.value && o.value.show(e, t, c);
+    notify: (t, e, c) => {
+      o.value && o.value.show(t, e, c);
     }
   };
 }), g = {
@@ -26,11 +26,11 @@ const i = r("notify", () => {
 }, f = r("loading", () => {
   const o = a(null);
   return {
-    setLoadingRef: (t) => {
-      o.value = t;
+    setLoadingRef: (e) => {
+      o.value = e;
     },
-    showLoading: (t) => {
-      o.value && o.value.show(t);
+    showLoading: (e) => {
+      o.value && o.value.show(e);
     },
     hideLoading: () => {
       o.value && o.value.hide();
@@ -53,9 +53,9 @@ const i = r("notify", () => {
     }
   }
 }), h = {
-  show: (o, n) => {
+  show: (o, n, s) => {
     const e = l().confirmRef;
-    return !e || !e.ConfirmDialog ? (console.error("ConfirmDialog component is not registered"), Promise.resolve(!1)) : e.ConfirmDialog(o, n);
+    return !e || !e.ConfirmDialog ? (console.error("ConfirmDialog component is not registered"), Promise.resolve(!1)) : e.ConfirmDialog(o, n, s);
   }
 };
 export {
@@ -66,4 +66,4 @@ export {
   g as n,
   i as u
 };
-//# sourceMappingURL=confirm-C2_0K_cX.js.map
+//# sourceMappingURL=confirm-bR2JIO3i.js.map

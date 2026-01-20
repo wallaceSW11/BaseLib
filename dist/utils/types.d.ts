@@ -6,8 +6,15 @@ export interface LoadingComponentRef {
     show: (message?: string) => void;
     hide: () => void;
 }
+export interface ConfirmOptions {
+    persistent?: boolean;
+    confirmText?: string;
+    cancelText?: string;
+    confirmColor?: string;
+    cancelColor?: string;
+}
 export interface ConfirmComponentRef {
-    ConfirmDialog: (title: string, message: string) => Promise<boolean>;
+    ConfirmDialog: (title: string, message: string, options?: ConfirmOptions) => Promise<boolean>;
 }
 export type NotifyType = 'success' | 'error' | 'warning' | 'info';
 export interface NotifyOptions {

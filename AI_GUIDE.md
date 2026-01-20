@@ -75,13 +75,35 @@ notify.info('Title', 'Message')
 ```typescript
 import { confirm } from '@wallacesw11/base-lib'
 
+// Default (Yes/No)
 const result = await confirm.show('Title', 'Message')
 if (result) {
   // User clicked Yes
 } else {
   // User clicked No
 }
+
+// Custom buttons
+const deleted = await confirm.show(
+  'Delete Item',
+  'This cannot be undone.',
+  {
+    confirmText: 'Delete',
+    cancelText: 'Cancel',
+    confirmColor: 'error'
+  }
+)
+
+// OK dialog
+await confirm.show('Info', 'Done!', {
+  confirmText: 'OK',
+  cancelText: 'Close'
+})
 ```
+
+**Options**: `persistent`, `confirmText`, `cancelText`, `confirmColor`, `cancelColor`
+
+**Features**: Custom overlay, responsive (16px margin), button wrapping, smooth animations
 
 ### Loading
 
@@ -423,7 +445,13 @@ import { confirm, notify, loading, api } from '@wallacesw11/base-lib'
 async function deleteItem(id: number) {
   const confirmed = await confirm.show(
     'Delete Item',
-    'This action cannot be undone. Continue?'
+    'This action cannot be undone. Continue?',
+    {
+      confirmText: 'Delete',
+      cancelText: 'Cancel',
+      confirmColor: 'error',
+      cancelColor: 'grey'
+    }
   )
   
   if (!confirmed) return

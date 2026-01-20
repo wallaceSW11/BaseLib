@@ -107,9 +107,17 @@
           </v-card-title>
           <v-card-text>
             <p class="mb-3">Test the confirmation dialog:</p>
-            <v-btn color="primary" prepend-icon="mdi-help-circle" @click="showConfirmDialog">
-              Show Confirmation
-            </v-btn>
+            <div class="d-flex flex-wrap gap-2">
+              <v-btn color="primary" prepend-icon="mdi-help-circle" @click="showConfirmDialog">
+                Show Confirmation
+              </v-btn>
+              <v-btn color="error" prepend-icon="mdi-delete" @click="showDeleteConfirm">
+                Delete Confirmation
+              </v-btn>
+              <v-btn color="info" prepend-icon="mdi-information" @click="showOkConfirm">
+                OK Dialog
+              </v-btn>
+            </div>
             <p v-if="lastConfirmResult !== null" class="mt-3">
               Last result: <v-chip :color="lastConfirmResult ? 'success' : 'error'">
                 {{ lastConfirmResult ? 'Confirmed' : 'Cancelled' }}
@@ -686,6 +694,42 @@ const showConfirmDialog = async () => {
   } else {
     notify.info('Cancelled', 'You chose No')
   }
+}
+
+const showDeleteConfirm = async () => {
+  const confirmed = await confirm.show(
+    'Delete Item',
+    'This action cannot be undone. Are you sure?',
+    {
+      confirmText: 'Delete',
+      cancelText: 'Cancel',
+      confirmColor: 'error',
+      cancelColor: 'grey'
+    }
+  )
+  
+  lastConfirmResult.value = confirmed
+
+  if (confirmed) {
+    notify.success('Deleted', 'Item was deleted')
+  } else {
+    notify.info('Cancelled', 'Delete cancelled')
+  }
+}
+
+const showOkConfirm = async () => {
+  const confirmed = await confirm.show(
+    'Information',
+    'This is an informational message.',
+    {
+      confirmText: 'OK',
+      cancelText: 'Close',
+      confirmColor: 'primary',
+      cancelColor: 'grey'
+    }
+  )
+  
+  lastConfirmResult.value = confirmed
 }
 
 const openModal = () => {
