@@ -36,6 +36,7 @@ pnpm add github:wallacesw11/BaseLib#main
 - **🎯 Buttons** - PrimaryButton, SecondaryButton, TertiaryButton, QuartenaryButton
 - **⏳ Loading Overlay** - Full-screen loading state
 - **🔧 API Client** - Axios with auth and interceptors
+- **💰 Input Fields** - MoneyField, EmailField, NumberField with validation and formatting
 
 ## 📦 Installation
 
@@ -262,6 +263,141 @@ themeStore.setTheme('dark')
   <ThemeToggle />
 </template>
 ```
+
+### Input Fields
+
+#### MoneyField
+
+Currency input with automatic formatting and mask:
+
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+import { MoneyField } from '@wallacesw11/base-lib'
+
+const amount = ref(1250.50)
+</script>
+
+<template>
+  <MoneyField 
+    v-model="amount" 
+    label="Amount"
+    hint="Enter amount"
+    currency="BRL"
+    locale="pt-BR"
+  />
+</template>
+```
+
+**Props**:
+- `modelValue` (number) - The numeric value
+- `label` (string) - Field label
+- `rules` (array) - Validation rules
+- `disabled` (boolean) - Disabled state
+- `hint` (string) - Helper text
+- `persistentHint` (boolean) - Always show hint
+- `currency` (string) - Currency code (BRL, USD, EUR, GBP) - default: 'BRL'
+- `locale` (string) - Locale for formatting - default: 'pt-BR'
+
+**Features**:
+- Automatic currency formatting (R$ 1.250,50)
+- Mask stays visible when typing/deleting
+- Supports negative values
+- Backspace removes digits one by one
+- Cursor always at the end
+
+#### EmailField
+
+Email input with validation and visual feedback:
+
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+import { EmailField } from '@wallacesw11/base-lib'
+
+const email = ref('')
+const isValid = ref(false)
+</script>
+
+<template>
+  <EmailField 
+    v-model="email" 
+    label="Email Address"
+    hint="Enter your email"
+    required
+    @valid="(valid) => isValid = valid"
+  />
+</template>
+```
+
+**Props**:
+- `modelValue` (string) - The email value
+- `label` (string) - Field label - default: 'Email'
+- `rules` (array) - Additional validation rules
+- `disabled` (boolean) - Disabled state
+- `hint` (string) - Helper text
+- `persistentHint` (boolean) - Always show hint
+- `required` (boolean) - Required field - default: false
+- `validateOnBlur` (boolean) - Validate on blur only - default: true
+
+**Events**:
+- `@valid` - Emits boolean when validation state changes
+
+**Features**:
+- Email regex validation (supports + sign: user+tag@example.com)
+- Icon changes color when valid (green check)
+- Real-time or on-blur validation
+- Autocomplete and inputmode optimized
+
+#### NumberField
+
+Numeric input with configurable decimal places and formatting:
+
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+import { NumberField } from '@wallacesw11/base-lib'
+
+const quantity = ref(1234)
+const price = ref(99.99)
+</script>
+
+<template>
+  <!-- Integer -->
+  <NumberField 
+    v-model="quantity" 
+    label="Quantity"
+    :decimal-places="0"
+  />
+  
+  <!-- Decimal -->
+  <NumberField 
+    v-model="price" 
+    label="Price"
+    :decimal-places="2"
+  />
+</template>
+```
+
+**Props**:
+- `modelValue` (number) - The numeric value
+- `label` (string) - Field label
+- `rules` (array) - Validation rules
+- `disabled` (boolean) - Disabled state
+- `hint` (string) - Helper text
+- `persistentHint` (boolean) - Always show hint
+- `decimalPlaces` (number) - Number of decimal places - default: 0
+- `locale` (string) - Locale for formatting - default: 'pt-BR'
+- `allowNegative` (boolean) - Allow negative values - default: true
+
+**Features**:
+- No spinner arrows (clean input)
+- Automatic thousand separators (1.234)
+- Configurable decimal places (0 to 4+)
+- Mask stays visible when typing/deleting
+- Backspace removes digits one by one
+- Right-aligned text
+- Supports negative values (optional)
 
 ### Breakpoint Detection
 

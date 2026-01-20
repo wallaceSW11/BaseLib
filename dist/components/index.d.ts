@@ -10,4 +10,7 @@ export { default as FloatingNotify } from "./messages/FloatingNotify.vue";
 export { default as LoadingOverlay } from "./LoadingOverlay.vue";
 export { default as ThemeToggle } from "./ThemeToggle.vue";
 export { default as LanguageSelector } from "./LanguageSelector.vue";
+export { default as MoneyField } from "./inputs/MoneyField.vue";
+export { default as EmailField } from "./inputs/EmailField.vue";
+export { default as NumberField } from "./inputs/NumberField.vue";
 //# sourceMappingURL=index.d.ts.map
