@@ -6,8 +6,9 @@
         v-bind="props"
         :icon="icon"
         variant="text"
+        @click="emit('click', $event)"
       />
-      <v-icon v-else v-bind="props">{{ icon }}</v-icon>
+      <v-icon v-else v-bind="props" @click="emit('click', $event)">{{ icon }}</v-icon>
     </template>
   </v-tooltip>
 </template>
@@ -23,4 +24,8 @@ withDefaults(defineProps<Props>(), {
   text: undefined,
   asButton: false,
 })
+
+const emit = defineEmits<{
+  click: [event: MouseEvent]
+}>()
 </script>
