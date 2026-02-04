@@ -3,7 +3,11 @@ interface Props {
     text?: string;
     asButton?: boolean;
 }
-declare const __VLS_export: import("vue").DefineComponent<Props, {}, {}, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {}, string, import("vue").PublicProps, Readonly<Props> & Readonly<{}>, {
+declare const __VLS_export: import("vue").DefineComponent<Props, {}, {}, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {
+    click: (event: MouseEvent) => any;
+}, string, import("vue").PublicProps, Readonly<Props> & Readonly<{
+    onClick?: ((event: MouseEvent) => any) | undefined;
+}>, {
     text: string;
     asButton: boolean;
 }, {}, {}, {}, string, import("vue").ComponentProvideOptions, false, {}, any>;
