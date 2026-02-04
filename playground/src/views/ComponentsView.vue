@@ -220,7 +220,8 @@
               :fullscreen="isMobileOrTablet"
               :actions="modalActions"
             >
-              <v-textarea
+              <v-form ref="myform">
+                <v-textarea
                 v-model="observationText"
                 label="Observation"
                 placeholder="Enter your observation here..."
@@ -238,6 +239,7 @@
                 variant="outlined"
                 class="mt-2"
               />
+              </v-form>
               
               <div v-if="selectedOption" class="mt-2 text-caption text-grey">
                 Selected: {{ selectedOption }}
@@ -629,13 +631,10 @@ const modalActions: ModalAction[] = [
     variant: 'elevated',
     icon: 'mdi-content-save',
     handler: () => {
-      if (observationText.value.trim()) {
-        notify.success('Saved!', `Observation saved: ${observationText.value}`)
-        observationText.value = ''
-        showModal.value = false
-      } else {
-        notify.warning('Empty Field', 'Please enter an observation')
-      }
+      console.log('Salvando...', observationText.value, selectedOption.value)
+      notify.success('Saved!', 'Observation saved successfully')
+      // Quem usa o modal decide se fecha ou não
+      // showModal.value = false
     }
   },
   {
@@ -645,7 +644,8 @@ const modalActions: ModalAction[] = [
     icon: 'mdi-close',
     handler: () => {
       observationText.value = ''
-      showModal.value = false
+      selectedOption.value = null
+      showModal.value = false // Aqui sim, fecha o modal
       notify.info('Cancelled', 'No changes were made')
     }
   }
