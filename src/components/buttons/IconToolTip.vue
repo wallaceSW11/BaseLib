@@ -1,14 +1,21 @@
 <template>
   <v-tooltip :text="text" location="top" :disabled="!text">
-    <template v-slot:activator="{ props }">
+    <template v-slot:activator="{ props: tooltipProps }">
       <v-btn
         v-if="asButton"
-        v-bind="props"
+        v-bind="tooltipProps"
         :icon="icon"
         variant="text"
-        @click="emit('click', $event)"
+        @click.stop="handleClick"
       />
-      <v-icon v-else v-bind="props" @click="emit('click', $event)">{{ icon }}</v-icon>
+      <v-icon 
+        v-else 
+        v-bind="tooltipProps" 
+        style="cursor: pointer;"
+        @click.stop="handleClick"
+      >
+        {{ icon }}
+      </v-icon>
     </template>
   </v-tooltip>
 </template>
@@ -28,4 +35,8 @@ withDefaults(defineProps<Props>(), {
 const emit = defineEmits<{
   click: [event: MouseEvent]
 }>()
+
+const handleClick = (event: MouseEvent) => {
+  emit('click', event)
+}
 </script>

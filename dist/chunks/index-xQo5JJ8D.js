@@ -1,7 +1,7 @@
-import { defineComponent as a, resolveComponent as G, createBlock as C, openBlock as L, mergeProps as W, withCtx as Y, renderSlot as E, createTextVNode as s, toDisplayString as l, ref as k, watch as P, createVNode as b, createCommentVNode as d, createElementVNode as p, createElementBlock as U, Fragment as F, renderList as n, Teleport as J, Transition as X, withModifiers as K, unref as B, computed as R, createSlots as h, nextTick as m } from "vue";
-import { useI18n as H } from "vue-i18n";
+import { defineComponent as a, resolveComponent as G, createBlock as C, openBlock as L, mergeProps as W, withCtx as Y, renderSlot as E, createTextVNode as s, toDisplayString as l, withModifiers as h, ref as k, watch as P, createVNode as b, createCommentVNode as d, createElementVNode as p, createElementBlock as U, Fragment as F, renderList as v, Teleport as K, Transition as X, unref as B, computed as R, createSlots as H, nextTick as m } from "vue";
+import { useI18n as n } from "vue-i18n";
 import { N as V, a as r } from "./types-CDzRHMYF.js";
-import { u as v } from "./theme-CCYjaYW3.js";
+import { u as J } from "./theme-CCYjaYW3.js";
 import { defaultAvailableLocales as f } from "../locales/index.js";
 const e = /* @__PURE__ */ a({
   __name: "BaseButton",
@@ -18,10 +18,10 @@ const e = /* @__PURE__ */ a({
   },
   emits: ["click"],
   setup(N, { emit: D }) {
-    const M = D, g = (j) => {
-      M("click", j);
+    const M = D, g = (I) => {
+      M("click", I);
     };
-    return (j, T) => {
+    return (I, T) => {
       const y = G("v-btn");
       return L(), C(y, W({
         "prepend-icon": N.prependIcon,
@@ -33,9 +33,9 @@ const e = /* @__PURE__ */ a({
         size: N.size,
         block: N.block,
         class: "text-none"
-      }, j.$attrs, { onClick: g }), {
+      }, I.$attrs, { onClick: g }), {
         default: Y(() => [
-          E(j.$slots, "default", {}, () => [
+          E(I.$slots, "default", {}, () => [
             s(l(N.text), 1)
           ])
         ]),
@@ -152,21 +152,24 @@ const e = /* @__PURE__ */ a({
   },
   emits: ["click"],
   setup(N, { emit: D }) {
-    const M = D;
-    return (g, j) => {
-      const T = G("v-btn"), y = G("v-icon"), O = G("v-tooltip");
-      return L(), C(O, {
+    const M = D, g = (I) => {
+      M("click", I);
+    };
+    return (I, T) => {
+      const y = G("v-btn"), O = G("v-icon"), x = G("v-tooltip");
+      return L(), C(x, {
         text: N.text,
         location: "top",
         disabled: !N.text
       }, {
-        activator: Y(({ props: x }) => [
-          N.asButton ? (L(), C(T, W({ key: 0 }, x, {
+        activator: Y(({ props: S }) => [
+          N.asButton ? (L(), C(y, W({ key: 0 }, S, {
             icon: N.icon,
             variant: "text",
-            onClick: j[0] || (j[0] = (S) => M("click", S))
-          }), null, 16, ["icon"])) : (L(), C(y, W({ key: 1 }, x, {
-            onClick: j[1] || (j[1] = (S) => M("click", S))
+            onClick: h(g, ["stop"])
+          }), null, 16, ["icon"])) : (L(), C(O, W({ key: 1 }, S, {
+            style: { cursor: "pointer" },
+            onClick: h(g, ["stop"])
           }), {
             default: Y(() => [
               s(l(N.icon), 1)
@@ -193,20 +196,20 @@ const e = /* @__PURE__ */ a({
   },
   emits: ["update:modelValue", "close"],
   setup(N, { emit: D }) {
-    const M = N, g = D, j = k(M.modelValue);
+    const M = N, g = D, I = k(M.modelValue);
     P(() => M.modelValue, (y) => {
-      j.value = y;
-    }), P(j, (y) => {
+      I.value = y;
+    }), P(I, (y) => {
       g("update:modelValue", y);
     });
     const T = async (y) => {
       y.handler && await y.handler();
     };
     return (y, O) => {
-      const x = G("v-icon"), S = G("v-card-title"), i = G("v-card-text"), I = G("v-spacer"), z = G("v-btn"), A = G("v-card-actions"), c = G("v-card"), Z = G("v-dialog");
+      const x = G("v-icon"), S = G("v-card-title"), i = G("v-card-text"), j = G("v-spacer"), z = G("v-btn"), A = G("v-card-actions"), c = G("v-card"), Z = G("v-dialog");
       return L(), C(Z, {
-        modelValue: j.value,
-        "onUpdate:modelValue": O[0] || (O[0] = (u) => j.value = u),
+        modelValue: I.value,
+        "onUpdate:modelValue": O[0] || (O[0] = (u) => I.value = u),
         "max-width": N.maxWidth,
         persistent: N.persistent,
         attach: "body",
@@ -247,8 +250,8 @@ const e = /* @__PURE__ */ a({
               }),
               b(A, null, {
                 default: Y(() => [
-                  b(I),
-                  (L(!0), U(F, null, n(N.actions, (u, w) => (L(), C(z, {
+                  b(j),
+                  (L(!0), U(F, null, v(N.actions, (u, w) => (L(), C(z, {
                     key: w,
                     color: u.color || "primary",
                     "prepend-icon": u.icon,
@@ -282,32 +285,32 @@ const e = /* @__PURE__ */ a({
 }, TM = { class: "custom-dialog-actions" }, wM = /* @__PURE__ */ a({
   __name: "CustomConfirmDialog",
   setup(N, { expose: D }) {
-    const { t: M } = H(), g = k(!1), j = k(""), T = k(""), y = k(!0), O = k(""), x = k(""), S = k("primary"), i = k("grey");
-    let I = null;
+    const { t: M } = n(), g = k(!1), I = k(""), T = k(""), y = k(!0), O = k(""), x = k(""), S = k("primary"), i = k("grey");
+    let j = null;
     const z = () => {
-      I && I(!0), g.value = !1;
+      j && j(!0), g.value = !1;
     }, A = () => {
-      I && I(!1), g.value = !1;
+      j && j(!1), g.value = !1;
     }, c = () => {
       y.value || A();
     };
     return D({
-      ConfirmDialog: (u, w, Q) => (j.value = u, T.value = w, y.value = Q?.persistent ?? !0, O.value = Q?.confirmText || M("common.yes"), x.value = Q?.cancelText || M("common.no"), S.value = Q?.confirmColor || "primary", i.value = Q?.cancelColor || "grey", g.value = !0, new Promise((o) => {
-        I = o;
+      ConfirmDialog: (u, w, Q) => (I.value = u, T.value = w, y.value = Q?.persistent ?? !0, O.value = Q?.confirmText || M("common.yes"), x.value = Q?.cancelText || M("common.no"), S.value = Q?.confirmColor || "primary", i.value = Q?.cancelColor || "grey", g.value = !0, new Promise((o) => {
+        j = o;
       }))
     }), (u, w) => {
       const Q = G("v-icon"), o = G("v-btn");
-      return L(), C(J, { to: "body" }, [
+      return L(), C(K, { to: "body" }, [
         b(X, { name: "dialog-fade" }, {
           default: Y(() => [
             g.value ? (L(), U("div", {
               key: 0,
               class: "custom-dialog-overlay",
-              onClick: K(c, ["self"])
+              onClick: h(c, ["self"])
             }, [
               p("div", jM, [
                 p("div", IM, [
-                  j.value ? (L(), U("div", DM, [
+                  I.value ? (L(), U("div", DM, [
                     b(Q, {
                       class: "custom-dialog-icon",
                       color: "warning",
@@ -318,7 +321,7 @@ const e = /* @__PURE__ */ a({
                       ])]),
                       _: 1
                     }),
-                    p("h2", gM, l(j.value), 1)
+                    p("h2", gM, l(I.value), 1)
                   ])) : d("", !0),
                   T.value ? (L(), U("div", AM, [
                     p("p", null, l(T.value), 1)
@@ -358,16 +361,16 @@ const e = /* @__PURE__ */ a({
   }
 }), t = (N, D) => {
   const M = N.__vccOpts || N;
-  for (const [g, j] of D)
-    M[g] = j;
+  for (const [g, I] of D)
+    M[g] = I;
   return M;
 }, YM = /* @__PURE__ */ t(wM, [["__scopeId", "data-v-120c0a93"]]), yM = /* @__PURE__ */ a({
   __name: "ConfirmDialog",
   setup(N, { expose: D }) {
     const M = k(null);
     return D({
-      ConfirmDialog: (j, T, y) => M.value ? M.value.ConfirmDialog(j, T, y) : (console.error("ConfirmDialog: customDialogRef is not available"), Promise.resolve(!1))
-    }), (j, T) => (L(), C(YM, {
+      ConfirmDialog: (I, T, y) => M.value ? M.value.ConfirmDialog(I, T, y) : (console.error("ConfirmDialog: customDialogRef is not available"), Promise.resolve(!1))
+    }), (I, T) => (L(), C(YM, {
       ref_key: "customDialogRef",
       ref: M
     }, null, 512));
@@ -375,10 +378,10 @@ const e = /* @__PURE__ */ a({
 }), iM = /* @__PURE__ */ a({
   __name: "FloatingNotify",
   setup(N, { expose: D }) {
-    const M = k(!1), g = k("info"), j = k(""), T = k("");
+    const M = k(!1), g = k("info"), I = k(""), T = k("");
     let y = null;
-    const O = (S, i, I = "") => {
-      y && clearTimeout(y), g.value = S, j.value = i, T.value = I, M.value = !0, y = setTimeout(() => {
+    const O = (S, i, j = "") => {
+      y && clearTimeout(y), g.value = S, I.value = i, T.value = j, M.value = !0, y = setTimeout(() => {
         x();
       }, V);
     }, x = () => {
@@ -388,13 +391,13 @@ const e = /* @__PURE__ */ a({
       show: O,
       hide: x
     }), (S, i) => {
-      const I = G("v-alert");
+      const j = G("v-alert");
       return L(), C(X, { name: "slide-fade" }, {
         default: Y(() => [
-          M.value ? (L(), C(I, {
+          M.value ? (L(), C(j, {
             key: 0,
             type: g.value,
-            title: j.value,
+            title: I.value,
             text: T.value,
             class: "floating-notify",
             closable: "",
@@ -415,22 +418,22 @@ const e = /* @__PURE__ */ a({
 }, xM = ["src"], GM = { class: "loading-text mt-3" }, CM = /* @__PURE__ */ a({
   __name: "LoadingOverlay",
   setup(N, { expose: D }) {
-    const { t: M } = H(), g = v(), j = k(!1), T = k(!1), y = k(M("common.loading"));
+    const { t: M } = n(), g = J(), I = k(!1), T = k(!1), y = k(M("common.loading"));
     let O = null;
     return D({
       show: (i) => {
-        y.value = i || M("common.loading"), j.value = !0, O = setTimeout(() => {
+        y.value = i || M("common.loading"), I.value = !0, O = setTimeout(() => {
           T.value = !0;
         }, r);
       },
       hide: () => {
-        O && (clearTimeout(O), O = null), T.value = !1, j.value = !1;
+        O && (clearTimeout(O), O = null), T.value = !1, I.value = !1;
       }
-    }), (i, I) => {
+    }), (i, j) => {
       const z = G("v-progress-circular");
       return L(), C(X, { name: "fade" }, {
         default: Y(() => [
-          j.value ? (L(), U("div", OM, [
+          I.value ? (L(), U("div", OM, [
             b(X, { name: "fade-delayed" }, {
               default: Y(() => [
                 T.value ? (L(), U("div", uM, [
@@ -460,19 +463,19 @@ const e = /* @__PURE__ */ a({
 }), cM = /* @__PURE__ */ t(CM, [["__scopeId", "data-v-7fa56b75"]]), SM = /* @__PURE__ */ a({
   __name: "ThemeToggle",
   setup(N) {
-    const D = v(), M = R(
+    const D = J(), M = R(
       () => D.isDark ? "mdi-weather-sunny" : "mdi-weather-night"
     ), g = R(
       () => D.isDark ? "Switch to Light Mode" : "Switch to Dark Mode"
     );
-    function j() {
+    function I() {
       D.toggleTheme();
     }
     return (T, y) => {
       const O = G("v-icon"), x = G("v-btn");
       return L(), C(x, {
         icon: M.value,
-        onClick: j,
+        onClick: I,
         title: g.value,
         variant: "text"
       }, {
@@ -494,16 +497,16 @@ function kM(N) {
   return D && N.some((M) => M.code === D) ? D : null;
 }
 function ZM(N) {
-  const { locale: D, t: M } = H(), g = N || f, j = R({
+  const { locale: D, t: M } = n(), g = N || f, I = R({
     get: () => D.value,
     set: (x) => {
       D.value = x, localStorage.setItem("locale", x);
     }
   }), T = g, y = (x) => {
-    j.value = x;
+    I.value = x;
   }, O = kM(g);
   return O && (D.value = O), {
-    locale: j,
+    locale: I,
     locales: T,
     setLocale: y,
     t: M
@@ -515,13 +518,13 @@ const QM = /* @__PURE__ */ JSON.parse(`[{"code":"AED","name":"UAE Dirham","count
     availableLocales: {}
   },
   setup(N) {
-    const D = N, { locale: M, locales: g, setLocale: j } = ZM(D.availableLocales), T = R(() => g.find((S) => S.code === M.value) || g[0]), y = R(() => T.value.name), O = R(() => x(T.value.countryCode));
+    const D = N, { locale: M, locales: g, setLocale: I } = ZM(D.availableLocales), T = R(() => g.find((S) => S.code === M.value) || g[0]), y = R(() => T.value.name), O = R(() => x(T.value.countryCode));
     function x(S) {
-      const i = QM.find((I) => I.countryCode === S);
+      const i = QM.find((j) => j.countryCode === S);
       return i ? i.flag : void 0;
     }
     return (S, i) => {
-      const I = G("v-icon"), z = G("v-btn"), A = G("v-list-item-title"), c = G("v-list-item"), Z = G("v-list"), u = G("v-menu");
+      const j = G("v-icon"), z = G("v-btn"), A = G("v-list-item-title"), c = G("v-list-item"), Z = G("v-list"), u = G("v-menu");
       return L(), C(u, null, {
         activator: Y(({ props: w }) => [
           b(z, W(w, {
@@ -534,7 +537,7 @@ const QM = /* @__PURE__ */ JSON.parse(`[{"code":"AED","name":"UAE Dirham","count
                 src: O.value,
                 alt: y.value,
                 style: { width: "24px", height: "24px", "border-radius": "4px" }
-              }, null, 8, aM)) : (L(), C(I, { key: 1 }, {
+              }, null, 8, aM)) : (L(), C(j, { key: 1 }, {
                 default: Y(() => [...i[0] || (i[0] = [
                   s("mdi-earth", -1)
                 ])]),
@@ -547,10 +550,10 @@ const QM = /* @__PURE__ */ JSON.parse(`[{"code":"AED","name":"UAE Dirham","count
         default: Y(() => [
           b(Z, null, {
             default: Y(() => [
-              (L(!0), U(F, null, n(B(g), (w) => (L(), C(c, {
+              (L(!0), U(F, null, v(B(g), (w) => (L(), C(c, {
                 key: w.code,
                 active: B(M) === w.code,
-                onClick: (Q) => B(j)(w.code)
+                onClick: (Q) => B(I)(w.code)
               }, {
                 prepend: Y(() => [
                   x(w.countryCode) ? (L(), U("img", {
@@ -558,7 +561,7 @@ const QM = /* @__PURE__ */ JSON.parse(`[{"code":"AED","name":"UAE Dirham","count
                     src: x(w.countryCode),
                     alt: w.name,
                     style: { width: "24px", height: "24px", "border-radius": "4px", "margin-right": "12px" }
-                  }, null, 8, bM)) : (L(), C(I, {
+                  }, null, 8, bM)) : (L(), C(j, {
                     key: 1,
                     style: { "margin-right": "12px" }
                   }, {
@@ -600,7 +603,7 @@ const QM = /* @__PURE__ */ JSON.parse(`[{"code":"AED","name":"UAE Dirham","count
   },
   emits: ["update:modelValue"],
   setup(N, { emit: D }) {
-    const M = N, g = D, j = k("R$ 0,00");
+    const M = N, g = D, I = k("R$ 0,00");
     function T(z) {
       const A = Math.abs(z), c = y(), Z = A.toLocaleString(M.locale, {
         minimumFractionDigits: 2,
@@ -625,7 +628,7 @@ const QM = /* @__PURE__ */ JSON.parse(`[{"code":"AED","name":"UAE Dirham","count
     function x(z) {
       const A = O(z);
       g("update:modelValue", A), m(() => {
-        j.value = T(A);
+        I.value = T(A);
       });
     }
     function S(z) {
@@ -640,15 +643,15 @@ const QM = /* @__PURE__ */ JSON.parse(`[{"code":"AED","name":"UAE Dirham","count
         A.setSelectionRange(A.value.length, A.value.length);
       });
     }
-    function I(z) {
-      const A = z.target, c = j.value;
+    function j(z) {
+      const A = z.target, c = I.value;
       if (["Backspace", "Delete", "ArrowLeft", "ArrowRight", "Tab", "Home", "End"].includes(z.key) || z.ctrlKey || z.metaKey) {
         if (z.key === "Backspace" || z.key === "Delete") {
           z.preventDefault();
           const u = c.replace(/\D/g, "");
           if (u.length > 0) {
             const w = u.slice(0, -1), Q = w ? parseInt(w) / 100 : 0;
-            g("update:modelValue", Q), j.value = T(Q), m(() => {
+            g("update:modelValue", Q), I.value = T(Q), m(() => {
               A.setSelectionRange(A.value.length, A.value.length);
             });
           }
@@ -661,10 +664,10 @@ const QM = /* @__PURE__ */ JSON.parse(`[{"code":"AED","name":"UAE Dirham","count
       }
       if (z.preventDefault(), z.key === "-") {
         const w = -O(c);
-        g("update:modelValue", w), j.value = T(w);
+        g("update:modelValue", w), I.value = T(w);
       } else {
         const w = c.replace(/\D/g, "") + z.key, Q = parseInt(w) / 100;
-        g("update:modelValue", Q), j.value = T(Q);
+        g("update:modelValue", Q), I.value = T(Q);
       }
       m(() => {
         A.setSelectionRange(A.value.length, A.value.length);
@@ -674,13 +677,13 @@ const QM = /* @__PURE__ */ JSON.parse(`[{"code":"AED","name":"UAE Dirham","count
       () => M.modelValue,
       (z) => {
         const A = z ?? 0;
-        j.value = T(A);
+        I.value = T(A);
       },
       { immediate: !0 }
     ), (z, A) => {
       const c = G("v-text-field");
       return L(), C(c, {
-        "model-value": j.value,
+        "model-value": I.value,
         "onUpdate:modelValue": x,
         label: N.label,
         rules: N.rules,
@@ -689,9 +692,9 @@ const QM = /* @__PURE__ */ JSON.parse(`[{"code":"AED","name":"UAE Dirham","count
         "persistent-hint": N.persistentHint,
         onFocus: S,
         onClick: i,
-        onKeydown: I,
+        onKeydown: j,
         inputmode: "decimal"
-      }, h({ _: 2 }, [
+      }, H({ _: 2 }, [
         z.$slots.prepend ? {
           name: "prepend",
           fn: Y(() => [
@@ -723,29 +726,29 @@ const QM = /* @__PURE__ */ JSON.parse(`[{"code":"AED","name":"UAE Dirham","count
   },
   emits: ["update:modelValue", "valid"],
   setup(N, { emit: D }) {
-    const M = N, g = D, j = k(M.modelValue), T = k(!1), y = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/;
+    const M = N, g = D, I = k(M.modelValue), T = k(!1), y = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/;
     function O(i) {
       return !i && !M.required ? !0 : !i && M.required ? "Email is required" : y.test(i) ? !0 : "Invalid email format";
     }
     const x = R(() => [O, ...M.rules]);
     function S() {
-      const i = O(j.value);
+      const i = O(I.value);
       T.value = i === !0, g("valid", T.value);
     }
-    return P(j, (i) => {
+    return P(I, (i) => {
       if (g("update:modelValue", i), !M.validateOnBlur) {
-        const I = O(i);
-        T.value = I === !0, g("valid", T.value);
+        const j = O(i);
+        T.value = j === !0, g("valid", T.value);
       }
     }), P(() => M.modelValue, (i) => {
-      j.value = i || "";
-      const I = O(j.value);
-      T.value = I === !0;
-    }), (i, I) => {
+      I.value = i || "";
+      const j = O(I.value);
+      T.value = j === !0;
+    }), (i, j) => {
       const z = G("v-icon"), A = G("v-text-field");
       return L(), C(A, {
-        modelValue: j.value,
-        "onUpdate:modelValue": I[0] || (I[0] = (c) => j.value = c),
+        modelValue: I.value,
+        "onUpdate:modelValue": j[0] || (j[0] = (c) => I.value = c),
         label: N.label,
         rules: x.value,
         disabled: N.disabled,
@@ -756,7 +759,7 @@ const QM = /* @__PURE__ */ JSON.parse(`[{"code":"AED","name":"UAE Dirham","count
         inputmode: "email",
         autocomplete: "email",
         onBlur: S
-      }, h({ _: 2 }, [
+      }, H({ _: 2 }, [
         i.$slots.prepend ? {
           name: "prepend",
           fn: Y(() => [
@@ -803,16 +806,16 @@ const QM = /* @__PURE__ */ JSON.parse(`[{"code":"AED","name":"UAE Dirham","count
   },
   emits: ["update:modelValue"],
   setup(N, { emit: D }) {
-    const M = N, g = D, j = k("0");
-    function T(I) {
-      const A = Math.abs(I).toLocaleString(M.locale, {
+    const M = N, g = D, I = k("0");
+    function T(j) {
+      const A = Math.abs(j).toLocaleString(M.locale, {
         minimumFractionDigits: M.decimalPlaces,
         maximumFractionDigits: M.decimalPlaces
       });
-      return I < 0 ? "-" + A : A;
+      return j < 0 ? "-" + A : A;
     }
-    function y(I) {
-      const z = I.includes("-"), A = I.replace(/\D/g, "");
+    function y(j) {
+      const z = j.includes("-"), A = j.replace(/\D/g, "");
       if (!A) return 0;
       let c;
       if (M.decimalPlaces === 0)
@@ -824,29 +827,29 @@ const QM = /* @__PURE__ */ JSON.parse(`[{"code":"AED","name":"UAE Dirham","count
       const Z = Number(c.toFixed(M.decimalPlaces));
       return z && M.allowNegative ? -Z : Z;
     }
-    function O(I) {
-      const z = y(I);
+    function O(j) {
+      const z = y(j);
       g("update:modelValue", z), m(() => {
-        j.value = T(z);
+        I.value = T(z);
       });
     }
-    function x(I) {
-      const z = I.target;
+    function x(j) {
+      const z = j.target;
       m(() => {
         z.setSelectionRange(z.value.length, z.value.length);
       });
     }
-    function S(I) {
-      const z = I.target;
+    function S(j) {
+      const z = j.target;
       m(() => {
         z.setSelectionRange(z.value.length, z.value.length);
       });
     }
-    function i(I) {
-      const z = I.target, A = j.value;
-      if (["Backspace", "Delete", "ArrowLeft", "ArrowRight", "Tab", "Home", "End"].includes(I.key) || I.ctrlKey || I.metaKey) {
-        if (I.key === "Backspace" || I.key === "Delete") {
-          I.preventDefault();
+    function i(j) {
+      const z = j.target, A = I.value;
+      if (["Backspace", "Delete", "ArrowLeft", "ArrowRight", "Tab", "Home", "End"].includes(j.key) || j.ctrlKey || j.metaKey) {
+        if (j.key === "Backspace" || j.key === "Delete") {
+          j.preventDefault();
           const Z = A.replace(/\D/g, "");
           if (Z.length > 0) {
             const u = Z.slice(0, -1);
@@ -859,22 +862,22 @@ const QM = /* @__PURE__ */ JSON.parse(`[{"code":"AED","name":"UAE Dirham","count
               const o = Math.pow(10, M.decimalPlaces);
               w = parseInt(u) / o;
             }
-            A.startsWith("-") && M.allowNegative && w !== 0 && (w = -w), g("update:modelValue", w), j.value = T(w), m(() => {
+            A.startsWith("-") && M.allowNegative && w !== 0 && (w = -w), g("update:modelValue", w), I.value = T(w), m(() => {
               z.setSelectionRange(z.value.length, z.value.length);
             });
           }
         }
         return;
       }
-      if (!/[\d-]/.test(I.key)) {
-        I.preventDefault();
+      if (!/[\d-]/.test(j.key)) {
+        j.preventDefault();
         return;
       }
-      if (I.preventDefault(), I.key === "-" && M.allowNegative) {
+      if (j.preventDefault(), j.key === "-" && M.allowNegative) {
         const u = -y(A);
-        g("update:modelValue", u), j.value = T(u);
-      } else if (I.key !== "-") {
-        const u = A.replace(/\D/g, "") + I.key;
+        g("update:modelValue", u), I.value = T(u);
+      } else if (j.key !== "-") {
+        const u = A.replace(/\D/g, "") + j.key;
         let w;
         if (M.decimalPlaces === 0)
           w = parseInt(u);
@@ -882,7 +885,7 @@ const QM = /* @__PURE__ */ JSON.parse(`[{"code":"AED","name":"UAE Dirham","count
           const o = Math.pow(10, M.decimalPlaces);
           w = parseInt(u) / o;
         }
-        A.startsWith("-") && M.allowNegative && (w = -w), g("update:modelValue", w), j.value = T(w);
+        A.startsWith("-") && M.allowNegative && (w = -w), g("update:modelValue", w), I.value = T(w);
       }
       m(() => {
         z.setSelectionRange(z.value.length, z.value.length);
@@ -890,15 +893,15 @@ const QM = /* @__PURE__ */ JSON.parse(`[{"code":"AED","name":"UAE Dirham","count
     }
     return P(
       () => M.modelValue,
-      (I) => {
-        const z = I ?? 0;
-        j.value = T(z);
+      (j) => {
+        const z = j ?? 0;
+        I.value = T(z);
       },
       { immediate: !0 }
-    ), (I, z) => {
+    ), (j, z) => {
       const A = G("v-text-field");
       return L(), C(A, {
-        "model-value": j.value,
+        "model-value": I.value,
         "onUpdate:modelValue": O,
         label: N.label,
         rules: N.rules,
@@ -909,18 +912,18 @@ const QM = /* @__PURE__ */ JSON.parse(`[{"code":"AED","name":"UAE Dirham","count
         onClick: S,
         onKeydown: i,
         inputmode: "decimal"
-      }, h({ _: 2 }, [
-        I.$slots.prepend ? {
+      }, H({ _: 2 }, [
+        j.$slots.prepend ? {
           name: "prepend",
           fn: Y(() => [
-            E(I.$slots, "prepend", {}, void 0, !0)
+            E(j.$slots, "prepend", {}, void 0, !0)
           ]),
           key: "0"
         } : void 0,
-        I.$slots.append ? {
+        j.$slots.append ? {
           name: "append",
           fn: Y(() => [
-            E(I.$slots, "append", {}, void 0, !0)
+            E(j.$slots, "append", {}, void 0, !0)
           ]),
           key: "1"
         } : void 0
@@ -963,4 +966,4 @@ export {
   lM as j,
   mM as k
 };
-//# sourceMappingURL=index-DZLLGCLi.js.map
+//# sourceMappingURL=index-xQo5JJ8D.js.map
