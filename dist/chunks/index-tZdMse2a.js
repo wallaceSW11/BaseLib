@@ -207,7 +207,8 @@ const e = /* @__PURE__ */ a({
         attach: "body",
         "content-class": N.contentClass,
         fullscreen: N.fullscreen,
-        scrollable: ""
+        scrollable: "",
+        "z-index": 2400
       }, {
         default: y(() => [
           b(c, null, {
@@ -247,6 +248,7 @@ const e = /* @__PURE__ */ a({
                     color: u.color || "primary",
                     "prepend-icon": u.icon,
                     variant: u.variant || "text",
+                    type: "button",
                     class: "text-none",
                     onClick: (Q) => T(u)
                   }, {
@@ -956,4 +958,4 @@ export {
   sM as j,
   UM as k
 };
-//# sourceMappingURL=index-CH_pD51I.js.map
+//# sourceMappingURL=index-tZdMse2a.js.map
