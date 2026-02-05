@@ -187,12 +187,16 @@
             Icon Tooltips
           </v-card-title>
           <v-card-text>
+            <p class="mb-3">Hover over icons to see tooltips. Click the delete button to test the confirm dialog:</p>
             <div class="d-flex align-center gap-4">
               <IconToolTip icon="mdi-help-circle" text="Help tooltip" />
               <IconToolTip icon="mdi-information" text="Information tooltip" />
-              <IconToolTip icon="mdi-delete" text="Delete action" as-button />
-              <IconToolTip icon="mdi-pencil" text="Edit action" :as-button="true" />
+              <IconToolTip icon="mdi-delete" text="Delete item" as-button @click="handleDeleteClick" />
+              <IconToolTip icon="mdi-pencil" text="Edit action" :as-button="true" @click="handleEditClick" />
             </div>
+            <p v-if="lastIconAction" class="mt-3 text-caption">
+              Last action: <v-chip size="small" color="info">{{ lastIconAction }}</v-chip>
+            </p>
           </v-card-text>
         </v-card>
       </v-col>
@@ -220,7 +224,8 @@
               :fullscreen="isMobileOrTablet"
               :actions="modalActions"
             >
-              <v-textarea
+              <v-form ref="myform">
+                <v-textarea
                 v-model="observationText"
                 label="Observation"
                 placeholder="Enter your observation here..."
@@ -238,6 +243,7 @@
                 variant="outlined"
                 class="mt-2"
               />
+              </v-form>
               
               <div v-if="selectedOption" class="mt-2 text-caption text-grey">
                 Selected: {{ selectedOption }}
@@ -596,6 +602,7 @@ const showModal = ref(false)
 const observationText = ref('')
 const lastConfirmResult = ref<boolean | null>(null)
 const apiResponse = ref<{ success: boolean; message: string } | null>(null)
+const lastIconAction = ref<string | null>(null)
 
 // Money Field states
 const moneyBRL = ref(1250.50)
@@ -629,13 +636,10 @@ const modalActions: ModalAction[] = [
     variant: 'elevated',
     icon: 'mdi-content-save',
     handler: () => {
-      if (observationText.value.trim()) {
-        notify.success('Saved!', `Observation saved: ${observationText.value}`)
-        observationText.value = ''
-        showModal.value = false
-      } else {
-        notify.warning('Empty Field', 'Please enter an observation')
-      }
+      console.log('Salvando...', observationText.value, selectedOption.value)
+      notify.success('Saved!', 'Observation saved successfully')
+      // Quem usa o modal decide se fecha ou não
+      // showModal.value = false
     }
   },
   {
@@ -645,7 +649,8 @@ const modalActions: ModalAction[] = [
     icon: 'mdi-close',
     handler: () => {
       observationText.value = ''
-      showModal.value = false
+      selectedOption.value = null
+      showModal.value = false // Aqui sim, fecha o modal
       notify.info('Cancelled', 'No changes were made')
     }
   }
@@ -826,6 +831,34 @@ const resetNumbers = () => {
   numberDecimal2.value = 0
   numberDecimal3.value = 0
   notify.warning('Reset', 'All number fields reset to zero')
+}
+
+const handleDeleteClick = async () => {
+  lastIconAction.value = 'Delete clicked'
+  
+  const confirmed = await confirm.show(
+    'Confirm Delete',
+    'Are you sure you want to delete this item? This action cannot be undone.',
+    {
+      confirmText: 'Yes, Delete',
+      cancelText: 'No, Cancel',
+      confirmColor: 'error',
+      cancelColor: 'grey'
+    }
+  )
+  
+  if (confirmed) {
+    notify.success('Deleted!', 'Item was successfully deleted')
+    lastIconAction.value = 'Item deleted (Yes clicked)'
+  } else {
+    notify.info('Cancelled', 'Delete action was cancelled')
+    lastIconAction.value = 'Delete cancelled (No clicked)'
+  }
+}
+
+const handleEditClick = () => {
+  lastIconAction.value = 'Edit clicked'
+  notify.info('Edit', 'Edit button was clicked')
 }
 </script>
 

@@ -7,6 +7,7 @@
     :content-class="contentClass"
     :fullscreen="fullscreen"
     scrollable
+    :z-index="2400"
   >
     <v-card>
       <v-card-title v-if="title" class="text-h5 d-flex align-center px-6 pt-6" style="word-break: break-word; white-space: normal;">
@@ -28,6 +29,7 @@
           :color="action.color || 'primary'"
           :prepend-icon="action.icon"
           :variant="action.variant || 'text'"
+          :type="'button'"
           class="text-none"
           @click="handleAction(action)"
         >
@@ -104,3 +106,12 @@ const handleAction = async (action: ModalAction) => {
   }
 }
 </script>
+
+<style>
+/* Garante que menus do Vuetify (v-select, v-menu, etc.) fiquem acima dos modais */
+.v-overlay-container .v-menu > .v-overlay__content,
+.v-overlay-container .v-select__content,
+.v-overlay-container .v-autocomplete__content {
+  z-index: 2500 !important;
+}
+</style>
