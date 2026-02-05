@@ -6,7 +6,7 @@
         :icon="icon"
         :variant="asButton ? 'text' : 'plain'"
         :density="asButton ? 'default' : 'compact'"
-        @click="handleClick"
+        @click="(e: MouseEvent) => $emit('click', e)"
       />
     </template>
   </v-tooltip>
@@ -24,12 +24,7 @@ withDefaults(defineProps<Props>(), {
   asButton: false,
 })
 
-const emit = defineEmits<{
-  click: [event: MouseEvent]
+defineEmits<{
+  (e: 'click', event: MouseEvent): void
 }>()
-
-const handleClick = (event: MouseEvent) => {
-  console.log('IconToolTip clicked!', event)
-  emit('click', event)
-}
 </script>
