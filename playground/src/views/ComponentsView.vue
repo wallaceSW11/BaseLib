@@ -211,7 +211,19 @@
             Modal Base
           </v-card-title>
           <v-card-text>
-            <p class="mb-3">Test the customizable modal component:</p>
+            <p class="mb-3">Test the customizable modal component with keyboard shortcuts:</p>
+            
+            <v-alert type="info" density="compact" class="mb-4">
+              <div class="text-subtitle-2 mb-2">⌨️ Keyboard Shortcuts:</div>
+              <ul class="text-caption">
+                <li><kbd>Enter</kbd> - Triggers the primary action (Save)</li>
+                <li><kbd>Esc</kbd> - Triggers the cancel/secondary action (Cancel)</li>
+              </ul>
+              <div class="text-caption mt-2">
+                💡 Try opening the modal and using these shortcuts instead of clicking the buttons!
+              </div>
+            </v-alert>
+
             <v-btn color="primary" prepend-icon="mdi-open-in-new" @click="openModal">
               Open Modal with Form
             </v-btn>
@@ -638,8 +650,7 @@ const modalActions: ModalAction[] = [
     handler: () => {
       console.log('Salvando...', observationText.value, selectedOption.value)
       notify.success('Saved!', 'Observation saved successfully')
-      // Quem usa o modal decide se fecha ou não
-      // showModal.value = false
+      showModal.value = false
     }
   },
   {
@@ -869,5 +880,15 @@ const handleEditClick = () => {
 
 .gap-4 {
   gap: 1rem;
+}
+
+kbd {
+  background-color: rgba(var(--v-theme-on-surface), 0.08);
+  border: 1px solid rgba(var(--v-theme-on-surface), 0.12);
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-family: monospace;
+  font-size: 0.875em;
+  font-weight: 600;
 }
 </style>

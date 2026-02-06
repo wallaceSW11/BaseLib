@@ -8,6 +8,7 @@
     :fullscreen="fullscreen"
     scrollable
     :z-index="2400"
+    @keydown="handleDialogKeydown"
   >
     <v-card>
       <v-card-title v-if="title" class="text-h5 d-flex align-center px-6 pt-6" style="word-break: break-word; white-space: normal;">
@@ -41,7 +42,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref, watch, onMounted, onUnmounted } from 'vue'
 
 export interface ModalAction {
   text: string
@@ -105,6 +106,79 @@ const handleAction = async (action: ModalAction) => {
     await action.handler()
   }
 }
+
+// Keyboard shortcuts - captura direto do dialog
+const handleDialogKeydown = (e: KeyboardEvent) => {
+  if (props.actions.length === 0) return
+
+  // ESC - aciona o botão secundário (cancelar)
+  if (e.key === 'Escape') {
+    const cancelAction = props.actions.find(a => 
+      a.color === 'secondary' || a.color === 'error'
+    )
+    if (cancelAction) {
+      e.preventDefault()
+      e.stopPropagation()
+      handleAction(cancelAction)
+    }
+  }
+
+  // ENTER - aciona o botão primário (confirmar)
+  if (e.key === 'Enter' && !e.shiftKey && !e.ctrlKey && !e.altKey) {
+    // Ignora se o foco está em um textarea
+    const target = e.target as HTMLElement
+    if (target.tagName === 'TEXTAREA') return
+
+    const primaryAction = props.actions.find(a => 
+      a.color === 'primary' || (!a.color && props.actions.indexOf(a) === props.actions.length - 1)
+    )
+    if (primaryAction) {
+      e.preventDefault()
+      e.stopPropagation()
+      handleAction(primaryAction)
+    }
+  }
+}
+
+// Keyboard shortcuts globais (fallback)
+onMounted(() => {
+  const handleKeydown = (e: KeyboardEvent) => {
+    // Só processa se o modal estiver aberto
+    if (!isOpen.value || props.actions.length === 0) return
+
+    // ESC - aciona o botão secundário (cancelar)
+    if (e.key === 'Escape' && !props.persistent) {
+      const cancelAction = props.actions.find(a => 
+        a.color === 'secondary' || a.color === 'error'
+      )
+      if (cancelAction) {
+        e.preventDefault()
+        handleAction(cancelAction)
+      }
+    }
+
+    // ENTER - aciona o botão primário (confirmar)
+    if (e.key === 'Enter' && !e.shiftKey && !e.ctrlKey && !e.altKey) {
+      // Ignora se o foco está em um textarea ou input de múltiplas linhas
+      const target = e.target as HTMLElement
+      if (target.tagName === 'TEXTAREA') return
+
+      const primaryAction = props.actions.find(a => 
+        a.color === 'primary' || (!a.color && props.actions.indexOf(a) === props.actions.length - 1)
+      )
+      if (primaryAction) {
+        e.preventDefault()
+        handleAction(primaryAction)
+      }
+    }
+  }
+
+  window.addEventListener('keydown', handleKeydown)
+
+  onUnmounted(() => {
+    window.removeEventListener('keydown', handleKeydown)
+  })
+})
 </script>
 
 <style>
