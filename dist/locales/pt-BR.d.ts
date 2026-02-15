@@ -12,6 +12,10 @@ declare const _default: {
         yes: string;
         no: string;
     };
+    validation: {
+        required: string;
+        invalidEmail: string;
+    };
 };
 export default _default;
 //# sourceMappingURL=pt-BR.d.ts.map

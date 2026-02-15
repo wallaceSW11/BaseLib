@@ -12,4 +12,8 @@ export default {
     yes: "Yes",
     no: "No",
   },
+  validation: {
+    required: "This field is required",
+    invalidEmail: "Invalid email format",
+  },
 };

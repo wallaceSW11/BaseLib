@@ -13,6 +13,10 @@ export declare const defaultMessages: {
             yes: string;
             no: string;
         };
+        validation: {
+            required: string;
+            invalidEmail: string;
+        };
     };
     "en-US": {
         common: {
@@ -27,6 +31,10 @@ export declare const defaultMessages: {
             next: string;
             yes: string;
             no: string;
+        };
+        validation: {
+            required: string;
+            invalidEmail: string;
         };
     };
 };

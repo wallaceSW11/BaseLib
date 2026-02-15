@@ -11,8 +11,12 @@ const e = {
     next: "Próximo",
     yes: "Sim",
     no: "Não"
+  },
+  validation: {
+    required: "Este campo é obrigatório",
+    invalidEmail: "Formato de e-mail inválido"
   }
-}, o = {
+}, a = {
   common: {
     loading: "Loading...",
     save: "Save",
@@ -25,17 +29,21 @@ const e = {
     next: "Next",
     yes: "Yes",
     no: "No"
+  },
+  validation: {
+    required: "This field is required",
+    invalidEmail: "Invalid email format"
   }
-}, a = {
+}, o = {
   "pt-BR": e,
-  "en-US": o
-}, n = [
+  "en-US": a
+}, i = [
   { code: "pt-BR", name: "Português (Brasil)", countryCode: "BR" },
   { code: "en-US", name: "English (US)", countryCode: "US" }
-], c = "pt-BR";
+], n = "pt-BR";
 export {
-  n as defaultAvailableLocales,
-  c as defaultLocale,
-  a as defaultMessages
+  i as defaultAvailableLocales,
+  n as defaultLocale,
+  o as defaultMessages
 };
 //# sourceMappingURL=index.js.map

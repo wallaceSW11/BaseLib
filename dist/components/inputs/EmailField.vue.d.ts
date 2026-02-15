@@ -7,6 +7,8 @@ interface Props {
     persistentHint?: boolean;
     required?: boolean;
     validateOnBlur?: boolean;
+    requiredMessage?: string;
+    invalidMessage?: string;
 }
 declare var __VLS_11: {}, __VLS_14: {};
 type __VLS_Slots = {} & {
@@ -29,6 +31,8 @@ declare const __VLS_base: import("vue").DefineComponent<Props, {}, {}, {}, {}, i
     hint: string;
     persistentHint: boolean;
     validateOnBlur: boolean;
+    requiredMessage: string;
+    invalidMessage: string;
 }, {}, {}, {}, string, import("vue").ComponentProvideOptions, false, {}, any>;
 declare const __VLS_export: __VLS_WithSlots<typeof __VLS_base, __VLS_Slots>;
 declare const _default: typeof __VLS_export;

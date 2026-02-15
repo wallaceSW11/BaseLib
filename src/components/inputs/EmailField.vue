@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue';
+import { ref, computed, watch, getCurrentInstance } from 'vue';
 
 interface Props {
   modelValue?: string;
@@ -38,6 +38,8 @@ interface Props {
   persistentHint?: boolean;
   required?: boolean;
   validateOnBlur?: boolean;
+  requiredMessage?: string;
+  invalidMessage?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -48,7 +50,9 @@ const props = withDefaults(defineProps<Props>(), {
   hint: '',
   persistentHint: false,
   required: false,
-  validateOnBlur: true
+  validateOnBlur: true,
+  requiredMessage: '',
+  invalidMessage: ''
 });
 
 const emit = defineEmits<{
@@ -62,17 +66,43 @@ const isValid = ref(false);
 // Regex que aceita o padrão de email com suporte ao sinal de +
 const emailRegex = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/;
 
+// Tenta pegar o i18n se estiver disponível
+const instance = getCurrentInstance();
+const i18n = instance?.appContext.config.globalProperties.$i18n;
+
+function getErrorMessage(key: string, fallback: string): string {
+  // Se tem mensagem customizada via prop, usa ela
+  if (key === 'required' && props.requiredMessage) return props.requiredMessage;
+  if (key === 'invalid' && props.invalidMessage) return props.invalidMessage;
+  
+  // Se tem i18n disponível, tenta usar
+  if (i18n) {
+    try {
+      const translationKey = `validation.${key === 'required' ? 'required' : 'invalidEmail'}`;
+      const translated = (i18n as any).global?.t?.(translationKey) || (i18n as any).t?.(translationKey);
+      if (translated && typeof translated === 'string' && !translated.startsWith('validation.')) {
+        return translated;
+      }
+    } catch (e) {
+      // Ignora erro e usa fallback
+    }
+  }
+  
+  // Fallback para inglês
+  return fallback;
+}
+
 function validateEmail(value: string): boolean | string {
   if (!value && !props.required) {
     return true;
   }
   
   if (!value && props.required) {
-    return 'Email is required';
+    return getErrorMessage('required', 'Email is required');
   }
   
   if (!emailRegex.test(value)) {
-    return 'Invalid email format';
+    return getErrorMessage('invalid', 'Invalid email format');
   }
   
   return true;
