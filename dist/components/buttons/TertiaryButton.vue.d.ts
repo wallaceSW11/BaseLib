@@ -1,9 +1,9 @@
 import { type BaseButtonProps } from './BaseButton.vue';
 interface Props extends Omit<BaseButtonProps, 'color' | 'variant'> {
 }
-declare var __VLS_9: {};
+declare var __VLS_10: {};
 type __VLS_Slots = {} & {
-    default?: (props: typeof __VLS_9) => any;
+    default?: (props: typeof __VLS_10) => any;
 };
 declare const __VLS_base: import("vue").DefineComponent<Props, {}, {}, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {
     click: (event: MouseEvent) => any;

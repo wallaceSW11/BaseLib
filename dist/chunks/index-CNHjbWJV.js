@@ -628,7 +628,7 @@ const lM = /* @__PURE__ */ JSON.parse(`[{"code":"AED","name":"UAE Dirham","count
     persistentHint: { type: Boolean, default: !1 },
     currency: { default: "BRL" },
     locale: { default: "pt-BR" },
-    variant: { default: "outlined" }
+    variant: { default: "underlined" }
   },
   emits: ["update:modelValue"],
   setup(N, { emit: g }) {
@@ -742,7 +742,7 @@ const lM = /* @__PURE__ */ JSON.parse(`[{"code":"AED","name":"UAE Dirham","count
       ]), 1032, ["model-value", "label", "rules", "disabled", "hint", "persistent-hint", "variant"]);
     };
   }
-}), UM = /* @__PURE__ */ t(oM, [["__scopeId", "data-v-dbe10a32"]]), dM = /* @__PURE__ */ b({
+}), UM = /* @__PURE__ */ t(oM, [["__scopeId", "data-v-baa1f38b"]]), dM = /* @__PURE__ */ b({
   __name: "EmailField",
   props: {
     modelValue: { default: "" },
@@ -755,7 +755,7 @@ const lM = /* @__PURE__ */ JSON.parse(`[{"code":"AED","name":"UAE Dirham","count
     validateOnBlur: { type: Boolean, default: !0 },
     requiredMessage: { default: "" },
     invalidMessage: { default: "" },
-    variant: { default: "outlined" }
+    variant: { default: "underlined" }
   },
   emits: ["update:modelValue", "valid"],
   setup(N, { emit: g }) {
@@ -849,7 +849,7 @@ const lM = /* @__PURE__ */ JSON.parse(`[{"code":"AED","name":"UAE Dirham","count
     decimalPlaces: { default: 0 },
     locale: { default: "pt-BR" },
     allowNegative: { type: Boolean, default: !0 },
-    variant: { default: "outlined" }
+    variant: { default: "underlined" }
   },
   emits: ["update:modelValue"],
   setup(N, { emit: g }) {
@@ -978,7 +978,7 @@ const lM = /* @__PURE__ */ JSON.parse(`[{"code":"AED","name":"UAE Dirham","count
       ]), 1032, ["model-value", "label", "rules", "disabled", "hint", "persistent-hint", "variant"]);
     };
   }
-}), pM = /* @__PURE__ */ t(WM, [["__scopeId", "data-v-8e9a8d26"]]), XM = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+}), pM = /* @__PURE__ */ t(WM, [["__scopeId", "data-v-b5c87239"]]), XM = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   BaseButton: e,
   ConfirmDialog: OM,
@@ -1014,4 +1014,4 @@ export {
   mM as j,
   dM as k
 };
-//# sourceMappingURL=index-DFNfmPhZ.js.map
+//# sourceMappingURL=index-CNHjbWJV.js.map

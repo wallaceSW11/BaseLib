@@ -55,7 +55,7 @@ const props = withDefaults(defineProps<Props>(), {
   validateOnBlur: true,
   requiredMessage: '',
   invalidMessage: '',
-  variant: 'outlined'
+  variant: 'underlined'
 });
 
 const emit = defineEmits<{

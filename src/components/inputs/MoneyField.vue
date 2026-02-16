@@ -46,7 +46,7 @@ const props = withDefaults(defineProps<Props>(), {
   persistentHint: false,
   currency: 'BRL',
   locale: 'pt-BR',
-  variant: 'outlined'
+  variant: 'underlined'
 });
 
 const emit = defineEmits<{

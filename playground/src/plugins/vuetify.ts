@@ -47,4 +47,25 @@ export default createVuetify({
   icons: {
     defaultSet: "mdi",
   },
+  defaults: {
+    global: {
+      variant: 'underlined',
+    },
+    VTextField: {
+      variant: 'underlined',
+      density: 'comfortable',
+    },
+    VTextarea: {
+      variant: 'underlined',
+    },
+    VSelect: {
+      variant: 'underlined',
+    },
+    VAutocomplete: {
+      variant: 'underlined',
+    },
+    VCombobox: {
+      variant: 'underlined',
+    },
+  },
 });

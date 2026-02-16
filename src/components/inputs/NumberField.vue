@@ -48,7 +48,7 @@ const props = withDefaults(defineProps<Props>(), {
   decimalPlaces: 0,
   locale: 'pt-BR',
   allowNegative: true,
-  variant: 'outlined'
+  variant: 'underlined'
 });
 
 const emit = defineEmits<{
@@ -229,5 +229,6 @@ watch(
 
 :deep(input[type="number"]) {
   -moz-appearance: textfield;
+  appearance: textfield;
 }
 </style>

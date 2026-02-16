@@ -27,9 +27,9 @@ interface Props {
      */
     titleIcon?: string;
 }
-declare var __VLS_30: {};
+declare var __VLS_34: {};
 type __VLS_Slots = {} & {
-    default?: (props: typeof __VLS_30) => any;
+    default?: (props: typeof __VLS_34) => any;
 };
 declare const __VLS_base: import("vue").DefineComponent<Props, {}, {}, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {
     close: () => any;
