@@ -7,6 +7,7 @@
     :hint="hint"
     :persistent-hint="persistentHint"
     :required="required"
+    :variant="variant"
     type="email"
     inputmode="email"
     autocomplete="email"
@@ -40,6 +41,7 @@ interface Props {
   validateOnBlur?: boolean;
   requiredMessage?: string;
   invalidMessage?: string;
+  variant?: 'outlined' | 'filled' | 'plain' | 'solo' | 'solo-filled' | 'solo-inverted' | 'underlined';
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -52,7 +54,8 @@ const props = withDefaults(defineProps<Props>(), {
   required: false,
   validateOnBlur: true,
   requiredMessage: '',
-  invalidMessage: ''
+  invalidMessage: '',
+  variant: 'outlined'
 });
 
 const emit = defineEmits<{

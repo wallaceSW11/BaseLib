@@ -7,6 +7,7 @@
     :disabled="disabled"
     :hint="hint"
     :persistent-hint="persistentHint"
+    :variant="variant"
     @focus="handleFocus"
     @click="handleClick"
     @keydown="handleKeydown"
@@ -34,6 +35,7 @@ interface Props {
   decimalPlaces?: number;
   locale?: string;
   allowNegative?: boolean;
+  variant?: 'outlined' | 'filled' | 'plain' | 'solo' | 'solo-filled' | 'solo-inverted' | 'underlined';
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -45,7 +47,8 @@ const props = withDefaults(defineProps<Props>(), {
   persistentHint: false,
   decimalPlaces: 0,
   locale: 'pt-BR',
-  allowNegative: true
+  allowNegative: true,
+  variant: 'outlined'
 });
 
 const emit = defineEmits<{

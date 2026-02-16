@@ -1,4 +1,4 @@
-import { defineComponent as b, resolveComponent as c, createBlock as k, openBlock as O, mergeProps as R, withCtx as i, renderSlot as E, createTextVNode as s, toDisplayString as l, createVNode as a, ref as Z, watch as P, onMounted as J, onUnmounted as K, createCommentVNode as d, createElementVNode as W, createElementBlock as o, Fragment as H, renderList as F, Teleport as V, Transition as X, withModifiers as r, unref as B, computed as p, createSlots as h, nextTick as m, getCurrentInstance as f } from "vue";
+import { defineComponent as b, resolveComponent as c, createBlock as k, openBlock as O, mergeProps as R, withCtx as i, renderSlot as E, createTextVNode as s, toDisplayString as l, createVNode as Q, ref as Z, watch as P, onMounted as J, onUnmounted as K, createCommentVNode as d, createElementVNode as W, createElementBlock as o, Fragment as H, renderList as F, Teleport as V, Transition as X, withModifiers as r, unref as B, computed as p, createSlots as h, nextTick as m, getCurrentInstance as f } from "vue";
 import { useI18n as n } from "vue-i18n";
 import { N as _, a as $ } from "./types-CDzRHMYF.js";
 import { u as v } from "./theme-CCYjaYW3.js";
@@ -17,26 +17,26 @@ const e = /* @__PURE__ */ b({
     block: { type: Boolean, default: !1 }
   },
   emits: ["click"],
-  setup(z, { emit: g }) {
+  setup(N, { emit: g }) {
     const M = g, A = (I) => {
       M("click", I);
     };
     return (I, T) => {
       const u = c("v-btn");
       return O(), k(u, R({
-        "prepend-icon": z.prependIcon,
-        "append-icon": z.appendIcon,
-        disabled: z.disabled,
-        loading: z.loading,
-        color: z.color,
-        variant: z.variant,
-        size: z.size,
-        block: z.block,
+        "prepend-icon": N.prependIcon,
+        "append-icon": N.appendIcon,
+        disabled: N.disabled,
+        loading: N.loading,
+        color: N.color,
+        variant: N.variant,
+        size: N.size,
+        block: N.block,
         class: "text-none"
       }, I.$attrs, { onClick: A }), {
         default: i(() => [
           E(I.$slots, "default", {}, () => [
-            s(l(z.text), 1)
+            s(l(N.text), 1)
           ])
         ]),
         _: 3
@@ -55,7 +55,7 @@ const e = /* @__PURE__ */ b({
     block: { type: Boolean }
   },
   emits: ["click"],
-  setup(z) {
+  setup(N) {
     return (g, M) => (O(), k(e, R({
       color: "primary",
       variant: "elevated"
@@ -80,7 +80,7 @@ const e = /* @__PURE__ */ b({
     block: { type: Boolean }
   },
   emits: ["click"],
-  setup(z) {
+  setup(N) {
     return (g, M) => (O(), k(e, R({
       color: "secondary",
       variant: "outlined"
@@ -105,7 +105,7 @@ const e = /* @__PURE__ */ b({
     block: { type: Boolean }
   },
   emits: ["click"],
-  setup(z) {
+  setup(N) {
     return (g, M) => (O(), k(e, R({
       color: "info",
       variant: "flat"
@@ -130,7 +130,7 @@ const e = /* @__PURE__ */ b({
     block: { type: Boolean }
   },
   emits: ["click"],
-  setup(z) {
+  setup(N) {
     return (g, M) => (O(), k(e, R({
       color: "warning",
       variant: "text"
@@ -151,19 +151,19 @@ const e = /* @__PURE__ */ b({
     asButton: { type: Boolean, default: !1 }
   },
   emits: ["click"],
-  setup(z) {
+  setup(N) {
     return (g, M) => {
       const A = c("v-btn"), I = c("v-tooltip");
       return O(), k(I, {
-        text: z.text,
+        text: N.text,
         location: "top",
-        disabled: !z.text
+        disabled: !N.text
       }, {
         activator: i(({ props: T }) => [
-          a(A, R(T, {
-            icon: z.icon,
-            variant: z.asButton ? "text" : "plain",
-            density: z.asButton ? "default" : "compact",
+          Q(A, R(T, {
+            icon: N.icon,
+            variant: N.asButton ? "text" : "plain",
+            density: N.asButton ? "default" : "compact",
             onClick: M[0] || (M[0] = (u) => g.$emit("click", u))
           }), null, 16, ["icon", "variant", "density"])
         ]),
@@ -185,8 +185,8 @@ const e = /* @__PURE__ */ b({
     titleIcon: { default: void 0 }
   },
   emits: ["update:modelValue", "close"],
-  setup(z, { emit: g }) {
-    const M = z, A = g, I = Z(M.modelValue);
+  setup(N, { emit: g }) {
+    const M = N, A = g, I = Z(M.modelValue);
     P(() => M.modelValue, (Y) => {
       I.value = Y;
     }), P(I, (Y) => {
@@ -233,54 +233,54 @@ const e = /* @__PURE__ */ b({
         window.removeEventListener("keydown", Y);
       });
     }), (Y, y) => {
-      const C = c("v-icon"), L = c("v-card-title"), D = c("v-card-text"), j = c("v-spacer"), N = c("v-btn"), x = c("v-card-actions"), S = c("v-card"), G = c("v-dialog");
+      const C = c("v-icon"), L = c("v-card-title"), D = c("v-card-text"), j = c("v-spacer"), z = c("v-btn"), x = c("v-card-actions"), S = c("v-card"), G = c("v-dialog");
       return O(), k(G, {
         modelValue: I.value,
         "onUpdate:modelValue": y[0] || (y[0] = (w) => I.value = w),
-        "max-width": z.maxWidth,
-        persistent: z.persistent,
+        "max-width": N.maxWidth,
+        persistent: N.persistent,
         attach: "body",
-        "content-class": z.contentClass,
-        fullscreen: z.fullscreen,
+        "content-class": N.contentClass,
+        fullscreen: N.fullscreen,
         scrollable: "",
         "z-index": 2400,
         onKeydown: u
       }, {
         default: i(() => [
-          a(S, null, {
+          Q(S, null, {
             default: i(() => [
-              z.title ? (O(), k(L, {
+              N.title ? (O(), k(L, {
                 key: 0,
                 class: "text-h5 d-flex align-center px-6 pt-6",
                 style: { "word-break": "break-word", "white-space": "normal" }
               }, {
                 default: i(() => [
-                  z.titleIcon ? (O(), k(C, {
+                  N.titleIcon ? (O(), k(C, {
                     key: 0,
                     class: "mr-2"
                   }, {
                     default: i(() => [
-                      s(l(z.titleIcon), 1)
+                      s(l(N.titleIcon), 1)
                     ]),
                     _: 1
                   })) : d("", !0),
-                  W("span", null, l(z.title), 1)
+                  W("span", null, l(N.title), 1)
                 ]),
                 _: 1
               })) : d("", !0),
-              a(D, { class: "px-6 pt-4" }, {
+              Q(D, { class: "px-6 pt-4" }, {
                 default: i(() => [
                   E(Y.$slots, "default", {}, () => [
-                    s(l(z.message), 1)
+                    s(l(N.message), 1)
                   ])
                 ]),
                 _: 3
               }),
-              a(x, null, {
+              Q(x, null, {
                 default: i(() => [
-                  a(j),
-                  (O(!0), o(H, null, F(z.actions, (w, Q) => (O(), k(N, {
-                    key: Q,
+                  Q(j),
+                  (O(!0), o(H, null, F(N.actions, (w, a) => (O(), k(z, {
+                    key: a,
                     color: w.color || "primary",
                     "prepend-icon": w.icon,
                     variant: w.variant || "text",
@@ -312,24 +312,24 @@ const e = /* @__PURE__ */ b({
   class: "custom-dialog-body"
 }, yM = { class: "custom-dialog-actions" }, iM = /* @__PURE__ */ b({
   __name: "CustomConfirmDialog",
-  setup(z, { expose: g }) {
+  setup(N, { expose: g }) {
     const { t: M } = n(), A = Z(!1), I = Z(""), T = Z(""), u = Z(!0), Y = Z(""), y = Z(""), C = Z("primary"), L = Z("grey");
     let D = null;
     const j = () => {
       D && D(!0), A.value = !1;
-    }, N = () => {
+    }, z = () => {
       D && D(!1), A.value = !1;
     }, x = () => {
-      u.value || N();
+      u.value || z();
     };
     return g({
-      ConfirmDialog: (G, w, Q) => (I.value = G, T.value = w, u.value = Q?.persistent ?? !0, Y.value = Q?.confirmText || M("common.yes"), y.value = Q?.cancelText || M("common.no"), C.value = Q?.confirmColor || "primary", L.value = Q?.cancelColor || "grey", A.value = !0, new Promise((U) => {
+      ConfirmDialog: (G, w, a) => (I.value = G, T.value = w, u.value = a?.persistent ?? !0, Y.value = a?.confirmText || M("common.yes"), y.value = a?.cancelText || M("common.no"), C.value = a?.confirmColor || "primary", L.value = a?.cancelColor || "grey", A.value = !0, new Promise((U) => {
         D = U;
       }))
     }), (G, w) => {
-      const Q = c("v-icon"), U = c("v-btn");
+      const a = c("v-icon"), U = c("v-btn");
       return O(), k(V, { to: "body" }, [
-        a(X, { name: "dialog-fade" }, {
+        Q(X, { name: "dialog-fade" }, {
           default: i(() => [
             A.value ? (O(), o("div", {
               key: 0,
@@ -339,7 +339,7 @@ const e = /* @__PURE__ */ b({
               W("div", gM, [
                 W("div", AM, [
                   I.value ? (O(), o("div", TM, [
-                    a(Q, {
+                    Q(a, {
                       class: "custom-dialog-icon",
                       color: "warning",
                       size: "28"
@@ -355,18 +355,18 @@ const e = /* @__PURE__ */ b({
                     W("p", null, l(T.value), 1)
                   ])) : d("", !0),
                   W("div", yM, [
-                    a(U, {
+                    Q(U, {
                       color: L.value,
                       variant: "text",
                       class: "text-none",
-                      onClick: N
+                      onClick: z
                     }, {
                       default: i(() => [
                         s(l(y.value), 1)
                       ]),
                       _: 1
                     }, 8, ["color"]),
-                    a(U, {
+                    Q(U, {
                       color: C.value,
                       variant: "elevated",
                       class: "text-none",
@@ -387,14 +387,14 @@ const e = /* @__PURE__ */ b({
       ]);
     };
   }
-}), t = (z, g) => {
-  const M = z.__vccOpts || z;
+}), t = (N, g) => {
+  const M = N.__vccOpts || N;
   for (const [A, I] of g)
     M[A] = I;
   return M;
 }, LM = /* @__PURE__ */ t(iM, [["__scopeId", "data-v-120c0a93"]]), OM = /* @__PURE__ */ b({
   __name: "ConfirmDialog",
-  setup(z, { expose: g }) {
+  setup(N, { expose: g }) {
     const M = Z(null);
     return g({
       ConfirmDialog: (I, T, u) => M.value ? M.value.ConfirmDialog(I, T, u) : (console.error("ConfirmDialog: customDialogRef is not available"), Promise.resolve(!1))
@@ -405,7 +405,7 @@ const e = /* @__PURE__ */ b({
   }
 }), uM = /* @__PURE__ */ b({
   __name: "FloatingNotify",
-  setup(z, { expose: g }) {
+  setup(N, { expose: g }) {
     const M = Z(!1), A = Z("info"), I = Z(""), T = Z("");
     let u = null;
     const Y = (C, L, D = "") => {
@@ -445,7 +445,7 @@ const e = /* @__PURE__ */ b({
   class: "loading-content"
 }, cM = ["src"], SM = { class: "loading-text mt-3" }, kM = /* @__PURE__ */ b({
   __name: "LoadingOverlay",
-  setup(z, { expose: g }) {
+  setup(N, { expose: g }) {
     const { t: M } = n(), A = v(), I = Z(!1), T = Z(!1), u = Z(M("common.loading"));
     let Y = null;
     return g({
@@ -462,7 +462,7 @@ const e = /* @__PURE__ */ b({
       return O(), k(X, { name: "fade" }, {
         default: i(() => [
           I.value ? (O(), o("div", GM, [
-            a(X, { name: "fade-delayed" }, {
+            Q(X, { name: "fade-delayed" }, {
               default: i(() => [
                 T.value ? (O(), o("div", CM, [
                   B(A).currentLogo ? (O(), o("img", {
@@ -471,7 +471,7 @@ const e = /* @__PURE__ */ b({
                     alt: "Logo",
                     class: "loading-logo mb-4"
                   }, null, 8, cM)) : d("", !0),
-                  a(j, {
+                  Q(j, {
                     indeterminate: "",
                     color: "primary",
                     size: 30,
@@ -488,9 +488,9 @@ const e = /* @__PURE__ */ b({
       });
     };
   }
-}), ZM = /* @__PURE__ */ t(kM, [["__scopeId", "data-v-7fa56b75"]]), QM = /* @__PURE__ */ b({
+}), ZM = /* @__PURE__ */ t(kM, [["__scopeId", "data-v-7fa56b75"]]), aM = /* @__PURE__ */ b({
   __name: "ThemeToggle",
-  setup(z) {
+  setup(N) {
     const g = v(), M = p(
       () => g.isDark ? "mdi-weather-sunny" : "mdi-weather-night"
     ), A = p(
@@ -508,7 +508,7 @@ const e = /* @__PURE__ */ b({
         variant: "text"
       }, {
         default: i(() => [
-          a(Y, null, {
+          Q(Y, null, {
             default: i(() => [
               s(l(M.value), 1)
             ]),
@@ -520,19 +520,19 @@ const e = /* @__PURE__ */ b({
     };
   }
 });
-function aM(z) {
+function QM(N) {
   const g = localStorage.getItem("locale");
-  return g && z.some((M) => M.code === g) ? g : null;
+  return g && N.some((M) => M.code === g) ? g : null;
 }
-function bM(z) {
-  const { locale: g, t: M } = n(), A = z || q, I = p({
+function bM(N) {
+  const { locale: g, t: M } = n(), A = N || q, I = p({
     get: () => g.value,
     set: (y) => {
       g.value = y, localStorage.setItem("locale", y);
     }
   }), T = A, u = (y) => {
     I.value = y;
-  }, Y = aM(A);
+  }, Y = QM(A);
   return Y && (g.value = Y), {
     locale: I,
     locales: T,
@@ -545,17 +545,17 @@ const lM = /* @__PURE__ */ JSON.parse(`[{"code":"AED","name":"UAE Dirham","count
   props: {
     availableLocales: {}
   },
-  setup(z) {
-    const g = z, { locale: M, locales: A, setLocale: I } = bM(g.availableLocales), T = p(() => A.find((C) => C.code === M.value) || A[0]), u = p(() => T.value.name), Y = p(() => y(T.value.countryCode));
+  setup(N) {
+    const g = N, { locale: M, locales: A, setLocale: I } = bM(g.availableLocales), T = p(() => A.find((C) => C.code === M.value) || A[0]), u = p(() => T.value.name), Y = p(() => y(T.value.countryCode));
     function y(C) {
       const L = lM.find((D) => D.countryCode === C);
       return L ? L.flag : void 0;
     }
     return (C, L) => {
-      const D = c("v-icon"), j = c("v-btn"), N = c("v-list-item-title"), x = c("v-list-item"), S = c("v-list"), G = c("v-menu");
+      const D = c("v-icon"), j = c("v-btn"), z = c("v-list-item-title"), x = c("v-list-item"), S = c("v-list"), G = c("v-menu");
       return O(), k(G, null, {
         activator: i(({ props: w }) => [
-          a(j, R(w, {
+          Q(j, R(w, {
             variant: "text",
             icon: ""
           }), {
@@ -576,12 +576,12 @@ const lM = /* @__PURE__ */ JSON.parse(`[{"code":"AED","name":"UAE Dirham","count
           }, 16)
         ]),
         default: i(() => [
-          a(S, null, {
+          Q(S, null, {
             default: i(() => [
               (O(!0), o(H, null, F(B(A), (w) => (O(), k(x, {
                 key: w.code,
                 active: B(M) === w.code,
-                onClick: (Q) => B(I)(w.code)
+                onClick: (a) => B(I)(w.code)
               }, {
                 prepend: i(() => [
                   y(w.countryCode) ? (O(), o("img", {
@@ -600,7 +600,7 @@ const lM = /* @__PURE__ */ JSON.parse(`[{"code":"AED","name":"UAE Dirham","count
                   }))
                 ]),
                 default: i(() => [
-                  a(N, null, {
+                  Q(z, null, {
                     default: i(() => [
                       s(l(w.name), 1)
                     ]),
@@ -627,13 +627,14 @@ const lM = /* @__PURE__ */ JSON.parse(`[{"code":"AED","name":"UAE Dirham","count
     hint: { default: "" },
     persistentHint: { type: Boolean, default: !1 },
     currency: { default: "BRL" },
-    locale: { default: "pt-BR" }
+    locale: { default: "pt-BR" },
+    variant: { default: "outlined" }
   },
   emits: ["update:modelValue"],
-  setup(z, { emit: g }) {
-    const M = z, A = g, I = Z("R$ 0,00");
+  setup(N, { emit: g }) {
+    const M = N, A = g, I = Z("R$ 0,00");
     function T(j) {
-      const N = Math.abs(j), x = u(), S = N.toLocaleString(M.locale, {
+      const z = Math.abs(j), x = u(), S = z.toLocaleString(M.locale, {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2
       });
@@ -648,39 +649,39 @@ const lM = /* @__PURE__ */ JSON.parse(`[{"code":"AED","name":"UAE Dirham","count
       }[M.currency] || M.currency;
     }
     function Y(j) {
-      const N = j.includes("-"), x = j.replace(/\D/g, "");
+      const z = j.includes("-"), x = j.replace(/\D/g, "");
       if (!x) return 0;
       const S = parseInt(x) / 100;
-      return Number((N ? -S : S).toFixed(2));
+      return Number((z ? -S : S).toFixed(2));
     }
     function y(j) {
-      const N = Y(j);
-      A("update:modelValue", N), m(() => {
-        I.value = T(N);
+      const z = Y(j);
+      A("update:modelValue", z), m(() => {
+        I.value = T(z);
       });
     }
     function C(j) {
-      const N = j.target;
+      const z = j.target;
       m(() => {
-        N.setSelectionRange(N.value.length, N.value.length);
+        z.setSelectionRange(z.value.length, z.value.length);
       });
     }
     function L(j) {
-      const N = j.target;
+      const z = j.target;
       m(() => {
-        N.setSelectionRange(N.value.length, N.value.length);
+        z.setSelectionRange(z.value.length, z.value.length);
       });
     }
     function D(j) {
-      const N = j.target, x = I.value;
+      const z = j.target, x = I.value;
       if (["Backspace", "Delete", "ArrowLeft", "ArrowRight", "Tab", "Home", "End"].includes(j.key) || j.ctrlKey || j.metaKey) {
         if (j.key === "Backspace" || j.key === "Delete") {
           j.preventDefault();
           const G = x.replace(/\D/g, "");
           if (G.length > 0) {
-            const w = G.slice(0, -1), Q = w ? parseInt(w) / 100 : 0;
-            A("update:modelValue", Q), I.value = T(Q), m(() => {
-              N.setSelectionRange(N.value.length, N.value.length);
+            const w = G.slice(0, -1), a = w ? parseInt(w) / 100 : 0;
+            A("update:modelValue", a), I.value = T(a), m(() => {
+              z.setSelectionRange(z.value.length, z.value.length);
             });
           }
         }
@@ -694,30 +695,31 @@ const lM = /* @__PURE__ */ JSON.parse(`[{"code":"AED","name":"UAE Dirham","count
         const w = -Y(x);
         A("update:modelValue", w), I.value = T(w);
       } else {
-        const w = x.replace(/\D/g, "") + j.key, Q = parseInt(w) / 100;
-        A("update:modelValue", Q), I.value = T(Q);
+        const w = x.replace(/\D/g, "") + j.key, a = parseInt(w) / 100;
+        A("update:modelValue", a), I.value = T(a);
       }
       m(() => {
-        N.setSelectionRange(N.value.length, N.value.length);
+        z.setSelectionRange(z.value.length, z.value.length);
       });
     }
     return P(
       () => M.modelValue,
       (j) => {
-        const N = j ?? 0;
-        I.value = T(N);
+        const z = j ?? 0;
+        I.value = T(z);
       },
       { immediate: !0 }
-    ), (j, N) => {
+    ), (j, z) => {
       const x = c("v-text-field");
       return O(), k(x, {
         "model-value": I.value,
         "onUpdate:modelValue": y,
-        label: z.label,
-        rules: z.rules,
-        disabled: z.disabled,
-        hint: z.hint,
-        "persistent-hint": z.persistentHint,
+        label: N.label,
+        rules: N.rules,
+        disabled: N.disabled,
+        hint: N.hint,
+        "persistent-hint": N.persistentHint,
+        variant: N.variant,
         onFocus: C,
         onClick: L,
         onKeydown: D,
@@ -737,10 +739,10 @@ const lM = /* @__PURE__ */ JSON.parse(`[{"code":"AED","name":"UAE Dirham","count
           ]),
           key: "1"
         } : void 0
-      ]), 1032, ["model-value", "label", "rules", "disabled", "hint", "persistent-hint"]);
+      ]), 1032, ["model-value", "label", "rules", "disabled", "hint", "persistent-hint", "variant"]);
     };
   }
-}), UM = /* @__PURE__ */ t(oM, [["__scopeId", "data-v-3bcacae0"]]), dM = /* @__PURE__ */ b({
+}), UM = /* @__PURE__ */ t(oM, [["__scopeId", "data-v-dbe10a32"]]), dM = /* @__PURE__ */ b({
   __name: "EmailField",
   props: {
     modelValue: { default: "" },
@@ -752,74 +754,76 @@ const lM = /* @__PURE__ */ JSON.parse(`[{"code":"AED","name":"UAE Dirham","count
     required: { type: Boolean, default: !1 },
     validateOnBlur: { type: Boolean, default: !0 },
     requiredMessage: { default: "" },
-    invalidMessage: { default: "" }
+    invalidMessage: { default: "" },
+    variant: { default: "outlined" }
   },
   emits: ["update:modelValue", "valid"],
-  setup(z, { emit: g }) {
-    const M = z, A = g, I = Z(M.modelValue), T = Z(!1), u = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/, y = f()?.appContext.config.globalProperties.$i18n;
-    function C(N, x) {
-      if (N === "required" && M.requiredMessage) return M.requiredMessage;
-      if (N === "invalid" && M.invalidMessage) return M.invalidMessage;
+  setup(N, { emit: g }) {
+    const M = N, A = g, I = Z(M.modelValue), T = Z(!1), u = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/, y = f()?.appContext.config.globalProperties.$i18n;
+    function C(z, x) {
+      if (z === "required" && M.requiredMessage) return M.requiredMessage;
+      if (z === "invalid" && M.invalidMessage) return M.invalidMessage;
       if (y)
         try {
-          const S = `validation.${N === "required" ? "required" : "invalidEmail"}`, G = y.global?.t?.(S) || y.t?.(S);
+          const S = `validation.${z === "required" ? "required" : "invalidEmail"}`, G = y.global?.t?.(S) || y.t?.(S);
           if (G && typeof G == "string" && !G.startsWith("validation."))
             return G;
         } catch {
         }
       return x;
     }
-    function L(N) {
-      return !N && !M.required ? !0 : !N && M.required ? C("required", "Email is required") : u.test(N) ? !0 : C("invalid", "Invalid email format");
+    function L(z) {
+      return !z && !M.required ? !0 : !z && M.required ? C("required", "Email is required") : u.test(z) ? !0 : C("invalid", "Invalid email format");
     }
     const D = p(() => [L, ...M.rules]);
     function j() {
-      const N = L(I.value);
-      T.value = N === !0, A("valid", T.value);
+      const z = L(I.value);
+      T.value = z === !0, A("valid", T.value);
     }
-    return P(I, (N) => {
-      if (A("update:modelValue", N), !M.validateOnBlur) {
-        const x = L(N);
+    return P(I, (z) => {
+      if (A("update:modelValue", z), !M.validateOnBlur) {
+        const x = L(z);
         T.value = x === !0, A("valid", T.value);
       }
-    }), P(() => M.modelValue, (N) => {
-      I.value = N || "";
+    }), P(() => M.modelValue, (z) => {
+      I.value = z || "";
       const x = L(I.value);
       T.value = x === !0;
-    }), (N, x) => {
+    }), (z, x) => {
       const S = c("v-icon"), G = c("v-text-field");
       return O(), k(G, {
         modelValue: I.value,
         "onUpdate:modelValue": x[0] || (x[0] = (w) => I.value = w),
-        label: z.label,
+        label: N.label,
         rules: D.value,
-        disabled: z.disabled,
-        hint: z.hint,
-        "persistent-hint": z.persistentHint,
-        required: z.required,
+        disabled: N.disabled,
+        hint: N.hint,
+        "persistent-hint": N.persistentHint,
+        required: N.required,
+        variant: N.variant,
         type: "email",
         inputmode: "email",
         autocomplete: "email",
         onBlur: j
       }, h({ _: 2 }, [
-        N.$slots.prepend ? {
+        z.$slots.prepend ? {
           name: "prepend",
           fn: i(() => [
-            E(N.$slots, "prepend")
+            E(z.$slots, "prepend")
           ]),
           key: "0"
         } : void 0,
-        N.$slots.append ? {
+        z.$slots.append ? {
           name: "append",
           fn: i(() => [
-            E(N.$slots, "append")
+            E(z.$slots, "append")
           ]),
           key: "1"
         } : void 0,
-        N.$slots.prepend ? void 0 : {
+        z.$slots.prepend ? void 0 : {
           name: "prepend-inner",
           fn: i(() => [
-            a(S, {
+            Q(S, {
               color: T.value ? "success" : void 0
             }, {
               default: i(() => [
@@ -830,7 +834,7 @@ const lM = /* @__PURE__ */ JSON.parse(`[{"code":"AED","name":"UAE Dirham","count
           ]),
           key: "2"
         }
-      ]), 1032, ["modelValue", "label", "rules", "disabled", "hint", "persistent-hint", "required"]);
+      ]), 1032, ["modelValue", "label", "rules", "disabled", "hint", "persistent-hint", "required", "variant"]);
     };
   }
 }), WM = /* @__PURE__ */ b({
@@ -844,27 +848,28 @@ const lM = /* @__PURE__ */ JSON.parse(`[{"code":"AED","name":"UAE Dirham","count
     persistentHint: { type: Boolean, default: !1 },
     decimalPlaces: { default: 0 },
     locale: { default: "pt-BR" },
-    allowNegative: { type: Boolean, default: !0 }
+    allowNegative: { type: Boolean, default: !0 },
+    variant: { default: "outlined" }
   },
   emits: ["update:modelValue"],
-  setup(z, { emit: g }) {
-    const M = z, A = g, I = Z("0");
+  setup(N, { emit: g }) {
+    const M = N, A = g, I = Z("0");
     function T(D) {
-      const N = Math.abs(D).toLocaleString(M.locale, {
+      const z = Math.abs(D).toLocaleString(M.locale, {
         minimumFractionDigits: M.decimalPlaces,
         maximumFractionDigits: M.decimalPlaces
       });
-      return D < 0 ? "-" + N : N;
+      return D < 0 ? "-" + z : z;
     }
     function u(D) {
-      const j = D.includes("-"), N = D.replace(/\D/g, "");
-      if (!N) return 0;
+      const j = D.includes("-"), z = D.replace(/\D/g, "");
+      if (!z) return 0;
       let x;
       if (M.decimalPlaces === 0)
-        x = parseInt(N);
+        x = parseInt(z);
       else {
         const G = Math.pow(10, M.decimalPlaces);
-        x = parseInt(N) / G;
+        x = parseInt(z) / G;
       }
       const S = Number(x.toFixed(M.decimalPlaces));
       return j && M.allowNegative ? -S : S;
@@ -888,11 +893,11 @@ const lM = /* @__PURE__ */ JSON.parse(`[{"code":"AED","name":"UAE Dirham","count
       });
     }
     function L(D) {
-      const j = D.target, N = I.value;
+      const j = D.target, z = I.value;
       if (["Backspace", "Delete", "ArrowLeft", "ArrowRight", "Tab", "Home", "End"].includes(D.key) || D.ctrlKey || D.metaKey) {
         if (D.key === "Backspace" || D.key === "Delete") {
           D.preventDefault();
-          const S = N.replace(/\D/g, "");
+          const S = z.replace(/\D/g, "");
           if (S.length > 0) {
             const G = S.slice(0, -1);
             let w;
@@ -904,7 +909,7 @@ const lM = /* @__PURE__ */ JSON.parse(`[{"code":"AED","name":"UAE Dirham","count
               const U = Math.pow(10, M.decimalPlaces);
               w = parseInt(G) / U;
             }
-            N.startsWith("-") && M.allowNegative && w !== 0 && (w = -w), A("update:modelValue", w), I.value = T(w), m(() => {
+            z.startsWith("-") && M.allowNegative && w !== 0 && (w = -w), A("update:modelValue", w), I.value = T(w), m(() => {
               j.setSelectionRange(j.value.length, j.value.length);
             });
           }
@@ -916,10 +921,10 @@ const lM = /* @__PURE__ */ JSON.parse(`[{"code":"AED","name":"UAE Dirham","count
         return;
       }
       if (D.preventDefault(), D.key === "-" && M.allowNegative) {
-        const G = -u(N);
+        const G = -u(z);
         A("update:modelValue", G), I.value = T(G);
       } else if (D.key !== "-") {
-        const G = N.replace(/\D/g, "") + D.key;
+        const G = z.replace(/\D/g, "") + D.key;
         let w;
         if (M.decimalPlaces === 0)
           w = parseInt(G);
@@ -927,7 +932,7 @@ const lM = /* @__PURE__ */ JSON.parse(`[{"code":"AED","name":"UAE Dirham","count
           const U = Math.pow(10, M.decimalPlaces);
           w = parseInt(G) / U;
         }
-        N.startsWith("-") && M.allowNegative && (w = -w), A("update:modelValue", w), I.value = T(w);
+        z.startsWith("-") && M.allowNegative && (w = -w), A("update:modelValue", w), I.value = T(w);
       }
       m(() => {
         j.setSelectionRange(j.value.length, j.value.length);
@@ -941,15 +946,16 @@ const lM = /* @__PURE__ */ JSON.parse(`[{"code":"AED","name":"UAE Dirham","count
       },
       { immediate: !0 }
     ), (D, j) => {
-      const N = c("v-text-field");
-      return O(), k(N, {
+      const z = c("v-text-field");
+      return O(), k(z, {
         "model-value": I.value,
         "onUpdate:modelValue": Y,
-        label: z.label,
-        rules: z.rules,
-        disabled: z.disabled,
-        hint: z.hint,
-        "persistent-hint": z.persistentHint,
+        label: N.label,
+        rules: N.rules,
+        disabled: N.disabled,
+        hint: N.hint,
+        "persistent-hint": N.persistentHint,
+        variant: N.variant,
         onFocus: y,
         onClick: C,
         onKeydown: L,
@@ -969,10 +975,10 @@ const lM = /* @__PURE__ */ JSON.parse(`[{"code":"AED","name":"UAE Dirham","count
           ]),
           key: "1"
         } : void 0
-      ]), 1032, ["model-value", "label", "rules", "disabled", "hint", "persistent-hint"]);
+      ]), 1032, ["model-value", "label", "rules", "disabled", "hint", "persistent-hint", "variant"]);
     };
   }
-}), pM = /* @__PURE__ */ t(WM, [["__scopeId", "data-v-732c7a00"]]), XM = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+}), pM = /* @__PURE__ */ t(WM, [["__scopeId", "data-v-8e9a8d26"]]), XM = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   BaseButton: e,
   ConfirmDialog: OM,
@@ -988,7 +994,7 @@ const lM = /* @__PURE__ */ JSON.parse(`[{"code":"AED","name":"UAE Dirham","count
   QuartenaryButton: jM,
   SecondaryButton: NM,
   TertiaryButton: zM,
-  ThemeToggle: QM
+  ThemeToggle: aM
 }, Symbol.toStringTag, { value: "Module" }));
 export {
   xM as F,
@@ -1004,8 +1010,8 @@ export {
   IM as f,
   DM as g,
   OM as h,
-  QM as i,
+  aM as i,
   mM as j,
   dM as k
 };
-//# sourceMappingURL=index-CcOiEzGU.js.map
+//# sourceMappingURL=index-DFNfmPhZ.js.map

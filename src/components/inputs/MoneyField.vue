@@ -7,6 +7,7 @@
     :disabled="disabled"
     :hint="hint"
     :persistent-hint="persistentHint"
+    :variant="variant"
     @focus="handleFocus"
     @click="handleClick"
     @keydown="handleKeydown"
@@ -33,6 +34,7 @@ interface Props {
   persistentHint?: boolean;
   currency?: string;
   locale?: string;
+  variant?: 'outlined' | 'filled' | 'plain' | 'solo' | 'solo-filled' | 'solo-inverted' | 'underlined';
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -43,7 +45,8 @@ const props = withDefaults(defineProps<Props>(), {
   hint: '',
   persistentHint: false,
   currency: 'BRL',
-  locale: 'pt-BR'
+  locale: 'pt-BR',
+  variant: 'outlined'
 });
 
 const emit = defineEmits<{

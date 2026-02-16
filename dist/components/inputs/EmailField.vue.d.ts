@@ -9,6 +9,7 @@ interface Props {
     validateOnBlur?: boolean;
     requiredMessage?: string;
     invalidMessage?: string;
+    variant?: 'outlined' | 'filled' | 'plain' | 'solo' | 'solo-filled' | 'solo-inverted' | 'underlined';
 }
 declare var __VLS_11: {}, __VLS_14: {};
 type __VLS_Slots = {} & {
@@ -24,6 +25,7 @@ declare const __VLS_base: import("vue").DefineComponent<Props, {}, {}, {}, {}, i
     onValid?: ((isValid: boolean) => any) | undefined;
 }>, {
     disabled: boolean;
+    variant: "outlined" | "filled" | "plain" | "solo" | "solo-filled" | "solo-inverted" | "underlined";
     modelValue: string;
     required: boolean;
     label: string;
