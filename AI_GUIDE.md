@@ -16,13 +16,13 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import { createVuetify } from 'vuetify'
 import { createI18n } from 'vue-i18n'
-import { setupLib, defaultMessages, defaultLocale } from '@wallacesw11/base-lib'
+import { setupLib, defaultMessages, defaultLocale, requiredVuetifyComponents } from '@wallacesw11/base-lib'
 import '@wallacesw11/base-lib/style.css'
 
 const app = createApp(App)
 
 app.use(createPinia())
-app.use(createVuetify({ theme: { defaultTheme: 'light' } }))
+app.use(createVuetify({ theme: { defaultTheme: 'light' }, components: { ...requiredVuetifyComponents } }))
 app.use(createI18n({ legacy: false, locale: defaultLocale, messages: defaultMessages }))
 setupLib(app) // MUST BE LAST
 
@@ -354,7 +354,8 @@ import {
   loading, 
   confirm, 
   api, 
-  configureApi 
+  configureApi,
+  requiredVuetifyComponents
 } from '@wallacesw11/base-lib'
 
 // Stores
@@ -510,11 +511,59 @@ const actions: ModalAction[] = [
 </template>
 ```
 
+## Vuetify Setup (Bundle Otimizado)
+
+Não use `import * as components from "vuetify/components"` — isso puxa tudo e infla o bundle.
+
+A lib exporta `requiredVuetifyComponents` com todos os componentes Vuetify que ela usa internamente. No projeto consumidor, registre apenas o necessário:
+
+```typescript
+// vuetify.ts
+import "vuetify/styles";
+import { createVuetify } from "vuetify";
+import * as directives from "vuetify/directives";
+import "@mdi/font/css/materialdesignicons.css";
+import { requiredVuetifyComponents } from "@wallacesw11/base-lib";
+
+// só os componentes que o SEU projeto usa diretamente
+import { VDataTable, VChip } from "vuetify/components";
+
+export default createVuetify({
+  components: {
+    ...requiredVuetifyComponents, // garante que os componentes da lib funcionem
+    VDataTable,                   // seus próprios componentes
+    VChip,
+  },
+  directives,
+  theme: {
+    defaultTheme: "light",
+  },
+});
+```
+
+Para auto-import dos componentes do seu projeto, use o `vite-plugin-vuetify`:
+
+```typescript
+// vite.config.ts
+import vuetify from "vite-plugin-vuetify";
+
+export default defineConfig({
+  plugins: [
+    vue(),
+    vuetify({ autoImport: true }), // resolve componentes do projeto automaticamente
+  ],
+});
+```
+
+> O `autoImport: true` cuida dos componentes usados no projeto. O `...requiredVuetifyComponents` garante os que vêm de dentro da lib. Os dois funcionam juntos sem conflito.
+
 ## Troubleshooting
 
 | Issue | Solution |
 |-------|----------|
 | `Failed to resolve component: v-card-title` | Register Vuetify BEFORE setupLib() |
+| Componentes da lib quebrados (textos no lugar de botões) | Use `...requiredVuetifyComponents` no createVuetify — veja seção "Vuetify Setup" |
+| Bundle muito grande | Não use `import * as components from "vuetify/components"` — use `requiredVuetifyComponents` + `autoImport: true` |
 | Notifications not showing | Add FloatingNotify to App.vue and register ref |
 | Theme not loading | Create public/theme.json |
 | API auth missing | Store token: `localStorage.setItem('auth_token', token)` |

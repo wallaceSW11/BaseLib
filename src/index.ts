@@ -10,6 +10,7 @@ export * from "./composables";
 export * from "./locales";
 export * from "./stores";
 export { default as globalsPlugin } from "./plugins";
+export { requiredVuetifyComponents } from "./vuetifyComponents";
 
 export default function registerLibComponents(app: App) {
   Object.entries(components).forEach(([name, component]) => {
