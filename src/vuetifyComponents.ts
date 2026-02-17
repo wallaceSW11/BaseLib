@@ -33,6 +33,7 @@ import {
   VListItem,
   VListItemTitle,
   VMenu,
+  VProgressCircular,
 } from "vuetify/components";
 
 export const requiredVuetifyComponents = {
@@ -51,4 +52,5 @@ export const requiredVuetifyComponents = {
   VListItem,
   VListItemTitle,
   VMenu,
+  VProgressCircular,
 };

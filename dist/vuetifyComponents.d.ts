@@ -12891,5 +12891,221 @@ export declare const requiredVuetifyComponents: {
         id: StringConstructor;
         submenu: BooleanConstructor;
     }>>;
+    VProgressCircular: {
+        new (...args: any[]): import("vue").CreateComponentPublicInstanceWithMixins<{
+            style: string | false | import("vue").StyleValue[] | import("vue").CSSProperties | null;
+            tag: string | import("vuetify/lib/types.mjs").JSXComponent;
+            size: string | number;
+            rounded: boolean;
+            modelValue: string | number;
+            rotate: string | number;
+            width: string | number;
+        } & {
+            theme?: string | undefined;
+            class?: any;
+            bgColor?: string | undefined;
+            color?: string | undefined;
+            indeterminate?: "disable-shrink" | boolean | undefined;
+        } & {
+            $children?: {
+                default?: ((arg: {
+                    value: number;
+                }) => import("vue").VNodeChild) | undefined;
+            } | {
+                $stable?: boolean | undefined;
+            } | ((arg: {
+                value: number;
+            }) => import("vue").VNodeChild) | import("vue").VNodeChild;
+            "v-slots"?: {
+                default?: false | ((arg: {
+                    value: number;
+                }) => import("vue").VNodeChild) | undefined;
+            } | undefined;
+        } & {
+            "v-slot:default"?: false | ((arg: {
+                value: number;
+            }) => import("vue").VNodeChild) | undefined;
+        }, {}, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, Record<string, any>, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, {
+            style: import("vue").StyleValue;
+            tag: string | import("vuetify/lib/types.mjs").JSXComponent;
+            size: string | number;
+            rounded: boolean;
+            modelValue: string | number;
+            rotate: string | number;
+            width: string | number;
+        }, true, {}, import("vue").SlotsType<Partial<{
+            default: (arg: {
+                value: number;
+            }) => import("vue").VNode<import("vue").RendererNode, import("vue").RendererElement, {
+                [key: string]: any;
+            }>[];
+        }>>, import("vue").GlobalComponents, import("vue").GlobalDirectives, string, {}, any, import("vue").ComponentProvideOptions, {
+            P: {};
+            B: {};
+            D: {};
+            C: {};
+            M: {};
+            Defaults: {};
+        }, {
+            style: string | false | import("vue").StyleValue[] | import("vue").CSSProperties | null;
+            tag: string | import("vuetify/lib/types.mjs").JSXComponent;
+            size: string | number;
+            rounded: boolean;
+            modelValue: string | number;
+            rotate: string | number;
+            width: string | number;
+        } & {
+            theme?: string | undefined;
+            class?: any;
+            bgColor?: string | undefined;
+            color?: string | undefined;
+            indeterminate?: "disable-shrink" | boolean | undefined;
+        } & {
+            $children?: {
+                default?: ((arg: {
+                    value: number;
+                }) => import("vue").VNodeChild) | undefined;
+            } | {
+                $stable?: boolean | undefined;
+            } | ((arg: {
+                value: number;
+            }) => import("vue").VNodeChild) | import("vue").VNodeChild;
+            "v-slots"?: {
+                default?: false | ((arg: {
+                    value: number;
+                }) => import("vue").VNodeChild) | undefined;
+            } | undefined;
+        } & {
+            "v-slot:default"?: false | ((arg: {
+                value: number;
+            }) => import("vue").VNodeChild) | undefined;
+        }, {}, {}, {}, {}, {
+            style: import("vue").StyleValue;
+            tag: string | import("vuetify/lib/types.mjs").JSXComponent;
+            size: string | number;
+            rounded: boolean;
+            modelValue: string | number;
+            rotate: string | number;
+            width: string | number;
+        }>;
+        __isFragment?: undefined;
+        __isTeleport?: undefined;
+        __isSuspense?: undefined;
+    } & import("vue").ComponentOptionsBase<{
+        style: string | false | import("vue").StyleValue[] | import("vue").CSSProperties | null;
+        tag: string | import("vuetify/lib/types.mjs").JSXComponent;
+        size: string | number;
+        rounded: boolean;
+        modelValue: string | number;
+        rotate: string | number;
+        width: string | number;
+    } & {
+        theme?: string | undefined;
+        class?: any;
+        bgColor?: string | undefined;
+        color?: string | undefined;
+        indeterminate?: "disable-shrink" | boolean | undefined;
+    } & {
+        $children?: {
+            default?: ((arg: {
+                value: number;
+            }) => import("vue").VNodeChild) | undefined;
+        } | {
+            $stable?: boolean | undefined;
+        } | ((arg: {
+            value: number;
+        }) => import("vue").VNodeChild) | import("vue").VNodeChild;
+        "v-slots"?: {
+            default?: false | ((arg: {
+                value: number;
+            }) => import("vue").VNodeChild) | undefined;
+        } | undefined;
+    } & {
+        "v-slot:default"?: false | ((arg: {
+            value: number;
+        }) => import("vue").VNodeChild) | undefined;
+    }, {}, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, Record<string, any>, string, {
+        style: import("vue").StyleValue;
+        tag: string | import("vuetify/lib/types.mjs").JSXComponent;
+        size: string | number;
+        rounded: boolean;
+        modelValue: string | number;
+        rotate: string | number;
+        width: string | number;
+    }, {}, string, import("vue").SlotsType<Partial<{
+        default: (arg: {
+            value: number;
+        }) => import("vue").VNode<import("vue").RendererNode, import("vue").RendererElement, {
+            [key: string]: any;
+        }>[];
+    }>>, import("vue").GlobalComponents, import("vue").GlobalDirectives, string, import("vue").ComponentProvideOptions> & import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps & import("vuetify/lib/util/defineComponent.mjs").FilterPropsOptions<{
+        theme: StringConstructor;
+        class: import("vue").PropType<any>;
+        style: {
+            type: import("vue").PropType<import("vue").StyleValue>;
+            default: null;
+        };
+        tag: Omit<{
+            type: import("vue").PropType<string | import("vuetify/lib/types.mjs").JSXComponent>;
+            default: string;
+        }, "default" | "type"> & {
+            type: import("vue").PropType<string | import("vuetify/lib/types.mjs").JSXComponent>;
+            default: NonNullable<string | import("vuetify/lib/types.mjs").JSXComponent>;
+        };
+        size: {
+            type: (NumberConstructor | StringConstructor)[];
+            default: string;
+        };
+        bgColor: StringConstructor;
+        color: StringConstructor;
+        indeterminate: import("vue").PropType<"disable-shrink" | boolean>;
+        rounded: BooleanConstructor;
+        modelValue: {
+            type: (NumberConstructor | StringConstructor)[];
+            default: number;
+        };
+        rotate: {
+            type: (NumberConstructor | StringConstructor)[];
+            default: number;
+        };
+        width: {
+            type: (NumberConstructor | StringConstructor)[];
+            default: number;
+        };
+    }, import("vue").ExtractPropTypes<{
+        theme: StringConstructor;
+        class: import("vue").PropType<any>;
+        style: {
+            type: import("vue").PropType<import("vue").StyleValue>;
+            default: null;
+        };
+        tag: Omit<{
+            type: import("vue").PropType<string | import("vuetify/lib/types.mjs").JSXComponent>;
+            default: string;
+        }, "default" | "type"> & {
+            type: import("vue").PropType<string | import("vuetify/lib/types.mjs").JSXComponent>;
+            default: NonNullable<string | import("vuetify/lib/types.mjs").JSXComponent>;
+        };
+        size: {
+            type: (NumberConstructor | StringConstructor)[];
+            default: string;
+        };
+        bgColor: StringConstructor;
+        color: StringConstructor;
+        indeterminate: import("vue").PropType<"disable-shrink" | boolean>;
+        rounded: BooleanConstructor;
+        modelValue: {
+            type: (NumberConstructor | StringConstructor)[];
+            default: number;
+        };
+        rotate: {
+            type: (NumberConstructor | StringConstructor)[];
+            default: number;
+        };
+        width: {
+            type: (NumberConstructor | StringConstructor)[];
+            default: number;
+        };
+    }>>;
 };
 //# sourceMappingURL=vuetifyComponents.d.ts.map
