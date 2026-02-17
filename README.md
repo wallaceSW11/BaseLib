@@ -51,6 +51,15 @@ pnpm add vue@^3.5.0 vuetify@^3.0.0 pinia@^3.0.0 vue-i18n@^11.0.0 axios@^1.0.0
 
 ## 🔧 Setup
 
+### 📦 Bundle Optimization
+
+**IMPORTANTE**: A biblioteca suporta duas formas de uso:
+
+1. **Registro Global** (mais fácil, bundle maior ~650 KB)
+2. **Importação Seletiva** (recomendado, bundle menor ~50-100 KB)
+
+Para projetos em produção, recomendamos a **importação seletiva**. Veja [BUNDLE_OPTIMIZATION.md](./BUNDLE_OPTIMIZATION.md) para detalhes.
+
 ### 1. Register in main.ts
 
 **⚠️ CRITICAL: Vuetify MUST be registered BEFORE BaseLib!**
@@ -84,7 +93,13 @@ const i18n = createI18n({
 app.use(i18n);
 
 // 4. BaseLib (LAST!)
-setupLib(app);
+setupLib(app); // Registra TODOS os componentes (bundle ~650 KB)
+
+// OU para bundle otimizado (~50-100 KB):
+// import { registerLibPlugins, PrimaryButton, SecondaryButton } from '@wallacesw11/base-lib'
+// registerLibPlugins(app) // Apenas utilitários globais
+// app.component('PrimaryButton', PrimaryButton) // Registra apenas o que você usa
+// Veja BUNDLE_OPTIMIZATION.md para mais detalhes
 
 app.mount("#app");
 ```

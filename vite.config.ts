@@ -52,6 +52,34 @@ export default defineConfig({
         },
         entryFileNames: "[name].js",
         chunkFileNames: "chunks/[name]-[hash].js",
+        // Melhor code splitting: separa componentes em chunks individuais
+        manualChunks: (id) => {
+          // Cada componente Vue em seu próprio chunk
+          if (id.includes('src/components/') && id.endsWith('.vue')) {
+            const match = id.match(/src\/components\/(.+)\.vue$/);
+            if (match) {
+              return `components/${match[1].replace(/\//g, '-')}`;
+            }
+          }
+          // Agrupa utilitários relacionados
+          if (id.includes('src/utils/')) {
+            const match = id.match(/src\/utils\/(.+)\.ts$/);
+            if (match && !match[1].includes('index')) {
+              return `utils/${match[1]}`;
+            }
+          }
+          // Agrupa stores
+          if (id.includes('src/stores/') && !id.includes('index')) {
+            return 'stores/theme';
+          }
+          // Agrupa composables
+          if (id.includes('src/composables/') && !id.includes('index')) {
+            const match = id.match(/src\/composables\/(.+)\.ts$/);
+            if (match && !match[1].includes('index')) {
+              return `composables/${match[1]}`;
+            }
+          }
+        },
       },
     },
     sourcemap: true,

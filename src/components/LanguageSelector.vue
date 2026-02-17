@@ -2,17 +2,14 @@
   <v-menu>
     <template v-slot:activator="{ props }">
       <v-btn v-bind="props" variant="text" icon>
-        <img v-if="currentFlag" :src="currentFlag" :alt="currentLocaleName"
-          style="width: 24px; height: 24px; border-radius: 4px;" />
+        <span v-if="currentFlag" class="lang-flag" :aria-label="currentLocaleName">{{ currentFlag }}</span>
         <v-icon v-else>mdi-earth</v-icon>
       </v-btn>
     </template>
     <v-list>
       <v-list-item v-for="loc in locales" :key="loc.code" :active="locale === loc.code" @click="setLocale(loc.code)">
         <template v-slot:prepend>
-          <img v-if="getFlagByCountryCode(loc.countryCode)" :src="getFlagByCountryCode(loc.countryCode)" :alt="loc.name"
-            style="width: 24px; height: 24px; border-radius: 4px; margin-right: 12px;" />
-          <v-icon v-else style="margin-right: 12px;">mdi-earth</v-icon>
+          <span class="lang-flag lang-flag--list" :aria-label="loc.name">{{ getFlagEmoji(loc.countryCode) }}</span>
         </template>
         <v-list-item-title>{{ loc.name }}</v-list-item-title>
       </v-list-item>
@@ -24,7 +21,6 @@
 import { computed } from 'vue'
 import { useLocale } from '../composables/useLocale'
 import type { LocaleOption } from '../locales'
-import currenciesData from '../locales/currencies.json'
 
 interface Props {
   availableLocales?: readonly LocaleOption[]
@@ -40,12 +36,26 @@ const currentLocaleData = computed(() => {
 
 const currentLocaleName = computed(() => currentLocaleData.value.name)
 
-const currentFlag = computed(() => {
-  return getFlagByCountryCode(currentLocaleData.value.countryCode)
-})
+const currentFlag = computed(() => getFlagEmoji(currentLocaleData.value.countryCode))
 
-function getFlagByCountryCode(countryCode: string): string | undefined {
-  const currency = currenciesData.find((c: { countryCode: string }) => c.countryCode === countryCode)
-  return currency ? currency.flag : undefined
+// Converte código de país ISO 3166-1 alpha-2 em emoji de bandeira
+// Funciona em todos os browsers modernos sem nenhuma dependência
+function getFlagEmoji(countryCode: string): string {
+  return countryCode
+    .toUpperCase()
+    .split('')
+    .map(char => String.fromCodePoint(0x1F1E6 - 65 + char.charCodeAt(0)))
+    .join('')
 }
 </script>
+
+<style scoped>
+.lang-flag {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.lang-flag--list {
+  margin-right: 12px;
+}
+</style>
