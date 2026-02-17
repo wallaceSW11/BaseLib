@@ -2,7 +2,7 @@ import { defineComponent as g, ref as s, resolveComponent as h, createBlock as y
 import { useI18n as k } from "vue-i18n";
 import { L as x } from "../utils/types-C6AEF72b.js";
 import { u as C } from "../stores/theme-CCYjaYW3.js";
-import { _ as N } from "./LanguageSelector-CI4QGhJx.js";
+import { _ as N } from "./LanguageSelector-IS48NNS1.js";
 const w = {
   key: 0,
   class: "loading-overlay"
@@ -58,4 +58,4 @@ const w = {
 export {
   j as L
 };
-//# sourceMappingURL=LoadingOverlay-At5V0-zp.js.map
+//# sourceMappingURL=LoadingOverlay-C3rZd3ZV.js.map

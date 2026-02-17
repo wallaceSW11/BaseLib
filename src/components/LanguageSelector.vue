@@ -2,14 +2,30 @@
   <v-menu>
     <template v-slot:activator="{ props }">
       <v-btn v-bind="props" variant="text" icon>
-        <span v-if="currentFlag" class="lang-flag" :aria-label="currentLocaleName">{{ currentFlag }}</span>
+        <img
+          v-if="currentFlagSvg"
+          :src="currentFlagSvg"
+          :alt="currentLocaleName"
+          class="lang-flag"
+        />
         <v-icon v-else>mdi-earth</v-icon>
       </v-btn>
     </template>
     <v-list>
-      <v-list-item v-for="loc in locales" :key="loc.code" :active="locale === loc.code" @click="setLocale(loc.code)">
+      <v-list-item
+        v-for="loc in locales"
+        :key="loc.code"
+        :active="locale === loc.code"
+        @click="setLocale(loc.code)"
+      >
         <template v-slot:prepend>
-          <span class="lang-flag lang-flag--list" :aria-label="loc.name">{{ getFlagEmoji(loc.countryCode) }}</span>
+          <img
+            v-if="getFlagSvg(loc.countryCode)"
+            :src="getFlagSvg(loc.countryCode)"
+            :alt="loc.name"
+            class="lang-flag lang-flag--list"
+          />
+          <v-icon v-else style="margin-right: 12px;">mdi-earth</v-icon>
         </template>
         <v-list-item-title>{{ loc.name }}</v-list-item-title>
       </v-list-item>
@@ -35,24 +51,25 @@ const currentLocaleData = computed(() => {
 })
 
 const currentLocaleName = computed(() => currentLocaleData.value.name)
+const currentFlagSvg = computed(() => getFlagSvg(currentLocaleData.value.countryCode))
 
-const currentFlag = computed(() => getFlagEmoji(currentLocaleData.value.countryCode))
+// SVGs inline das bandeiras suportadas — sem dependência externa, sem arquivo gigante
+const FLAG_SVGS: Record<string, string> = {
+  BR: `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 504"><rect width="720" height="504" fill="%23009c3b"/><polygon points="360,36 684,252 360,468 36,252" fill="%23ffdf00"/><circle cx="360" cy="252" r="108" fill="%23002776"/><path d="M252,216 a108,108 0 0,1 216,36" fill="none" stroke="white" stroke-width="18"/><text x="360" y="270" text-anchor="middle" font-size="28" font-family="sans-serif" fill="white" font-weight="bold" letter-spacing="3">ORDEM E PROGRESSO</text></svg>`,
+  US: `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 504"><rect width="720" height="504" fill="white"/><rect y="0" width="720" height="38.77" fill="%23B22234"/><rect y="77.54" width="720" height="38.77" fill="%23B22234"/><rect y="155.08" width="720" height="38.77" fill="%23B22234"/><rect y="232.62" width="720" height="38.77" fill="%23B22234"/><rect y="310.15" width="720" height="38.77" fill="%23B22234"/><rect y="387.69" width="720" height="38.77" fill="%23B22234"/><rect y="465.23" width="720" height="38.77" fill="%23B22234"/><rect width="288" height="271.35" fill="%233C3B6E"/><g fill="white" font-size="30" text-anchor="middle" font-family="sans-serif"><text x="144" y="55">★ ★ ★ ★ ★ ★</text><text x="144" y="100">★ ★ ★ ★ ★</text><text x="144" y="145">★ ★ ★ ★ ★ ★</text><text x="144" y="190">★ ★ ★ ★ ★</text><text x="144" y="235">★ ★ ★ ★ ★ ★</text></g></svg>`,
+}
 
-// Converte código de país ISO 3166-1 alpha-2 em emoji de bandeira
-// Funciona em todos os browsers modernos sem nenhuma dependência
-function getFlagEmoji(countryCode: string): string {
-  return countryCode
-    .toUpperCase()
-    .split('')
-    .map(char => String.fromCodePoint(0x1F1E6 - 65 + char.charCodeAt(0)))
-    .join('')
+function getFlagSvg(countryCode: string): string | undefined {
+  return FLAG_SVGS[countryCode.toUpperCase()]
 }
 </script>
 
 <style scoped>
 .lang-flag {
-  font-size: 20px;
-  line-height: 1;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 .lang-flag--list {

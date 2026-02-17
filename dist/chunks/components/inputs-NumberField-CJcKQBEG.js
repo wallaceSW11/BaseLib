@@ -1,5 +1,5 @@
 import { defineComponent as V, ref as D, watch as P, resolveComponent as I, createBlock as B, openBlock as F, createSlots as S, withCtx as v, renderSlot as g, nextTick as r } from "vue";
-import { _ as K } from "./LanguageSelector-CI4QGhJx.js";
+import { _ as K } from "./LanguageSelector-IS48NNS1.js";
 const R = /* @__PURE__ */ V({
   __name: "NumberField",
   props: {
@@ -145,4 +145,4 @@ const R = /* @__PURE__ */ V({
 export {
   M as N
 };
-//# sourceMappingURL=inputs-NumberField-C6SnLB9s.js.map
+//# sourceMappingURL=inputs-NumberField-CJcKQBEG.js.map

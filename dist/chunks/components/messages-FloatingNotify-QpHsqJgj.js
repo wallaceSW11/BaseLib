@@ -1,6 +1,6 @@
 import { defineComponent as p, ref as t, resolveComponent as v, createBlock as u, openBlock as f, Transition as d, withCtx as T, createCommentVNode as x } from "vue";
 import { N as y } from "../utils/types-C6AEF72b.js";
-import { _ as N } from "./LanguageSelector-CI4QGhJx.js";
+import { _ as N } from "./LanguageSelector-IS48NNS1.js";
 const b = /* @__PURE__ */ p({
   __name: "FloatingNotify",
   setup(C, { expose: m }) {
@@ -39,4 +39,4 @@ const b = /* @__PURE__ */ p({
 export {
   F
 };
-//# sourceMappingURL=messages-FloatingNotify-C7HXgRfu.js.map
+//# sourceMappingURL=messages-FloatingNotify-QpHsqJgj.js.map
