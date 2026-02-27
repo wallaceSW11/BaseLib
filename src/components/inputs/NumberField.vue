@@ -8,6 +8,7 @@
     :hint="hint"
     :persistent-hint="persistentHint"
     :variant="variant"
+    :maxlength="maxlength"
     @focus="handleFocus"
     @click="handleClick"
     @keydown="handleKeydown"
@@ -36,6 +37,7 @@ interface Props {
   locale?: string;
   allowNegative?: boolean;
   variant?: 'outlined' | 'filled' | 'plain' | 'solo' | 'solo-filled' | 'solo-inverted' | 'underlined';
+  maxlength?: number;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -48,7 +50,8 @@ const props = withDefaults(defineProps<Props>(), {
   decimalPlaces: 0,
   locale: 'pt-BR',
   allowNegative: true,
-  variant: 'underlined'
+  variant: 'underlined',
+  maxlength: 999000000
 });
 
 const emit = defineEmits<{
@@ -99,23 +102,24 @@ function handleInput(value: string) {
 }
 
 function handleFocus(event: FocusEvent) {
-  const input = event.target as HTMLInputElement;
+  const input = event.target as HTMLInputElement | null;
   nextTick(() => {
-    // Posiciona o cursor no final do campo
+    if (!input || input.value == null) return;
     input.setSelectionRange(input.value.length, input.value.length);
   });
 }
 
 function handleClick(event: MouseEvent) {
-  const input = event.target as HTMLInputElement;
+  const input = event.target as HTMLInputElement | null;
   nextTick(() => {
-    // Posiciona o cursor no final do campo
+    if (!input || input.value == null) return;
     input.setSelectionRange(input.value.length, input.value.length);
   });
 }
 
 function handleKeydown(event: KeyboardEvent) {
-  const input = event.target as HTMLInputElement;
+  const input = event.target as HTMLInputElement | null;
+  if (!input) return;
   const currentValue = formattedValue.value;
   
   // Permite teclas de navegação e controle
@@ -153,6 +157,7 @@ function handleKeydown(event: KeyboardEvent) {
         
         // Mantém o cursor no final
         nextTick(() => {
+          if (!input || input.value == null) return;
           input.setSelectionRange(input.value.length, input.value.length);
         });
       }
@@ -201,6 +206,7 @@ function handleKeydown(event: KeyboardEvent) {
   
   // Mantém o cursor no final
   nextTick(() => {
+    if (!input || input.value == null) return;
     input.setSelectionRange(input.value.length, input.value.length);
   });
 }

@@ -10,6 +10,7 @@ interface Props {
     requiredMessage?: string;
     invalidMessage?: string;
     variant?: 'outlined' | 'filled' | 'plain' | 'solo' | 'solo-filled' | 'solo-inverted' | 'underlined';
+    maxlength?: number;
 }
 declare var __VLS_11: {}, __VLS_14: {};
 type __VLS_Slots = {} & {
@@ -32,6 +33,7 @@ declare const __VLS_base: import("vue").DefineComponent<Props, {}, {}, {}, {}, i
     rules: any[];
     hint: string;
     persistentHint: boolean;
+    maxlength: number;
     validateOnBlur: boolean;
     requiredMessage: string;
     invalidMessage: string;

@@ -8,6 +8,7 @@ interface Props {
     currency?: string;
     locale?: string;
     variant?: 'outlined' | 'filled' | 'plain' | 'solo' | 'solo-filled' | 'solo-inverted' | 'underlined';
+    maxlength?: number;
 }
 declare var __VLS_14: {}, __VLS_17: {};
 type __VLS_Slots = {} & {
@@ -29,6 +30,7 @@ declare const __VLS_base: import("vue").DefineComponent<Props, {}, {}, {}, {}, i
     hint: string;
     persistentHint: boolean;
     currency: string;
+    maxlength: number;
 }, {}, {}, {}, string, import("vue").ComponentProvideOptions, false, {}, any>;
 declare const __VLS_export: __VLS_WithSlots<typeof __VLS_base, __VLS_Slots>;
 declare const _default: typeof __VLS_export;
