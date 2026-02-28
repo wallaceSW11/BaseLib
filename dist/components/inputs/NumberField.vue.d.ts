@@ -9,7 +9,8 @@ interface Props {
     locale?: string;
     allowNegative?: boolean;
     variant?: 'outlined' | 'filled' | 'plain' | 'solo' | 'solo-filled' | 'solo-inverted' | 'underlined';
-    maxlength?: number;
+    max?: number;
+    min?: number;
 }
 declare var __VLS_14: {}, __VLS_17: {};
 type __VLS_Slots = {} & {
@@ -30,7 +31,8 @@ declare const __VLS_base: import("vue").DefineComponent<Props, {}, {}, {}, {}, i
     rules: any[];
     hint: string;
     persistentHint: boolean;
-    maxlength: number;
+    max: number;
+    min: number;
     decimalPlaces: number;
     allowNegative: boolean;
 }, {}, {}, {}, string, import("vue").ComponentProvideOptions, false, {}, any>;

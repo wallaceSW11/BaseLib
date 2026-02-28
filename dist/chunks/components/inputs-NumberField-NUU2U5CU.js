@@ -1,4 +1,4 @@
-import { defineComponent as V, ref as D, watch as P, resolveComponent as x, createBlock as I, openBlock as B, createSlots as F, withCtx as v, renderSlot as g, nextTick as c } from "vue";
+import { defineComponent as V, ref as x, watch as D, resolveComponent as P, createBlock as I, openBlock as B, createSlots as F, withCtx as v, renderSlot as g, nextTick as d } from "vue";
 import { _ as S } from "./LanguageSelector-IS48NNS1.js";
 const K = /* @__PURE__ */ V({
   __name: "NumberField",
@@ -13,15 +13,16 @@ const K = /* @__PURE__ */ V({
     locale: { default: "pt-BR" },
     allowNegative: { type: Boolean, default: !0 },
     variant: { default: "underlined" },
-    maxlength: { default: 999e6 }
+    max: { default: 999e6 },
+    min: { default: void 0 }
   },
   emits: ["update:modelValue"],
-  setup(s, { emit: h }) {
-    const l = s, d = h, u = D("0");
+  setup(u, { emit: h }) {
+    const a = u, c = h, o = x("0");
     function r(e) {
-      const n = Math.abs(e).toLocaleString(l.locale, {
-        minimumFractionDigits: l.decimalPlaces,
-        maximumFractionDigits: l.decimalPlaces
+      const n = Math.abs(e).toLocaleString(a.locale, {
+        minimumFractionDigits: a.decimalPlaces,
+        maximumFractionDigits: a.decimalPlaces
       });
       return e < 0 ? "-" + n : n;
     }
@@ -29,53 +30,53 @@ const K = /* @__PURE__ */ V({
       const t = e.includes("-"), n = e.replace(/\D/g, "");
       if (!n) return 0;
       let m;
-      if (l.decimalPlaces === 0)
+      if (a.decimalPlaces === 0)
         m = parseInt(n);
       else {
-        const i = Math.pow(10, l.decimalPlaces);
+        const i = Math.pow(10, a.decimalPlaces);
         m = parseInt(n) / i;
       }
-      const o = Number(m.toFixed(l.decimalPlaces));
-      return t && l.allowNegative ? -o : o;
+      const s = Number(m.toFixed(a.decimalPlaces));
+      return t && a.allowNegative ? -s : s;
     }
     function b(e) {
       const t = p(e);
-      d("update:modelValue", t), c(() => {
-        u.value = r(t);
+      c("update:modelValue", t), d(() => {
+        o.value = r(t);
       });
     }
     function w(e) {
       const t = e.target;
-      c(() => {
+      d(() => {
         !t || t.value == null || t.setSelectionRange(t.value.length, t.value.length);
       });
     }
     function N(e) {
       const t = e.target;
-      c(() => {
+      d(() => {
         !t || t.value == null || t.setSelectionRange(t.value.length, t.value.length);
       });
     }
     function y(e) {
       const t = e.target;
       if (!t) return;
-      const n = u.value;
+      const n = o.value;
       if (["Backspace", "Delete", "ArrowLeft", "ArrowRight", "Tab", "Home", "End"].includes(e.key) || e.ctrlKey || e.metaKey) {
         if (e.key === "Backspace" || e.key === "Delete") {
           e.preventDefault();
-          const o = n.replace(/\D/g, "");
-          if (o.length > 0) {
-            const i = o.slice(0, -1);
-            let a;
+          const s = n.replace(/\D/g, "");
+          if (s.length > 0) {
+            const i = s.slice(0, -1);
+            let l;
             if (!i)
-              a = 0;
-            else if (l.decimalPlaces === 0)
-              a = parseInt(i);
+              l = 0;
+            else if (a.decimalPlaces === 0)
+              l = parseInt(i);
             else {
-              const f = Math.pow(10, l.decimalPlaces);
-              a = parseInt(i) / f;
+              const f = Math.pow(10, a.decimalPlaces);
+              l = parseInt(i) / f;
             }
-            n.startsWith("-") && l.allowNegative && a !== 0 && (a = -a), d("update:modelValue", a), u.value = r(a), c(() => {
+            n.startsWith("-") && a.allowNegative && l !== 0 && (l = -l), c("update:modelValue", l), o.value = r(l), d(() => {
               !t || t.value == null || t.setSelectionRange(t.value.length, t.value.length);
             });
           }
@@ -86,43 +87,44 @@ const K = /* @__PURE__ */ V({
         e.preventDefault();
         return;
       }
-      if (e.preventDefault(), e.key === "-" && l.allowNegative) {
+      if (e.preventDefault(), e.key === "-" && a.allowNegative) {
         const i = -p(n);
-        d("update:modelValue", i), u.value = r(i);
+        if (a.min !== void 0 && i < a.min || a.max !== void 0 && i > a.max) return;
+        c("update:modelValue", i), o.value = r(i);
       } else if (e.key !== "-") {
         const i = n.replace(/\D/g, "") + e.key;
-        let a;
-        if (l.decimalPlaces === 0)
-          a = parseInt(i);
+        let l;
+        if (a.decimalPlaces === 0)
+          l = parseInt(i);
         else {
-          const f = Math.pow(10, l.decimalPlaces);
-          a = parseInt(i) / f;
+          const f = Math.pow(10, a.decimalPlaces);
+          l = parseInt(i) / f;
         }
-        n.startsWith("-") && l.allowNegative && (a = -a), d("update:modelValue", a), u.value = r(a);
+        if (n.startsWith("-") && a.allowNegative && (l = -l), a.max !== void 0 && l > a.max || a.min !== void 0 && l < a.min) return;
+        c("update:modelValue", l), o.value = r(l);
       }
-      c(() => {
+      d(() => {
         !t || t.value == null || t.setSelectionRange(t.value.length, t.value.length);
       });
     }
-    return P(
-      () => l.modelValue,
+    return D(
+      () => a.modelValue,
       (e) => {
         const t = e ?? 0;
-        u.value = r(t);
+        o.value = r(t);
       },
       { immediate: !0 }
     ), (e, t) => {
-      const n = x("v-text-field");
+      const n = P("v-text-field");
       return B(), I(n, {
-        "model-value": u.value,
+        "model-value": o.value,
         "onUpdate:modelValue": b,
-        label: s.label,
-        rules: s.rules,
-        disabled: s.disabled,
-        hint: s.hint,
-        "persistent-hint": s.persistentHint,
-        variant: s.variant,
-        maxlength: s.maxlength,
+        label: u.label,
+        rules: u.rules,
+        disabled: u.disabled,
+        hint: u.hint,
+        "persistent-hint": u.persistentHint,
+        variant: u.variant,
         onFocus: w,
         onClick: N,
         onKeydown: y,
@@ -142,11 +144,11 @@ const K = /* @__PURE__ */ V({
           ]),
           key: "1"
         } : void 0
-      ]), 1032, ["model-value", "label", "rules", "disabled", "hint", "persistent-hint", "variant", "maxlength"]);
+      ]), 1032, ["model-value", "label", "rules", "disabled", "hint", "persistent-hint", "variant"]);
     };
   }
-}), M = /* @__PURE__ */ S(K, [["__scopeId", "data-v-bfe15e2f"]]);
+}), M = /* @__PURE__ */ S(K, [["__scopeId", "data-v-5bdd33e8"]]);
 export {
   M as N
 };
-//# sourceMappingURL=inputs-NumberField-zX4nPcSb.js.map
+//# sourceMappingURL=inputs-NumberField-NUU2U5CU.js.map

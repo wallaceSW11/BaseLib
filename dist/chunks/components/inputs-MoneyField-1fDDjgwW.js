@@ -1,4 +1,4 @@
-import { defineComponent as w, ref as D, watch as R, resolveComponent as $, createBlock as B, openBlock as S, createSlots as x, withCtx as p, renderSlot as g, nextTick as c } from "vue";
+import { defineComponent as w, ref as D, watch as R, resolveComponent as $, createBlock as x, openBlock as B, createSlots as S, withCtx as p, renderSlot as v, nextTick as d } from "vue";
 import { _ as F } from "./LanguageSelector-IS48NNS1.js";
 const C = /* @__PURE__ */ w({
   __name: "MoneyField",
@@ -12,61 +12,62 @@ const C = /* @__PURE__ */ w({
     currency: { default: "BRL" },
     locale: { default: "pt-BR" },
     variant: { default: "underlined" },
-    maxlength: { default: 999e6 }
+    max: { default: 999e6 },
+    min: { default: void 0 }
   },
   emits: ["update:modelValue"],
-  setup(l, { emit: y }) {
-    const d = l, m = y, a = D("R$ 0,00");
-    function r(t) {
-      const e = Math.abs(t), n = h(), o = e.toLocaleString(d.locale, {
+  setup(u, { emit: y }) {
+    const n = u, m = y, o = D("R$ 0,00");
+    function s(t) {
+      const e = Math.abs(t), l = g(), i = e.toLocaleString(n.locale, {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2
       });
-      return t < 0 ? `-${n} ${o}` : `${n} ${o}`;
+      return t < 0 ? `-${l} ${i}` : `${l} ${i}`;
     }
-    function h() {
+    function g() {
       return {
         BRL: "R$",
         USD: "$",
         EUR: "€",
         GBP: "£"
-      }[d.currency] || d.currency;
+      }[n.currency] || n.currency;
     }
     function f(t) {
-      const e = t.includes("-"), n = t.replace(/\D/g, "");
-      if (!n) return 0;
-      const o = parseInt(n) / 100;
-      return Number((e ? -o : o).toFixed(2));
-    }
-    function v(t) {
-      const e = f(t);
-      m("update:modelValue", e), c(() => {
-        a.value = r(e);
-      });
+      const e = t.includes("-"), l = t.replace(/\D/g, "");
+      if (!l) return 0;
+      const i = parseInt(l) / 100;
+      return Number((e ? -i : i).toFixed(2));
     }
     function b(t) {
+      const e = f(t);
+      m("update:modelValue", e), d(() => {
+        o.value = s(e);
+      });
+    }
+    function h(t) {
       const e = t.target;
-      c(() => {
+      d(() => {
         !e || e.value == null || e.setSelectionRange(e.value.length, e.value.length);
       });
     }
     function k(t) {
       const e = t.target;
-      c(() => {
+      d(() => {
         !e || e.value == null || e.setSelectionRange(e.value.length, e.value.length);
       });
     }
     function V(t) {
       const e = t.target;
       if (!e) return;
-      const n = a.value;
+      const l = o.value;
       if (["Backspace", "Delete", "ArrowLeft", "ArrowRight", "Tab", "Home", "End"].includes(t.key) || t.ctrlKey || t.metaKey) {
         if (t.key === "Backspace" || t.key === "Delete") {
           t.preventDefault();
-          const s = n.replace(/\D/g, "");
-          if (s.length > 0) {
-            const u = s.slice(0, -1), i = u ? parseInt(u) / 100 : 0;
-            m("update:modelValue", i), a.value = r(i), c(() => {
+          const c = l.replace(/\D/g, "");
+          if (c.length > 0) {
+            const a = c.slice(0, -1), r = a ? parseInt(a) / 100 : 0;
+            m("update:modelValue", r), o.value = s(r), d(() => {
               !e || e.value == null || e.setSelectionRange(e.value.length, e.value.length);
             });
           }
@@ -78,59 +79,60 @@ const C = /* @__PURE__ */ w({
         return;
       }
       if (t.preventDefault(), t.key === "-") {
-        const u = -f(n);
-        m("update:modelValue", u), a.value = r(u);
+        const a = -f(l);
+        if (n.min !== void 0 && a < n.min || n.max !== void 0 && a > n.max) return;
+        m("update:modelValue", a), o.value = s(a);
       } else {
-        const u = n.replace(/\D/g, "") + t.key, i = parseInt(u) / 100;
-        m("update:modelValue", i), a.value = r(i);
+        const a = l.replace(/\D/g, "") + t.key, r = parseInt(a) / 100;
+        if (n.max !== void 0 && r > n.max || n.min !== void 0 && r < n.min) return;
+        m("update:modelValue", r), o.value = s(r);
       }
-      c(() => {
+      d(() => {
         !e || e.value == null || e.setSelectionRange(e.value.length, e.value.length);
       });
     }
     return R(
-      () => d.modelValue,
+      () => n.modelValue,
       (t) => {
         const e = t ?? 0;
-        a.value = r(e);
+        o.value = s(e);
       },
       { immediate: !0 }
     ), (t, e) => {
-      const n = $("v-text-field");
-      return S(), B(n, {
-        "model-value": a.value,
-        "onUpdate:modelValue": v,
-        label: l.label,
-        rules: l.rules,
-        disabled: l.disabled,
-        hint: l.hint,
-        "persistent-hint": l.persistentHint,
-        variant: l.variant,
-        maxlength: l.maxlength,
-        onFocus: b,
+      const l = $("v-text-field");
+      return B(), x(l, {
+        "model-value": o.value,
+        "onUpdate:modelValue": b,
+        label: u.label,
+        rules: u.rules,
+        disabled: u.disabled,
+        hint: u.hint,
+        "persistent-hint": u.persistentHint,
+        variant: u.variant,
+        onFocus: h,
         onClick: k,
         onKeydown: V,
         inputmode: "decimal"
-      }, x({ _: 2 }, [
+      }, S({ _: 2 }, [
         t.$slots.prepend ? {
           name: "prepend",
           fn: p(() => [
-            g(t.$slots, "prepend", {}, void 0, !0)
+            v(t.$slots, "prepend", {}, void 0, !0)
           ]),
           key: "0"
         } : void 0,
         t.$slots.append ? {
           name: "append",
           fn: p(() => [
-            g(t.$slots, "append", {}, void 0, !0)
+            v(t.$slots, "append", {}, void 0, !0)
           ]),
           key: "1"
         } : void 0
-      ]), 1032, ["model-value", "label", "rules", "disabled", "hint", "persistent-hint", "variant", "maxlength"]);
+      ]), 1032, ["model-value", "label", "rules", "disabled", "hint", "persistent-hint", "variant"]);
     };
   }
-}), M = /* @__PURE__ */ F(C, [["__scopeId", "data-v-0217cc37"]]);
+}), M = /* @__PURE__ */ F(C, [["__scopeId", "data-v-cbda10bd"]]);
 export {
   M
 };
-//# sourceMappingURL=inputs-MoneyField-CXckVn26.js.map
+//# sourceMappingURL=inputs-MoneyField-1fDDjgwW.js.map

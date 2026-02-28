@@ -33,10 +33,10 @@ declare const __VLS_base: import("vue").DefineComponent<Props, {}, {}, {}, {}, i
     rules: any[];
     hint: string;
     persistentHint: boolean;
-    maxlength: number;
     validateOnBlur: boolean;
     requiredMessage: string;
     invalidMessage: string;
+    maxlength: number;
 }, {}, {}, {}, string, import("vue").ComponentProvideOptions, false, {}, any>;
 declare const __VLS_export: __VLS_WithSlots<typeof __VLS_base, __VLS_Slots>;
 declare const _default: typeof __VLS_export;

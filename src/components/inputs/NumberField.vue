@@ -8,7 +8,6 @@
     :hint="hint"
     :persistent-hint="persistentHint"
     :variant="variant"
-    :maxlength="maxlength"
     @focus="handleFocus"
     @click="handleClick"
     @keydown="handleKeydown"
@@ -37,7 +36,8 @@ interface Props {
   locale?: string;
   allowNegative?: boolean;
   variant?: 'outlined' | 'filled' | 'plain' | 'solo' | 'solo-filled' | 'solo-inverted' | 'underlined';
-  maxlength?: number;
+  max?: number;
+  min?: number;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -51,7 +51,8 @@ const props = withDefaults(defineProps<Props>(), {
   locale: 'pt-BR',
   allowNegative: true,
   variant: 'underlined',
-  maxlength: 999000000
+  max: 999000000,
+  min: undefined
 });
 
 const emit = defineEmits<{
@@ -178,6 +179,8 @@ function handleKeydown(event: KeyboardEvent) {
     // Inverte o sinal
     const currentNumeric = parseNumberInput(currentValue);
     const newValue = -currentNumeric;
+    if (props.min !== undefined && newValue < props.min) return;
+    if (props.max !== undefined && newValue > props.max) return;
     emit('update:modelValue', newValue);
     formattedValue.value = formatNumber(newValue);
   } else if (event.key !== '-') {
@@ -200,6 +203,8 @@ function handleKeydown(event: KeyboardEvent) {
       newValue = -newValue;
     }
     
+    if (props.max !== undefined && newValue > props.max) return;
+    if (props.min !== undefined && newValue < props.min) return;
     emit('update:modelValue', newValue);
     formattedValue.value = formatNumber(newValue);
   }

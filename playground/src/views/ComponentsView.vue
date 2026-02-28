@@ -303,8 +303,9 @@
                   persistent-hint
                   currency="BRL"
                   locale="pt-BR"
+                  :max="9999.99"
                 />
-                <p class="mt-2 text-caption">Valor: R$ {{ moneyBRL.toFixed(2) }}</p>
+                <p class="mt-2 text-caption">Valor: R$ {{ moneyBRL.toFixed(2) }} (max: R$ 9.999,99)</p>
               </v-col>
 
               <v-col cols="12" md="6">
@@ -475,11 +476,12 @@
                 <NumberField 
                   v-model="numberInteger" 
                   label="Integer (0 decimal places)"
-                  hint="Only whole numbers"
+                  hint="Only whole numbers, max 1000"
                   persistent-hint
                   :decimal-places="0"
+                  :max="1000"
                 />
-                <p class="mt-2 text-caption">Value: {{ numberInteger }}</p>
+                <p class="mt-2 text-caption">Value: {{ numberInteger }} (max: 1000)</p>
               </v-col>
 
               <v-col cols="12" md="6">
