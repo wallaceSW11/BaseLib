@@ -132,6 +132,32 @@ import { PrimaryButton, SecondaryButton, TertiaryButton, QuartenaryButton } from
 
 **Available props**: `text`, `prependIcon`, `appendIcon`, `disabled`, `loading`, `block`, `size`, `color`, `variant`
 
+### IconToolTip
+
+Botão de ícone com tooltip. Usa cor primária por padrão.
+
+```vue
+<script setup lang="ts">
+import { IconToolTip } from '@wallacesw11/base-lib'
+</script>
+
+<template>
+  <!-- usa primary por padrão -->
+  <IconToolTip icon="mdi-pencil" tooltip="Editar" @click="edit" />
+
+  <!-- cor customizada -->
+  <IconToolTip icon="mdi-delete" tooltip="Excluir" color="error" @click="remove" />
+  <IconToolTip icon="mdi-alert" tooltip="Atenção" color="warning" @click="warn" />
+
+  <!-- como botão (maior, com fundo) -->
+  <IconToolTip icon="mdi-plus" tooltip="Adicionar" as-button @click="add" />
+</template>
+```
+
+**Props**: `icon` (required), `tooltip`, `text` (alias de tooltip), `color` (default: `'primary'`), `asButton` (default: `false`)
+
+> `tooltip` e `text` são equivalentes — `tooltip` tem prioridade se ambos forem passados. Use `tooltip` nos projetos novos.
+
 ### Modal
 
 ```vue
