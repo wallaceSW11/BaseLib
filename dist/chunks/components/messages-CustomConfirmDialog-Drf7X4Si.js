@@ -10,7 +10,7 @@ const z = { class: "custom-dialog-container" }, S = { class: "custom-dialog-card
 }, A = { class: "custom-dialog-actions" }, F = /* @__PURE__ */ V({
   __name: "CustomConfirmDialog",
   setup(G, { expose: N }) {
-    const { t: p } = O(), a = e(!1), m = e(""), d = e(""), C = e(!0), g = e(""), h = e(""), x = e("primary"), y = e("grey");
+    const { t: p } = O(), a = e(!1), d = e(""), m = e(""), C = e(!0), g = e(""), h = e(""), y = e("primary"), x = e("secondary");
     let t = null;
     const b = () => {
       t && t(!0), a.value = !1;
@@ -20,7 +20,7 @@ const z = { class: "custom-dialog-container" }, S = { class: "custom-dialog-card
       C.value || k();
     };
     return N({
-      ConfirmDialog: (T, c, o) => (m.value = T, d.value = c, C.value = o?.persistent ?? !0, g.value = o?.confirmText || p("common.yes"), h.value = o?.cancelText || p("common.no"), x.value = o?.confirmColor || "primary", y.value = o?.cancelColor || "grey", a.value = !0, new Promise((n) => {
+      ConfirmDialog: (T, c, o) => (d.value = T, m.value = c, C.value = o?.persistent ?? !0, g.value = o?.confirmText || p("common.yes"), h.value = o?.cancelText || p("common.no"), y.value = o?.confirmColor || "primary", x.value = o?.cancelColor || "secondary", a.value = !0, new Promise((n) => {
         t = n;
       }))
     }), (T, c) => {
@@ -35,7 +35,7 @@ const z = { class: "custom-dialog-container" }, S = { class: "custom-dialog-card
             }, [
               l("div", z, [
                 l("div", S, [
-                  m.value ? (s(), v("div", Y, [
+                  d.value ? (s(), v("div", Y, [
                     r(o, {
                       class: "custom-dialog-icon",
                       color: "warning",
@@ -46,15 +46,15 @@ const z = { class: "custom-dialog-container" }, S = { class: "custom-dialog-card
                       ])]),
                       _: 1
                     }),
-                    l("h2", j, u(m.value), 1)
+                    l("h2", j, u(d.value), 1)
                   ])) : _("", !0),
-                  d.value ? (s(), v("div", q, [
-                    l("p", null, u(d.value), 1)
+                  m.value ? (s(), v("div", q, [
+                    l("p", null, u(m.value), 1)
                   ])) : _("", !0),
                   l("div", A, [
                     r(n, {
-                      color: y.value,
-                      variant: "text",
+                      color: x.value,
+                      variant: "outlined",
                       class: "text-none",
                       onClick: k
                     }, {
@@ -64,7 +64,7 @@ const z = { class: "custom-dialog-container" }, S = { class: "custom-dialog-card
                       _: 1
                     }, 8, ["color"]),
                     r(n, {
-                      color: x.value,
+                      color: y.value,
                       variant: "elevated",
                       class: "text-none",
                       onClick: b
@@ -84,8 +84,8 @@ const z = { class: "custom-dialog-container" }, S = { class: "custom-dialog-card
       ]);
     };
   }
-}), Q = /* @__PURE__ */ P(F, [["__scopeId", "data-v-120c0a93"]]);
+}), Q = /* @__PURE__ */ P(F, [["__scopeId", "data-v-0e427c38"]]);
 export {
   Q as C
 };
-//# sourceMappingURL=messages-CustomConfirmDialog-CWrD9Env.js.map
+//# sourceMappingURL=messages-CustomConfirmDialog-Drf7X4Si.js.map

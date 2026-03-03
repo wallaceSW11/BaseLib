@@ -21,7 +21,7 @@
             <div class="custom-dialog-actions">
               <v-btn
                 :color="cancelColor"
-                variant="text"
+                variant="outlined"
                 class="text-none"
                 @click="handleNo"
               >
@@ -56,7 +56,7 @@ const persistent = ref(true)
 const confirmText = ref('')
 const cancelText = ref('')
 const confirmColor = ref('primary')
-const cancelColor = ref('grey')
+const cancelColor = ref('secondary')
 let resolvePromise: ((value: boolean) => void) | null = null
 
 const handleYes = () => {
@@ -94,7 +94,7 @@ const ConfirmDialog = (
   confirmText.value = options?.confirmText || t('common.yes')
   cancelText.value = options?.cancelText || t('common.no')
   confirmColor.value = options?.confirmColor || 'primary'
-  cancelColor.value = options?.cancelColor || 'grey'
+  cancelColor.value = options?.cancelColor || 'secondary'
   isOpen.value = true
 
   return new Promise((resolve) => {
