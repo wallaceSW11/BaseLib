@@ -3,7 +3,6 @@
     v-model="isOpen" 
     :max-width="maxWidth" 
     :persistent="persistent" 
-    attach="body"
     :content-class="contentClass"
     :fullscreen="fullscreen"
     scrollable

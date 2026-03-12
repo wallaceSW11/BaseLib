@@ -50,9 +50,6 @@ export default createVuetify({
     defaultSet: "mdi",
   },
   defaults: {
-    global: {
-      variant: 'underlined',
-    },
     VTextField: {
       variant: 'underlined',
       density: 'comfortable',

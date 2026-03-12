@@ -1,5 +1,5 @@
-import { defineComponent as b, ref as B, watch as g, onMounted as D, onUnmounted as N, resolveComponent as c, createBlock as m, openBlock as f, withCtx as i, createVNode as p, createCommentVNode as h, createElementVNode as T, createTextVNode as y, toDisplayString as v, renderSlot as I, createElementBlock as L, Fragment as O, renderList as M } from "vue";
-const S = /* @__PURE__ */ b({
+import { defineComponent as B, ref as b, watch as g, onMounted as D, onUnmounted as N, resolveComponent as c, createBlock as m, openBlock as f, withCtx as i, createVNode as p, createCommentVNode as x, createElementVNode as T, createTextVNode as y, toDisplayString as v, renderSlot as I, createElementBlock as L, Fragment as O, renderList as M } from "vue";
+const S = /* @__PURE__ */ B({
   __name: "ModalBase",
   props: {
     modelValue: { type: Boolean },
@@ -13,8 +13,8 @@ const S = /* @__PURE__ */ b({
     titleIcon: { default: void 0 }
   },
   emits: ["update:modelValue", "close"],
-  setup(o, { emit: x }) {
-    const n = o, _ = x, s = B(n.modelValue);
+  setup(o, { emit: h }) {
+    const n = o, _ = h, s = b(n.modelValue);
     g(() => n.modelValue, (e) => {
       s.value = e;
     }), g(s, (e) => {
@@ -67,7 +67,6 @@ const S = /* @__PURE__ */ b({
         "onUpdate:modelValue": t[0] || (t[0] = (r) => s.value = r),
         "max-width": o.maxWidth,
         persistent: o.persistent,
-        attach: "body",
         "content-class": o.contentClass,
         fullscreen: o.fullscreen,
         scrollable: "",
@@ -91,11 +90,11 @@ const S = /* @__PURE__ */ b({
                       y(v(o.titleIcon), 1)
                     ]),
                     _: 1
-                  })) : h("", !0),
+                  })) : x("", !0),
                   T("span", null, v(o.title), 1)
                 ]),
                 _: 1
-              })) : h("", !0),
+              })) : x("", !0),
               p(u, { class: "px-6 pt-4" }, {
                 default: i(() => [
                   I(e.$slots, "default", {}, () => [
@@ -136,4 +135,4 @@ const S = /* @__PURE__ */ b({
 export {
   S as _
 };
-//# sourceMappingURL=modals-ModalBase-C2iRr0Xc.js.map
+//# sourceMappingURL=modals-ModalBase-DMhZtZlI.js.map
