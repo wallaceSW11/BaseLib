@@ -3,7 +3,7 @@
     v-model="isOpen" 
     :max-width="maxWidth" 
     :persistent="persistent" 
-    :content-class="contentClass"
+    :content-class="contentClass ? `${dialogThemeClass} ${contentClass}` : dialogThemeClass"
     :fullscreen="fullscreen"
     scrollable
     :z-index="2400"
@@ -41,7 +41,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onMounted, onUnmounted } from 'vue'
+import { ref, watch, computed, onMounted, onUnmounted } from 'vue'
+import { useTheme } from 'vuetify'
+
+const theme = useTheme()
+const dialogThemeClass = computed(() => `v-theme--${theme.global.name.value}`)
 
 export interface ModalAction {
   text: string
