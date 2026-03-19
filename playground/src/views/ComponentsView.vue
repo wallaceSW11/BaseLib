@@ -560,6 +560,101 @@
       </v-col>
     </v-row>
 
+    <!-- Phone Field Section -->
+    <v-row>
+      <v-col cols="12">
+        <v-card class="mb-6">
+          <v-card-title class="d-flex align-center">
+            <v-icon class="mr-2">mdi-phone</v-icon>
+            Phone Field
+          </v-card-title>
+          <v-card-text>
+            <p class="mb-3">Teste o campo de telefone com máscara automática:</p>
+
+            <v-row>
+              <v-col cols="12" md="6">
+                <PhoneField
+                  v-model="phone1"
+                  label="Celular"
+                  hint="Ex: (21) 98888-7777"
+                  :rules="[v => !!v || 'Telefone obrigatório']"
+                />
+                <p class="mt-2 text-caption">Dígitos: {{ phone1 }}</p>
+              </v-col>
+
+              <v-col cols="12" md="6">
+                <PhoneField
+                  v-model="phone2"
+                  label="Telefone Fixo"
+                  hint="Ex: (21) 2742-1122"
+                  :rules="[v => !!v || 'Telefone obrigatório']"
+                />
+                <p class="mt-2 text-caption">Dígitos: {{ phone2 }}</p>
+              </v-col>
+
+              <v-col cols="12" md="6">
+                <PhoneField
+                  v-model="phone3"
+                  label="Telefone Desabilitado"
+                  :rules="[]"
+                  :disabled="true"
+                />
+              </v-col>
+            </v-row>
+
+            <v-divider class="my-4" />
+
+            <div class="d-flex gap-2">
+              <v-btn color="warning" prepend-icon="mdi-refresh" @click="resetPhones">
+                Reset
+              </v-btn>
+            </div>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+
+    <!-- CEP Field Section -->
+    <v-row>
+      <v-col cols="12">
+        <v-card class="mb-6">
+          <v-card-title class="d-flex align-center">
+            <v-icon class="mr-2">mdi-map-marker</v-icon>
+            CEP Field &amp; Full Address
+          </v-card-title>
+          <v-card-text>
+
+            <p class="text-subtitle-2 mb-3">CepField — standalone, emits address on lookup:</p>
+            <v-row>
+              <v-col cols="12" md="4">
+                <CepField
+                  v-model="cepOnly"
+                  label="ZIP Code"
+                  :rules="[v => !!v || 'ZIP Code is required']"
+                  hint="Try: 01001000"
+                  @address-found="(a) => notify.success('Found!', `${a.logradouro}, ${a.localidade}`)"
+                  @address-not-found="() => notify.error('Not found', 'ZIP code not found')"
+                />
+                <p class="mt-2 text-caption">Digits: {{ cepOnly }}</p>
+              </v-col>
+            </v-row>
+
+            <v-divider class="my-4" />
+
+            <p class="text-subtitle-2 mb-3">FullAddress — all fields editable after lookup:</p>
+            <FullAddress v-model="fullAddress" />
+            <p class="mt-2 text-caption">v-model: {{ JSON.stringify(fullAddress) }}</p>
+
+            <v-divider class="my-4" />
+
+            <p class="text-subtitle-2 mb-3">FullAddress with <code>disabled-fields</code> — auto-filled fields locked after lookup:</p>
+            <FullAddress v-model="fullAddressDisabledFields" disabled-fields />
+
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+
     <!-- API Testing Section -->
     <v-row>
       <v-col cols="12">
@@ -606,6 +701,9 @@ import {
   MoneyField,
   EmailField,
   NumberField,
+  CepField,
+  FullAddress,
+  type Address,
   type ModalAction
 } from '@/components'
 
@@ -640,6 +738,38 @@ const numberDecimal1 = ref(123.45)
 const numberDecimal2 = ref(9.876)
 const numberDecimal3 = ref(1234.5678)
 const numberDisabled = ref(999)
+
+// Phone Field states
+const phone1 = ref('21988887777')
+const phone2 = ref('2127421122')
+const phone3 = ref('1133334444')
+
+const resetPhones = () => {
+  phone1.value = ''
+  phone2.value = ''
+  notify.warning('Reset', 'Campos de telefone limpos')
+}
+
+// CEP / Address states
+const cepOnly = ref('')
+const fullAddress = ref<Address>({
+  zipCode: '',
+  street: '',
+  number: '',
+  complement: '',
+  neighborhood: '',
+  city: '',
+  state: '',
+})
+const fullAddressDisabledFields = ref<Address>({
+  zipCode: '',
+  street: '',
+  number: '',
+  complement: '',
+  neighborhood: '',
+  city: '',
+  state: '',
+})
 
 const currentTheme = computed(() => themeStore.currentMode)
 

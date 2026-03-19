@@ -282,6 +282,116 @@ const price = ref(99.99)
 
 **Features**: No spinner arrows, thousand separators, configurable decimals, mask stays visible
 
+#### PhoneField
+
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+import { PhoneField } from '@wallacesw11/base-lib'
+
+const phone = ref('')
+</script>
+
+<template>
+  <PhoneField
+    v-model="phone"
+    label="Phone"
+    :rules="[v => !!v || 'Phone is required']"
+    hint="Ex: (21) 98888-7777"
+  />
+</template>
+```
+
+**Props**: `modelValue`, `label`, `rules`, `disabled`, `hint`, `variant`
+
+**Features**: Auto mask `(XX) XXXX-XXXX` (landline) or `(XX) XXXXX-XXXX` (mobile), `v-model` returns only digits, powered by maska
+
+#### CepField
+
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+import { CepField } from '@wallacesw11/base-lib'
+import type { ViaCepResponse } from '@wallacesw11/base-lib'
+
+const zipCode = ref('')
+
+function onFound(address: ViaCepResponse) {
+  console.log(address.logradouro, address.localidade, address.uf)
+}
+</script>
+
+<template>
+  <CepField
+    v-model="zipCode"
+    label="ZIP Code"
+    :rules="[v => !!v || 'ZIP Code is required']"
+    @address-found="onFound"
+    @address-not-found="() => console.log('not found')"
+  />
+</template>
+```
+
+**Props**: `modelValue`, `label`, `rules`, `disabled`, `hint`, `variant`
+
+**Events**:
+- `@address-found` — emits `ViaCepResponse` when ZIP is found
+- `@address-not-found` — emits when ZIP is invalid or not found
+
+**Features**: Mask `#####-###`, auto-queries ViaCEP on completion, shows loading spinner during fetch
+
+#### FullAddress
+
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+import { FullAddress } from '@wallacesw11/base-lib'
+import type { Address } from '@wallacesw11/base-lib'
+
+const address = ref<Address>({
+  zipCode: '',
+  street: '',
+  number: '',
+  complement: '',
+  neighborhood: '',
+  city: '',
+  state: '',
+})
+</script>
+
+<template>
+  <!-- All fields editable -->
+  <FullAddress v-model="address" />
+
+  <!-- Auto-filled fields locked after ZIP lookup -->
+  <FullAddress v-model="address" disabled-fields />
+
+  <!-- Everything locked -->
+  <FullAddress v-model="address" disabled />
+</template>
+```
+
+**Props**:
+- `modelValue` — `Address` object
+- `disabled` — locks all fields (default: `false`)
+- `disabledFields` — locks only auto-filled fields (street, neighborhood, city, state) after a successful ZIP lookup (default: `false`)
+- `variant`
+
+**Address interface**:
+```ts
+interface Address {
+  zipCode: string
+  street: string
+  number: string
+  complement: string
+  neighborhood: string
+  city: string
+  state: string  // UF, e.g. "SP"
+}
+```
+
+**Features**: Integrates `CepField` + ViaCEP auto-fill, `v-select` with all 27 Brazilian states, fields unlock automatically if ZIP is not found
+
 ### Theme
 
 ```vue
@@ -371,44 +481,15 @@ import {
   LanguageSelector,
   MoneyField,
   EmailField,
-  NumberField
+  NumberField,
+  PhoneField,
+  CepField,
+  FullAddress
 } from '@wallacesw11/base-lib'
-
-// Utils
-import { 
-  notify, 
-  loading, 
-  confirm, 
-  api, 
-  configureApi,
-  requiredVuetifyComponents
-} from '@wallacesw11/base-lib'
-
-// Stores
-import { 
-  useThemeStore, 
-  useNotifyStore, 
-  useLoadingStore, 
-  useConfirmStore 
-} from '@wallacesw11/base-lib/stores'
-
-// Composables
-import { 
-  useBreakpoint, 
-  useGlobals, 
-  useLocale, 
-  useThemeSync 
-} from '@wallacesw11/base-lib/composables'
-
-// Locales
-import { 
-  defaultMessages, 
-  defaultLocale, 
-  defaultAvailableLocales 
-} from '@wallacesw11/base-lib/locales'
 
 // Types
 import type { ModalAction } from '@wallacesw11/base-lib/components'
+import type { Address } from '@wallacesw11/base-lib/components'
 import type { 
   NotifyType, 
   LoadingComponentRef, 
@@ -595,17 +676,21 @@ export default defineConfig({
 | API auth missing | Store token: `localStorage.setItem('auth_token', token)` |
 | Modal not closing | Set `isOpen.value = false` in handler |
 | Input mask disappearing | Use MoneyField/NumberField instead of v-text-field |
+| ZIP not auto-filling | Check network — CepField queries viacep.com.br directly |
+| FullAddress fields still editable after ZIP | Pass `disabled-fields` prop |
 
 ## Tips for AI Assistants
 
 1. **Always check setup order**: Vuetify → i18n → setupLib
 2. **Modal closing**: Never assume auto-close, always set v-model to false
-3. **Input fields**: Use MoneyField/EmailField/NumberField for formatted inputs
+3. **Input fields**: Use MoneyField/EmailField/NumberField/PhoneField/CepField/FullAddress for formatted inputs
 4. **Responsive**: Use `useBreakpoint()` for mobile detection
 5. **Loading states**: Wrap async operations with loading.show/hide
 6. **Validation**: EmailField emits @valid event, use it for form validation
 7. **Currency**: MoneyField supports BRL, USD, EUR, GBP
 8. **Decimals**: NumberField decimalPlaces prop (0 = integer)
+9. **Phone**: PhoneField v-model returns only digits, mask is visual only
+10. **ZIP/Address**: Use CepField standalone for ZIP-only, FullAddress for complete address form; `disabled-fields` locks auto-filled fields after lookup, `disabled` locks everything
 
 ## Update Library
 
