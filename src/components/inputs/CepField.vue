@@ -1,8 +1,8 @@
 <template>
   <v-text-field
     v-maska="maskOptions"
-    :model-value="maskedValue"
-    :label="label"
+    :model-value="displayValue"
+    :label="fieldLabel"
     :rules="rules"
     :disabled="disabled"
     :hint="hint"
@@ -24,8 +24,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { ref, computed } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { vMaska } from 'maska/vue';
+import { Mask } from 'maska';
 
 export interface ViaCepResponse {
   cep: string;
@@ -48,7 +50,7 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   modelValue: '',
-  label: 'ZIP Code',
+  label: undefined,
   rules: () => [],
   disabled: false,
   hint: '',
@@ -61,7 +63,18 @@ const emit = defineEmits<{
   'address-not-found': [];
 }>();
 
-const maskedValue = ref('');
+let t: (key: string) => string;
+try {
+  ({ t } = useI18n());
+} catch {
+  t = (key: string) => key;
+}
+
+const fieldLabel = computed(() => props.label ?? t('address.zipCode'));
+
+const mask = new Mask({ mask: '#####-###', eager: true });
+const displayValue = computed(() => mask.masked(props.modelValue ?? ''));
+
 const searching = ref(false);
 
 const maskOptions = {
@@ -69,9 +82,7 @@ const maskOptions = {
   eager: true,
   onMaska: (detail: { masked: string; unmasked: string; completed: boolean }) => {
     emit('update:modelValue', detail.unmasked);
-    if (detail.completed) {
-      fetchAddress(detail.unmasked);
-    }
+    if (detail.completed) fetchAddress(detail.unmasked);
   },
 };
 
@@ -80,27 +91,12 @@ async function fetchAddress(zipCode: string) {
   try {
     const res = await fetch(`https://viacep.com.br/ws/${zipCode}/json/`);
     const data: ViaCepResponse = await res.json();
-    if (data.erro) {
-      emit('address-not-found');
-    } else {
-      emit('address-found', data);
-    }
+    if (data.erro) emit('address-not-found');
+    else emit('address-found', data);
   } catch {
     emit('address-not-found');
   } finally {
     searching.value = false;
   }
 }
-
-watch(
-  () => props.modelValue,
-  (val) => {
-    const digits = (val ?? '').replace(/\D/g, '').slice(0, 8);
-    if (!digits) { maskedValue.value = ''; return; }
-    maskedValue.value = digits.length > 5
-      ? `${digits.slice(0, 5)}-${digits.slice(5)}`
-      : digits;
-  },
-  { immediate: true }
-);
 </script>

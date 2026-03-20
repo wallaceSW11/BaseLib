@@ -1,65 +1,63 @@
 <template>
   <v-row>
-    <v-col cols="12" sm="4">
+    <v-col cols="12" md="4">
       <CepField
         v-model="internal.zipCode"
-        label="ZIP Code"
-        :rules="[]"
         :disabled="disabled"
         @address-found="onAddressFound"
         @address-not-found="onAddressNotFound"
       />
     </v-col>
 
-    <v-col cols="12" sm="8">
+    <v-col cols="12" md="8">
       <v-text-field
         v-model="internal.street"
-        label="Street"
+        :label="l.street"
         :disabled="disabled || isFieldDisabled"
         :variant="variant"
       />
     </v-col>
 
-    <v-col cols="12" sm="3">
+    <v-col cols="12" md="3">
       <v-text-field
         v-model="internal.number"
-        label="Number"
+        :label="l.number"
         :disabled="disabled"
         :variant="variant"
       />
     </v-col>
 
-    <v-col cols="12" sm="5">
+    <v-col cols="12" md="5">
       <v-text-field
         v-model="internal.complement"
-        label="Complement"
+        :label="l.complement"
         :disabled="disabled"
         :variant="variant"
       />
     </v-col>
 
-    <v-col cols="12" sm="4">
+    <v-col cols="12" md="4">
       <v-text-field
         v-model="internal.neighborhood"
-        label="Neighborhood"
+        :label="l.neighborhood"
         :disabled="disabled || isFieldDisabled"
         :variant="variant"
       />
     </v-col>
 
-    <v-col cols="12" sm="6">
+    <v-col cols="12" md="6">
       <v-text-field
         v-model="internal.city"
-        label="City"
+        :label="l.city"
         :disabled="disabled || isFieldDisabled"
         :variant="variant"
       />
     </v-col>
 
-    <v-col cols="12" sm="6">
+    <v-col cols="12" md="6">
       <v-select
         v-model="internal.state"
-        label="State"
+        :label="l.state"
         :items="brazilianStates"
         item-title="name"
         item-value="uf"
@@ -72,6 +70,7 @@
 
 <script setup lang="ts">
 import { reactive, ref, watch, computed } from 'vue';
+import { useI18n } from 'vue-i18n';
 import CepField, { type ViaCepResponse } from './CepField.vue';
 
 export interface Address {
@@ -84,10 +83,21 @@ export interface Address {
   state: string;
 }
 
+export interface AddressLabels {
+  zipCode?: string;
+  street?: string;
+  number?: string;
+  complement?: string;
+  neighborhood?: string;
+  city?: string;
+  state?: string;
+}
+
 interface Props {
   modelValue?: Partial<Address>;
   disabled?: boolean;
   disabledFields?: boolean;
+  labels?: AddressLabels;
   variant?: 'outlined' | 'filled' | 'plain' | 'solo' | 'solo-filled' | 'solo-inverted' | 'underlined';
 }
 
@@ -95,12 +105,30 @@ const props = withDefaults(defineProps<Props>(), {
   modelValue: () => ({}),
   disabled: false,
   disabledFields: false,
+  labels: () => ({}),
   variant: 'underlined',
 });
 
 const emit = defineEmits<{
   'update:modelValue': [value: Address];
 }>();
+
+let t: (key: string) => string;
+try {
+  ({ t } = useI18n());
+} catch {
+  t = (key: string) => key;
+}
+
+const l = computed(() => ({
+  zipCode:      props.labels.zipCode      ?? t('address.zipCode'),
+  street:       props.labels.street       ?? t('address.street'),
+  number:       props.labels.number       ?? t('address.number'),
+  complement:   props.labels.complement   ?? t('address.complement'),
+  neighborhood: props.labels.neighborhood ?? t('address.neighborhood'),
+  city:         props.labels.city         ?? t('address.city'),
+  state:        props.labels.state        ?? t('address.state'),
+}));
 
 const internal = reactive<Address>({
   zipCode: '',
@@ -113,7 +141,6 @@ const internal = reactive<Address>({
   ...props.modelValue,
 });
 
-// disabledFields only locks auto-filled fields when CEP was found
 const cepFound = ref(false);
 const isFieldDisabled = computed(() => props.disabledFields && cepFound.value);
 

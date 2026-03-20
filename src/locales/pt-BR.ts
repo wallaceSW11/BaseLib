@@ -16,4 +16,13 @@ export default {
     required: "Este campo é obrigatório",
     invalidEmail: "Formato de e-mail inválido",
   },
+  address: {
+    zipCode: "CEP",
+    street: "Logradouro",
+    number: "Número",
+    complement: "Complemento",
+    neighborhood: "Bairro",
+    city: "Cidade",
+    state: "Estado",
+  },
 };

@@ -16,4 +16,13 @@ export default {
     required: "This field is required",
     invalidEmail: "Invalid email format",
   },
+  address: {
+    zipCode: "ZIP Code",
+    street: "Street",
+    number: "Number",
+    complement: "Complement",
+    neighborhood: "Neighborhood",
+    city: "City",
+    state: "State",
+  },
 };
