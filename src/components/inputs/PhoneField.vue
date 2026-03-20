@@ -6,7 +6,7 @@
     :rules="rules"
     :disabled="disabled"
     :hint="hint"
-    :persistent-hint="!!hint"
+    :persistent-hint="persistentHint"
     :variant="variant"
     inputmode="tel"
     autocomplete="tel"
@@ -28,6 +28,10 @@ import { computed } from 'vue';
 import { vMaska } from 'maska/vue';
 import { Mask } from 'maska';
 
+type MaskaDetail = { masked: string; unmasked: string; completed: boolean };
+
+type Variant = 'outlined' | 'filled' | 'plain' | 'solo' | 'solo-filled' | 'solo-inverted' | 'underlined';
+
 interface Props {
   modelValue?: string;
   label?: string;
@@ -35,17 +39,16 @@ interface Props {
   disabled?: boolean;
   hint?: string;
   icon?: string;
-  variant?: 'outlined' | 'filled' | 'plain' | 'solo' | 'solo-filled' | 'solo-inverted' | 'underlined';
+  variant?: Variant;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   modelValue: '',
   label: 'Phone',
   rules: () => [],
-  disabled: false,
   hint: '',
   icon: 'mdi-phone-outline',
-  variant: 'underlined',
+  variant: 'underlined'
 });
 
 const emit = defineEmits<{
@@ -54,14 +57,15 @@ const emit = defineEmits<{
 
 const mask = new Mask({ mask: ['(##) ####-####', '(##) #####-####'], eager: true });
 
-// Applies mask to the incoming modelValue (digits only) for display
 const displayValue = computed(() => mask.masked(props.modelValue ?? ''));
+
+const persistentHint = computed(() => !!props.hint);
 
 const maskOptions = {
   mask: ['(##) ####-####', '(##) #####-####'],
   eager: true,
-  onMaska: (detail: { masked: string; unmasked: string; completed: boolean }) => {
+  onMaska: (detail: MaskaDetail) => {
     emit('update:modelValue', detail.unmasked);
-  },
+  }
 };
 </script>
