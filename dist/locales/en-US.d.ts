@@ -16,6 +16,15 @@ declare const _default: {
         required: string;
         invalidEmail: string;
     };
+    address: {
+        zipCode: string;
+        street: string;
+        number: string;
+        complement: string;
+        neighborhood: string;
+        city: string;
+        state: string;
+    };
 };
 export default _default;
 //# sourceMappingURL=en-US.d.ts.map

@@ -1,3 +1,4 @@
+type Variant = 'outlined' | 'filled' | 'plain' | 'solo' | 'solo-filled' | 'solo-inverted' | 'underlined';
 interface Props {
     modelValue?: string;
     label?: string;
@@ -5,7 +6,7 @@ interface Props {
     disabled?: boolean;
     hint?: string;
     icon?: string;
-    variant?: 'outlined' | 'filled' | 'plain' | 'solo' | 'solo-filled' | 'solo-inverted' | 'underlined';
+    variant?: Variant;
 }
 declare var __VLS_16: {}, __VLS_19: {};
 type __VLS_Slots = {} & {
@@ -18,8 +19,7 @@ declare const __VLS_base: import("vue").DefineComponent<Props, {}, {}, {}, {}, i
 }, string, import("vue").PublicProps, Readonly<Props> & Readonly<{
     "onUpdate:modelValue"?: ((value: string) => any) | undefined;
 }>, {
-    disabled: boolean;
-    variant: "outlined" | "filled" | "plain" | "solo" | "solo-filled" | "solo-inverted" | "underlined";
+    variant: Variant;
     icon: string;
     modelValue: string;
     label: string;

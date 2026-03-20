@@ -1,4 +1,4 @@
-import { computed as r } from "vue";
+import { computed as s } from "vue";
 import { useI18n as d } from "vue-i18n";
 const m = {
   common: {
@@ -17,6 +17,15 @@ const m = {
   validation: {
     required: "Este campo é obrigatório",
     invalidEmail: "Formato de e-mail inválido"
+  },
+  address: {
+    zipCode: "CEP",
+    street: "Logradouro",
+    number: "Número",
+    complement: "Complemento",
+    neighborhood: "Bairro",
+    city: "Cidade",
+    state: "Estado"
   }
 }, u = {
   common: {
@@ -35,38 +44,47 @@ const m = {
   validation: {
     required: "This field is required",
     invalidEmail: "Invalid email format"
+  },
+  address: {
+    zipCode: "ZIP Code",
+    street: "Street",
+    number: "Number",
+    complement: "Complement",
+    neighborhood: "Neighborhood",
+    city: "City",
+    state: "State"
   }
-}, L = {
+}, f = {
   "pt-BR": m,
   "en-US": u
 }, v = [
   { code: "pt-BR", name: "Português (Brasil)", countryCode: "BR" },
   { code: "en-US", name: "English (US)", countryCode: "US" }
-], p = "pt-BR";
-function f(o) {
+], S = "pt-BR";
+function g(a) {
   const e = localStorage.getItem("locale");
-  return e && o.some((l) => l.code === e) ? e : null;
+  return e && a.some((t) => t.code === e) ? e : null;
 }
-function C(o) {
-  const { locale: e, t: l } = d(), t = o || v, c = r({
+function b(a) {
+  const { locale: e, t } = d(), l = a || v, n = s({
     get: () => e.value,
-    set: (a) => {
-      e.value = a, localStorage.setItem("locale", a);
+    set: (o) => {
+      e.value = o, localStorage.setItem("locale", o);
     }
-  }), i = t, s = (a) => {
-    c.value = a;
-  }, n = f(t);
-  return n && (e.value = n), {
-    locale: c,
-    locales: i,
-    setLocale: s,
-    t: l
+  }), r = l, i = (o) => {
+    n.value = o;
+  }, c = g(l);
+  return c && (e.value = c), {
+    locale: n,
+    locales: r,
+    setLocale: i,
+    t
   };
 }
 export {
   v as a,
-  p as b,
-  L as d,
-  C as u
+  S as b,
+  f as d,
+  b as u
 };
-//# sourceMappingURL=useLocale-CPLXo626.js.map
+//# sourceMappingURL=useLocale-DGKqGiq_.js.map

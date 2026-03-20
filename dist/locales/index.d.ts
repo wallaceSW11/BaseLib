@@ -17,6 +17,15 @@ export declare const defaultMessages: {
             required: string;
             invalidEmail: string;
         };
+        address: {
+            zipCode: string;
+            street: string;
+            number: string;
+            complement: string;
+            neighborhood: string;
+            city: string;
+            state: string;
+        };
     };
     "en-US": {
         common: {
@@ -35,6 +44,15 @@ export declare const defaultMessages: {
         validation: {
             required: string;
             invalidEmail: string;
+        };
+        address: {
+            zipCode: string;
+            street: string;
+            number: string;
+            complement: string;
+            neighborhood: string;
+            city: string;
+            state: string;
         };
     };
 };

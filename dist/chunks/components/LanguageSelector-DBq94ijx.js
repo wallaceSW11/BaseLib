@@ -1,5 +1,5 @@
 import { defineComponent as E, computed as h, resolveComponent as n, createBlock as s, openBlock as l, withCtx as e, createVNode as u, createElementBlock as m, Fragment as F, renderList as O, unref as _, createTextVNode as v, toDisplayString as R, mergeProps as D } from "vue";
-import { u as G } from "../composables/useLocale-CPLXo626.js";
+import { u as G } from "../composables/useLocale-DGKqGiq_.js";
 const N = (a, g) => {
   const o = a.__vccOpts || a;
   for (const [i, f] of g)
@@ -89,4 +89,4 @@ export {
   I as L,
   N as _
 };
-//# sourceMappingURL=LanguageSelector-IS48NNS1.js.map
+//# sourceMappingURL=LanguageSelector-DBq94ijx.js.map

@@ -1,5 +1,6 @@
-import { defineComponent as P, ref as C, watch as F, resolveComponent as N, withDirectives as O, createBlock as W, openBlock as j, createSlots as L, withCtx as E, createVNode as D, createTextVNode as q, renderSlot as S, unref as B } from "vue";
-var Z = Object.defineProperty, z = (a, e, s) => e in a ? Z(a, e, { enumerable: !0, configurable: !0, writable: !0, value: s }) : a[e] = s, y = (a, e, s) => z(a, typeof e != "symbol" ? e + "" : e, s);
+import { defineComponent as P, computed as C, ref as W, resolveComponent as N, withDirectives as $, createBlock as j, openBlock as L, createSlots as q, withCtx as E, createVNode as z, createTextVNode as B, renderSlot as S, unref as D } from "vue";
+import { useI18n as J } from "vue-i18n";
+var U = Object.defineProperty, Z = (a, e, s) => e in a ? U(a, e, { enumerable: !0, configurable: !0, writable: !0, value: s }) : a[e] = s, y = (a, e, s) => Z(a, typeof e != "symbol" ? e + "" : e, s);
 const I = {
   "#": { pattern: /[0-9]/ },
   "@": { pattern: /[a-zA-Z]/ },
@@ -11,52 +12,52 @@ const I = {
     maximumFractionDigits: e,
     roundingMode: "trunc"
   });
-}, J = (a, e = !0, s) => {
+}, H = (a, e = !0, s) => {
   var t, n, r, u;
-  const d = ((t = s.number) == null ? void 0 : t.unsigned) !== !0 && a.startsWith("-") ? "-" : "", o = ((n = s.number) == null ? void 0 : n.fraction) ?? 0;
-  let i = V(0, o, s);
-  const p = i.formatToParts(1000.12), c = ((r = p.find((l) => l.type === "group")) == null ? void 0 : r.value) ?? " ", g = ((u = p.find((l) => l.type === "decimal")) == null ? void 0 : u.value) ?? ".", h = x(a, c, g);
-  if (Number.isNaN(parseFloat(h))) return d;
-  const v = h.split(".");
-  if (v[1] != null && v[1].length >= 1) {
-    const l = v[1].length <= o ? v[1].length : o;
-    i = V(l, o, s);
+  const d = ((t = s.number) == null ? void 0 : t.unsigned) !== !0 && a.startsWith("-") ? "-" : "", p = ((n = s.number) == null ? void 0 : n.fraction) ?? 0;
+  let o = V(0, p, s);
+  const f = o.formatToParts(1000.12), l = ((r = f.find((i) => i.type === "group")) == null ? void 0 : r.value) ?? " ", m = ((u = f.find((i) => i.type === "decimal")) == null ? void 0 : u.value) ?? ".", c = x(a, l, m);
+  if (Number.isNaN(parseFloat(c))) return d;
+  const k = c.split(".");
+  if (k[1] != null && k[1].length >= 1) {
+    const i = k[1].length <= p ? k[1].length : p;
+    o = V(i, p, s);
   }
-  let f = i.format(parseFloat(h));
-  return e ? o > 0 && h.endsWith(".") && !h.slice(0, -1).includes(".") && (f += g) : f = x(f, c, g), d + f;
-}, T = (a) => JSON.parse(a.replaceAll("'", '"')), U = (a, e = {}) => {
+  let g = o.format(parseFloat(c));
+  return e ? p > 0 && c.endsWith(".") && !c.slice(0, -1).includes(".") && (g += m) : g = x(g, l, m), d + g;
+}, T = (a) => JSON.parse(a.replaceAll("'", '"')), G = (a, e = {}) => {
   const s = { ...e };
-  a.dataset.maska != null && a.dataset.maska !== "" && (s.mask = H(a.dataset.maska)), a.dataset.maskaEager != null && (s.eager = M(a.dataset.maskaEager)), a.dataset.maskaReversed != null && (s.reversed = M(a.dataset.maskaReversed)), a.dataset.maskaTokensReplace != null && (s.tokensReplace = M(a.dataset.maskaTokensReplace)), a.dataset.maskaTokens != null && (s.tokens = G(a.dataset.maskaTokens));
+  a.dataset.maska != null && a.dataset.maska !== "" && (s.mask = K(a.dataset.maska)), a.dataset.maskaEager != null && (s.eager = M(a.dataset.maskaEager)), a.dataset.maskaReversed != null && (s.reversed = M(a.dataset.maskaReversed)), a.dataset.maskaTokensReplace != null && (s.tokensReplace = M(a.dataset.maskaTokensReplace)), a.dataset.maskaTokens != null && (s.tokens = Q(a.dataset.maskaTokens));
   const t = {};
   return a.dataset.maskaNumberLocale != null && (t.locale = a.dataset.maskaNumberLocale), a.dataset.maskaNumberFraction != null && (t.fraction = parseInt(a.dataset.maskaNumberFraction)), a.dataset.maskaNumberUnsigned != null && (t.unsigned = M(a.dataset.maskaNumberUnsigned)), (a.dataset.maskaNumber != null || Object.values(t).length > 0) && (s.number = t), s;
-}, M = (a) => a !== "" ? !!JSON.parse(a) : !0, H = (a) => a.startsWith("[") && a.endsWith("]") ? T(a) : a, G = (a) => {
+}, M = (a) => a !== "" ? !!JSON.parse(a) : !0, K = (a) => a.startsWith("[") && a.endsWith("]") ? T(a) : a, Q = (a) => {
   if (a.startsWith("{") && a.endsWith("}"))
     return T(a);
   const e = {};
   return a.split("|").forEach((s) => {
     const t = s.split(":");
     e[t[0]] = {
-      pattern: $() ? new RegExp(t[1], "u") : new RegExp(t[1]),
+      pattern: F() ? new RegExp(t[1], "u") : new RegExp(t[1]),
       optional: t[2] === "optional",
       multiple: t[2] === "multiple",
       repeated: t[2] === "repeated"
     };
   }), e;
-}, $ = () => {
+}, F = () => {
   try {
     return new RegExp("\\p{L}", "u"), !0;
   } catch {
     return !1;
   }
 };
-class K {
+class O {
   constructor(e = {}) {
     y(this, "opts", {}), y(this, "memo", /* @__PURE__ */ new Map());
     const s = { ...e };
     if (s.tokens != null) {
       s.tokens = s.tokensReplace ? { ...s.tokens } : { ...I, ...s.tokens };
       for (const t of Object.values(s.tokens))
-        typeof t.pattern == "string" && (t.pattern = $() ? new RegExp(t.pattern, "u") : new RegExp(t.pattern));
+        typeof t.pattern == "string" && (t.pattern = F() ? new RegExp(t.pattern, "u") : new RegExp(t.pattern));
     } else
       s.tokens = I;
     Array.isArray(s.mask) && (s.mask.length > 1 ? s.mask = [...s.mask].sort((t, n) => t.length - n.length) : s.mask = s.mask[0] ?? ""), s.mask === "" && (s.mask = null), this.opts = s;
@@ -97,37 +98,37 @@ class K {
     }), { mask: s.join(""), escaped: t };
   }
   process(e, s, t = !0) {
-    if (this.opts.number != null) return J(e, t, this.opts);
+    if (this.opts.number != null) return H(e, t, this.opts);
     if (s == null) return e;
     const n = `v=${e},mr=${s},m=${t ? 1 : 0}`;
     if (this.memo.has(n)) return this.memo.get(n);
-    const { mask: r, escaped: u } = this.escapeMask(s), d = [], o = this.opts.tokens != null ? this.opts.tokens : {}, i = this.isReversed() ? -1 : 1, p = this.isReversed() ? "unshift" : "push", c = this.isReversed() ? 0 : r.length - 1, g = this.isReversed() ? () => l > -1 && m > -1 : () => l < r.length && m < e.length, h = (b) => !this.isReversed() && b <= c || this.isReversed() && b >= c;
-    let v, f = -1, l = this.isReversed() ? r.length - 1 : 0, m = this.isReversed() ? e.length - 1 : 0, w = !1;
-    for (; g(); ) {
-      const b = r.charAt(l), k = o[b], A = k?.transform != null ? k.transform(e.charAt(m)) : e.charAt(m);
-      if (!u.includes(l) && k != null ? (A.match(k.pattern) != null ? (d[p](A), k.repeated ? (f === -1 ? f = l : l === c && l !== f && (l = f - i), c === f && (l -= i)) : k.multiple && (w = !0, l -= i), l += i) : k.multiple ? w && (l += i, m -= i, w = !1) : A === v ? v = void 0 : k.optional && (l += i, m -= i), m += i) : (t && !this.isEager() && d[p](b), A === b && !this.isEager() ? m += i : v = b, this.isEager() || (l += i)), this.isEager())
-        for (; h(l) && (o[r.charAt(l)] == null || u.includes(l)); ) {
+    const { mask: r, escaped: u } = this.escapeMask(s), d = [], p = this.opts.tokens != null ? this.opts.tokens : {}, o = this.isReversed() ? -1 : 1, f = this.isReversed() ? "unshift" : "push", l = this.isReversed() ? 0 : r.length - 1, m = this.isReversed() ? () => i > -1 && h > -1 : () => i < r.length && h < e.length, c = (b) => !this.isReversed() && b <= l || this.isReversed() && b >= l;
+    let k, g = -1, i = this.isReversed() ? r.length - 1 : 0, h = this.isReversed() ? e.length - 1 : 0, w = !1;
+    for (; m(); ) {
+      const b = r.charAt(i), v = p[b], A = v?.transform != null ? v.transform(e.charAt(h)) : e.charAt(h);
+      if (!u.includes(i) && v != null ? (A.match(v.pattern) != null ? (d[f](A), v.repeated ? (g === -1 ? g = i : i === l && i !== g && (i = g - o), l === g && (i -= o)) : v.multiple && (w = !0, i -= o), i += o) : v.multiple ? w && (i += o, h -= o, w = !1) : A === k ? k = void 0 : v.optional && (i += o, h -= o), h += o) : (t && !this.isEager() && d[f](b), A === b && !this.isEager() ? h += o : k = b, this.isEager() || (i += o)), this.isEager())
+        for (; c(i) && (p[r.charAt(i)] == null || u.includes(i)); ) {
           if (t) {
-            if (d[p](r.charAt(l)), e.charAt(m) === r.charAt(l)) {
-              l += i, m += i;
+            if (d[f](r.charAt(i)), e.charAt(h) === r.charAt(i)) {
+              i += o, h += o;
               continue;
             }
-          } else r.charAt(l) === e.charAt(m) && (m += i);
-          l += i;
+          } else r.charAt(i) === e.charAt(h) && (h += o);
+          i += o;
         }
     }
     return this.memo.set(n, d.join("")), this.memo.get(n);
   }
 }
-class Q {
+class X {
   constructor(e, s = {}) {
     y(this, "items", /* @__PURE__ */ new Map()), y(this, "eventAbortController"), y(this, "onInput", (t) => {
       if (t instanceof CustomEvent && t.type === "input" && !t.isTrusted && !t.bubbles)
         return;
       const n = t.target, r = this.items.get(n);
       if (r === void 0) return;
-      const u = "inputType" in t && t.inputType.startsWith("delete"), d = r.isEager(), o = u && d && r.unmasked(n.value) === "" ? "" : n.value;
-      this.fixCursor(n, u, () => this.setValue(n, o));
+      const u = "inputType" in t && t.inputType.startsWith("delete"), d = r.isEager(), p = u && d && r.unmasked(n.value) === "" ? "" : n.value;
+      this.fixCursor(n, u, () => this.setValue(n, p));
     }), this.options = s, this.eventAbortController = new AbortController(), this.init(this.getInputs(e));
   }
   update(e = {}) {
@@ -147,7 +148,7 @@ class Q {
         const { signal: r } = this.eventAbortController;
         t.addEventListener("input", this.onInput, { capture: !0, signal: r });
       }
-      const n = new K(U(t, s));
+      const n = new O(G(t, s));
       this.items.set(t, n), queueMicrotask(() => this.updateValue(t)), t.selectionStart === null && n.isEager() && console.warn("Maska: input of `%s` type is not supported", t.type);
     }
   }
@@ -162,10 +163,10 @@ class Q {
     var n, r;
     const u = e.selectionStart, d = e.value;
     if (t(), u === null || u === d.length && !s) return;
-    const o = e.value, i = d.slice(0, u), p = o.slice(0, u), c = (n = this.processInput(e, i)) == null ? void 0 : n.unmasked, g = (r = this.processInput(e, p)) == null ? void 0 : r.unmasked;
-    if (c === void 0 || g === void 0) return;
-    let h = u;
-    i !== p && (h += s ? o.length - d.length : c.length - g.length), e.setSelectionRange(h, h);
+    const p = e.value, o = d.slice(0, u), f = p.slice(0, u), l = (n = this.processInput(e, o)) == null ? void 0 : n.unmasked, m = (r = this.processInput(e, f)) == null ? void 0 : r.unmasked;
+    if (l === void 0 || m === void 0) return;
+    let c = u;
+    o !== f && (c += s ? p.length - d.length : l.length - m.length), e.setSelectionRange(c, c);
   }
   setValue(e, s) {
     const t = this.processInput(e, s);
@@ -184,11 +185,11 @@ class Q {
     };
   }
 }
-const R = /* @__PURE__ */ new WeakMap(), X = (a, e) => {
+const R = /* @__PURE__ */ new WeakMap(), Y = (a, e) => {
   if (a.arg == null || a.instance == null) return;
   const s = "setup" in a.instance.$.type;
   a.arg in a.instance ? a.instance[a.arg] = e : s && console.warn("Maska: please expose `%s` using defineExpose", a.arg);
-}, Y = (a, e) => {
+}, _ = (a, e) => {
   var s;
   const t = a instanceof HTMLInputElement ? a : a.querySelector("input");
   if (t == null || t?.type === "file") return;
@@ -196,16 +197,16 @@ const R = /* @__PURE__ */ new WeakMap(), X = (a, e) => {
   if (e.value != null && (n = typeof e.value == "string" ? { mask: e.value } : { ...e.value }), e.arg != null) {
     const r = (u) => {
       const d = e.modifiers.unmasked ? u.unmasked : e.modifiers.completed ? u.completed : u.masked;
-      X(e, d);
+      Y(e, d);
     };
     n.onMaska = n.onMaska == null ? r : Array.isArray(n.onMaska) ? [...n.onMaska, r] : [n.onMaska, r];
   }
-  R.has(t) ? (s = R.get(t)) == null || s.update(n) : R.set(t, new Q(t, n));
-}, ee = /* @__PURE__ */ P({
+  R.has(t) ? (s = R.get(t)) == null || s.update(n) : R.set(t, new X(t, n));
+}, se = /* @__PURE__ */ P({
   __name: "CepField",
   props: {
     modelValue: { default: "" },
-    label: { default: "ZIP Code" },
+    label: { default: void 0 },
     rules: { default: () => [] },
     disabled: { type: Boolean, default: !1 },
     hint: { default: "" },
@@ -213,81 +214,77 @@ const R = /* @__PURE__ */ new WeakMap(), X = (a, e) => {
   },
   emits: ["update:modelValue", "address-found", "address-not-found"],
   setup(a, { emit: e }) {
-    const s = a, t = e, n = C(""), r = C(!1), u = {
+    const s = a, t = e;
+    let n;
+    try {
+      ({ t: n } = J());
+    } catch {
+      n = (l) => l;
+    }
+    const r = C(() => s.label ?? n("address.zipCode")), u = new O({ mask: "#####-###", eager: !0 }), d = C(() => u.masked(s.modelValue ?? "")), p = W(!1), o = {
       mask: "#####-###",
       eager: !0,
-      onMaska: (o) => {
-        t("update:modelValue", o.unmasked), o.completed && d(o.unmasked);
+      onMaska: (l) => {
+        t("update:modelValue", l.unmasked), l.completed && f(l.unmasked);
       }
     };
-    async function d(o) {
-      r.value = !0;
+    async function f(l) {
+      p.value = !0;
       try {
-        const p = await (await fetch(`https://viacep.com.br/ws/${o}/json/`)).json();
-        p.erro ? t("address-not-found") : t("address-found", p);
+        const c = await (await fetch(`https://viacep.com.br/ws/${l}/json/`)).json();
+        c.erro ? t("address-not-found") : t("address-found", c);
       } catch {
         t("address-not-found");
       } finally {
-        r.value = !1;
+        p.value = !1;
       }
     }
-    return F(
-      () => s.modelValue,
-      (o) => {
-        const i = (o ?? "").replace(/\D/g, "").slice(0, 8);
-        if (!i) {
-          n.value = "";
-          return;
-        }
-        n.value = i.length > 5 ? `${i.slice(0, 5)}-${i.slice(5)}` : i;
-      },
-      { immediate: !0 }
-    ), (o, i) => {
-      const p = N("v-icon"), c = N("v-text-field");
-      return O((j(), W(c, {
-        "model-value": n.value,
-        label: a.label,
+    return (l, m) => {
+      const c = N("v-icon"), k = N("v-text-field");
+      return $((L(), j(k, {
+        "model-value": d.value,
+        label: r.value,
         rules: a.rules,
         disabled: a.disabled,
         hint: a.hint,
         "persistent-hint": !!a.hint,
         variant: a.variant,
-        loading: r.value,
+        loading: p.value,
         inputmode: "numeric"
-      }, L({
+      }, q({
         "prepend-inner": E(() => [
-          D(p, null, {
-            default: E(() => [...i[0] || (i[0] = [
-              q("mdi-map-marker-outline", -1)
+          z(c, null, {
+            default: E(() => [...m[0] || (m[0] = [
+              B("mdi-map-marker-outline", -1)
             ])]),
             _: 1
           })
         ]),
         _: 2
       }, [
-        o.$slots.prepend ? {
+        l.$slots.prepend ? {
           name: "prepend",
           fn: E(() => [
-            S(o.$slots, "prepend")
+            S(l.$slots, "prepend")
           ]),
           key: "0"
         } : void 0,
-        o.$slots.append ? {
+        l.$slots.append ? {
           name: "append",
           fn: E(() => [
-            S(o.$slots, "append")
+            S(l.$slots, "append")
           ]),
           key: "1"
         } : void 0
       ]), 1032, ["model-value", "label", "rules", "disabled", "hint", "persistent-hint", "variant", "loading"])), [
-        [B(Y), u]
+        [D(_), o]
       ]);
     };
   }
 });
 export {
-  K as O,
-  ee as _,
-  Y as k
+  O,
+  se as _,
+  _ as k
 };
-//# sourceMappingURL=inputs-CepField-DwNeO2Ij.js.map
+//# sourceMappingURL=inputs-CepField-D19j-V9y.js.map
