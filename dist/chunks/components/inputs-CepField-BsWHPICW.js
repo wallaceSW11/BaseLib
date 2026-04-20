@@ -1,4 +1,4 @@
-import { defineComponent as P, computed as C, ref as W, resolveComponent as N, withDirectives as $, createBlock as j, openBlock as L, createSlots as q, withCtx as E, createVNode as z, createTextVNode as B, renderSlot as S, unref as D } from "vue";
+import { defineComponent as P, computed as S, ref as W, resolveComponent as C, withDirectives as $, createBlock as j, openBlock as L, createSlots as q, withCtx as E, createVNode as z, createTextVNode as B, renderSlot as N, unref as D } from "vue";
 import { useI18n as J } from "vue-i18n";
 var U = Object.defineProperty, Z = (a, e, s) => e in a ? U(a, e, { enumerable: !0, configurable: !0, writable: !0, value: s }) : a[e] = s, y = (a, e, s) => Z(a, typeof e != "symbol" ? e + "" : e, s);
 const I = {
@@ -14,17 +14,17 @@ const I = {
   });
 }, H = (a, e = !0, s) => {
   var t, n, r, u;
-  const d = ((t = s.number) == null ? void 0 : t.unsigned) !== !0 && a.startsWith("-") ? "-" : "", p = ((n = s.number) == null ? void 0 : n.fraction) ?? 0;
-  let o = V(0, p, s);
+  const p = ((t = s.number) == null ? void 0 : t.unsigned) !== !0 && a.startsWith("-") ? "-" : "", d = ((n = s.number) == null ? void 0 : n.fraction) ?? 0;
+  let o = V(0, d, s);
   const f = o.formatToParts(1000.12), l = ((r = f.find((i) => i.type === "group")) == null ? void 0 : r.value) ?? " ", m = ((u = f.find((i) => i.type === "decimal")) == null ? void 0 : u.value) ?? ".", c = x(a, l, m);
-  if (Number.isNaN(parseFloat(c))) return d;
+  if (Number.isNaN(parseFloat(c))) return p;
   const k = c.split(".");
   if (k[1] != null && k[1].length >= 1) {
-    const i = k[1].length <= p ? k[1].length : p;
-    o = V(i, p, s);
+    const i = k[1].length <= d ? k[1].length : d;
+    o = V(i, d, s);
   }
   let g = o.format(parseFloat(c));
-  return e ? p > 0 && c.endsWith(".") && !c.slice(0, -1).includes(".") && (g += m) : g = x(g, l, m), d + g;
+  return e ? d > 0 && c.endsWith(".") && !c.slice(0, -1).includes(".") && (g += m) : g = x(g, l, m), p + g;
 }, T = (a) => JSON.parse(a.replaceAll("'", '"')), G = (a, e = {}) => {
   const s = { ...e };
   a.dataset.maska != null && a.dataset.maska !== "" && (s.mask = K(a.dataset.maska)), a.dataset.maskaEager != null && (s.eager = M(a.dataset.maskaEager)), a.dataset.maskaReversed != null && (s.reversed = M(a.dataset.maskaReversed)), a.dataset.maskaTokensReplace != null && (s.tokensReplace = M(a.dataset.maskaTokensReplace)), a.dataset.maskaTokens != null && (s.tokens = Q(a.dataset.maskaTokens));
@@ -102,14 +102,14 @@ class O {
     if (s == null) return e;
     const n = `v=${e},mr=${s},m=${t ? 1 : 0}`;
     if (this.memo.has(n)) return this.memo.get(n);
-    const { mask: r, escaped: u } = this.escapeMask(s), d = [], p = this.opts.tokens != null ? this.opts.tokens : {}, o = this.isReversed() ? -1 : 1, f = this.isReversed() ? "unshift" : "push", l = this.isReversed() ? 0 : r.length - 1, m = this.isReversed() ? () => i > -1 && h > -1 : () => i < r.length && h < e.length, c = (b) => !this.isReversed() && b <= l || this.isReversed() && b >= l;
+    const { mask: r, escaped: u } = this.escapeMask(s), p = [], d = this.opts.tokens != null ? this.opts.tokens : {}, o = this.isReversed() ? -1 : 1, f = this.isReversed() ? "unshift" : "push", l = this.isReversed() ? 0 : r.length - 1, m = this.isReversed() ? () => i > -1 && h > -1 : () => i < r.length && h < e.length, c = (b) => !this.isReversed() && b <= l || this.isReversed() && b >= l;
     let k, g = -1, i = this.isReversed() ? r.length - 1 : 0, h = this.isReversed() ? e.length - 1 : 0, w = !1;
     for (; m(); ) {
-      const b = r.charAt(i), v = p[b], A = v?.transform != null ? v.transform(e.charAt(h)) : e.charAt(h);
-      if (!u.includes(i) && v != null ? (A.match(v.pattern) != null ? (d[f](A), v.repeated ? (g === -1 ? g = i : i === l && i !== g && (i = g - o), l === g && (i -= o)) : v.multiple && (w = !0, i -= o), i += o) : v.multiple ? w && (i += o, h -= o, w = !1) : A === k ? k = void 0 : v.optional && (i += o, h -= o), h += o) : (t && !this.isEager() && d[f](b), A === b && !this.isEager() ? h += o : k = b, this.isEager() || (i += o)), this.isEager())
-        for (; c(i) && (p[r.charAt(i)] == null || u.includes(i)); ) {
+      const b = r.charAt(i), v = d[b], A = v?.transform != null ? v.transform(e.charAt(h)) : e.charAt(h);
+      if (!u.includes(i) && v != null ? (A.match(v.pattern) != null ? (p[f](A), v.repeated ? (g === -1 ? g = i : i === l && i !== g && (i = g - o), l === g && (i -= o)) : v.multiple && (w = !0, i -= o), i += o) : v.multiple ? w && (i += o, h -= o, w = !1) : A === k ? k = void 0 : v.optional && (i += o, h -= o), h += o) : (t && !this.isEager() && p[f](b), A === b && !this.isEager() ? h += o : k = b, this.isEager() || (i += o)), this.isEager())
+        for (; c(i) && (d[r.charAt(i)] == null || u.includes(i)); ) {
           if (t) {
-            if (d[f](r.charAt(i)), e.charAt(h) === r.charAt(i)) {
+            if (p[f](r.charAt(i)), e.charAt(h) === r.charAt(i)) {
               i += o, h += o;
               continue;
             }
@@ -117,7 +117,7 @@ class O {
           i += o;
         }
     }
-    return this.memo.set(n, d.join("")), this.memo.get(n);
+    return this.memo.set(n, p.join("")), this.memo.get(n);
   }
 }
 class X {
@@ -127,8 +127,8 @@ class X {
         return;
       const n = t.target, r = this.items.get(n);
       if (r === void 0) return;
-      const u = "inputType" in t && t.inputType.startsWith("delete"), d = r.isEager(), p = u && d && r.unmasked(n.value) === "" ? "" : n.value;
-      this.fixCursor(n, u, () => this.setValue(n, p));
+      const u = "inputType" in t && t.inputType.startsWith("delete"), p = r.isEager(), d = u && p && r.unmasked(n.value) === "" ? "" : n.value;
+      this.fixCursor(n, u, () => this.setValue(n, d));
     }), this.options = s, this.eventAbortController = new AbortController(), this.init(this.getInputs(e));
   }
   update(e = {}) {
@@ -161,12 +161,12 @@ class X {
   }
   fixCursor(e, s, t) {
     var n, r;
-    const u = e.selectionStart, d = e.value;
-    if (t(), u === null || u === d.length && !s) return;
-    const p = e.value, o = d.slice(0, u), f = p.slice(0, u), l = (n = this.processInput(e, o)) == null ? void 0 : n.unmasked, m = (r = this.processInput(e, f)) == null ? void 0 : r.unmasked;
+    const u = e.selectionStart, p = e.value;
+    if (t(), u === null || u === p.length && !s) return;
+    const d = e.value, o = p.slice(0, u), f = d.slice(0, u), l = (n = this.processInput(e, o)) == null ? void 0 : n.unmasked, m = (r = this.processInput(e, f)) == null ? void 0 : r.unmasked;
     if (l === void 0 || m === void 0) return;
     let c = u;
-    o !== f && (c += s ? p.length - d.length : l.length - m.length), e.setSelectionRange(c, c);
+    o !== f && (c += s ? d.length - p.length : l.length - m.length), e.setSelectionRange(c, c);
   }
   setValue(e, s) {
     const t = this.processInput(e, s);
@@ -196,8 +196,8 @@ const R = /* @__PURE__ */ new WeakMap(), Y = (a, e) => {
   let n = {};
   if (e.value != null && (n = typeof e.value == "string" ? { mask: e.value } : { ...e.value }), e.arg != null) {
     const r = (u) => {
-      const d = e.modifiers.unmasked ? u.unmasked : e.modifiers.completed ? u.completed : u.masked;
-      Y(e, d);
+      const p = e.modifiers.unmasked ? u.unmasked : e.modifiers.completed ? u.completed : u.masked;
+      Y(e, p);
     };
     n.onMaska = n.onMaska == null ? r : Array.isArray(n.onMaska) ? [...n.onMaska, r] : [n.onMaska, r];
   }
@@ -217,11 +217,11 @@ const R = /* @__PURE__ */ new WeakMap(), Y = (a, e) => {
     const s = a, t = e;
     let n;
     try {
-      ({ t: n } = J());
+      ({ t: n } = J({ useScope: "global" }));
     } catch {
       n = (l) => l;
     }
-    const r = C(() => s.label ?? n("address.zipCode")), u = new O({ mask: "#####-###", eager: !0 }), d = C(() => u.masked(s.modelValue ?? "")), p = W(!1), o = {
+    const r = S(() => s.label ?? n("address.zipCode")), u = new O({ mask: "#####-###", eager: !0 }), p = S(() => u.masked(s.modelValue ?? "")), d = W(!1), o = {
       mask: "#####-###",
       eager: !0,
       onMaska: (l) => {
@@ -229,27 +229,27 @@ const R = /* @__PURE__ */ new WeakMap(), Y = (a, e) => {
       }
     };
     async function f(l) {
-      p.value = !0;
+      d.value = !0;
       try {
         const c = await (await fetch(`https://viacep.com.br/ws/${l}/json/`)).json();
         c.erro ? t("address-not-found") : t("address-found", c);
       } catch {
         t("address-not-found");
       } finally {
-        p.value = !1;
+        d.value = !1;
       }
     }
     return (l, m) => {
-      const c = N("v-icon"), k = N("v-text-field");
+      const c = C("v-icon"), k = C("v-text-field");
       return $((L(), j(k, {
-        "model-value": d.value,
+        "model-value": p.value,
         label: r.value,
         rules: a.rules,
         disabled: a.disabled,
         hint: a.hint,
         "persistent-hint": !!a.hint,
         variant: a.variant,
-        loading: p.value,
+        loading: d.value,
         inputmode: "numeric"
       }, q({
         "prepend-inner": E(() => [
@@ -265,14 +265,14 @@ const R = /* @__PURE__ */ new WeakMap(), Y = (a, e) => {
         l.$slots.prepend ? {
           name: "prepend",
           fn: E(() => [
-            S(l.$slots, "prepend")
+            N(l.$slots, "prepend")
           ]),
           key: "0"
         } : void 0,
         l.$slots.append ? {
           name: "append",
           fn: E(() => [
-            S(l.$slots, "append")
+            N(l.$slots, "append")
           ]),
           key: "1"
         } : void 0
@@ -287,4 +287,4 @@ export {
   se as _,
   _ as k
 };
-//# sourceMappingURL=inputs-CepField-D19j-V9y.js.map
+//# sourceMappingURL=inputs-CepField-BsWHPICW.js.map

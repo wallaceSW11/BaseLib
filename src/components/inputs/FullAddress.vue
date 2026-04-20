@@ -115,7 +115,7 @@ const emit = defineEmits<{
 
 let t: (key: string) => string;
 try {
-  ({ t } = useI18n());
+  ({ t } = useI18n({ useScope: 'global' }));
 } catch {
   t = (key: string) => key;
 }

@@ -302,9 +302,14 @@ const phone = ref('')
 </template>
 ```
 
-**Props**: `modelValue`, `label`, `rules`, `disabled`, `hint`, `variant`
+**Props**: `modelValue`, `label`, `rules`, `disabled`, `hint`, `icon` (default: `mdi-phone-outline`), `variant`
 
 **Features**: Auto mask `(XX) XXXX-XXXX` (landline) or `(XX) XXXXX-XXXX` (mobile), `v-model` returns only digits, powered by maska
+
+```vue
+<!-- WhatsApp icon example -->
+<PhoneField v-model="phone" icon="mdi-whatsapp" label="WhatsApp" :rules="[]" />
+```
 
 #### CepField
 
@@ -375,6 +380,7 @@ const address = ref<Address>({
 - `modelValue` — `Address` object
 - `disabled` — locks all fields (default: `false`)
 - `disabledFields` — locks only auto-filled fields (street, neighborhood, city, state) after a successful ZIP lookup (default: `false`)
+- `labels` — partial `AddressLabels` object to override individual field labels (falls back to i18n)
 - `variant`
 
 **Address interface**:
@@ -388,6 +394,26 @@ interface Address {
   city: string
   state: string  // UF, e.g. "SP"
 }
+```
+
+**AddressLabels interface** (all optional):
+```ts
+interface AddressLabels {
+  zipCode?: string
+  street?: string
+  number?: string
+  complement?: string
+  neighborhood?: string
+  city?: string
+  state?: string
+}
+```
+
+**i18n**: Labels are resolved automatically from the active locale (`pt-BR` → "CEP", "Logradouro", etc. / `en-US` → "ZIP Code", "Street", etc.). Use `labels` prop to override specific fields.
+
+```vue
+<!-- Override only what you need -->
+<FullAddress v-model="address" :labels="{ street: 'Rua / Av.' }" />
 ```
 
 **Features**: Integrates `CepField` + ViaCEP auto-fill, `v-select` with all 27 Brazilian states, fields unlock automatically if ZIP is not found
@@ -489,7 +515,7 @@ import {
 
 // Types
 import type { ModalAction } from '@wallacesw11/base-lib/components'
-import type { Address } from '@wallacesw11/base-lib/components'
+import type { Address, AddressLabels } from '@wallacesw11/base-lib/components'
 import type { 
   NotifyType, 
   LoadingComponentRef, 

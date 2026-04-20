@@ -1,6 +1,6 @@
 import { defineComponent as g, computed as c, reactive as y, ref as F, watch as V, resolveComponent as f, createBlock as G, openBlock as B, withCtx as i, createVNode as d } from "vue";
 import { useI18n as E } from "vue-i18n";
-import { _ as h } from "./inputs-CepField-D19j-V9y.js";
+import { _ as h } from "./inputs-CepField-BsWHPICW.js";
 const x = /* @__PURE__ */ g({
   __name: "FullAddress",
   props: {
@@ -15,7 +15,7 @@ const x = /* @__PURE__ */ g({
     const n = a, A = p;
     let u;
     try {
-      ({ t: u } = E());
+      ({ t: u } = E({ useScope: "global" }));
     } catch {
       u = (o) => o;
     }
@@ -40,7 +40,7 @@ const x = /* @__PURE__ */ g({
     function P(o) {
       e.street = o.logradouro ?? "", e.neighborhood = o.bairro ?? "", e.city = o.localidade ?? "", e.state = o.uf ?? "", v.value = !0;
     }
-    function R() {
+    function S() {
       v.value = !1;
     }
     V(
@@ -52,7 +52,7 @@ const x = /* @__PURE__ */ g({
       (o) => A("update:modelValue", { ...o }),
       { deep: !0 }
     );
-    const S = [
+    const R = [
       { uf: "AC", name: "AC - Acre" },
       { uf: "AL", name: "AL - Alagoas" },
       { uf: "AP", name: "AP - Amapá" },
@@ -95,7 +95,7 @@ const x = /* @__PURE__ */ g({
                 "onUpdate:modelValue": l[0] || (l[0] = (t) => e.zipCode = t),
                 disabled: a.disabled,
                 onAddressFound: P,
-                onAddressNotFound: R
+                onAddressNotFound: S
               }, null, 8, ["modelValue", "disabled"])
             ]),
             _: 1
@@ -184,7 +184,7 @@ const x = /* @__PURE__ */ g({
                 modelValue: e.state,
                 "onUpdate:modelValue": l[6] || (l[6] = (t) => e.state = t),
                 label: m.value.state,
-                items: S,
+                items: R,
                 "item-title": "name",
                 "item-value": "uf",
                 disabled: a.disabled || b.value,
@@ -202,4 +202,4 @@ const x = /* @__PURE__ */ g({
 export {
   x as _
 };
-//# sourceMappingURL=inputs-FullAddress-CzQrn6sz.js.map
+//# sourceMappingURL=inputs-FullAddress-NS5pfVhn.js.map
