@@ -71,6 +71,7 @@
 <script setup lang="ts">
 import { reactive, ref, watch, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { VRow, VCol, VTextField, VSelect } from 'vuetify/components';
 import CepField, { type ViaCepResponse } from './CepField.vue';
 
 export interface Address {
