@@ -48,7 +48,7 @@ const props = withDefaults(defineProps<Props>(), {
   rules: () => [],
   hint: '',
   icon: 'mdi-phone-outline',
-  variant: 'underlined'
+  variant: 'underlined',
 });
 
 const emit = defineEmits<{
@@ -66,6 +66,6 @@ const maskOptions = {
   eager: true,
   onMaska: (detail: MaskaDetail) => {
     emit('update:modelValue', detail.unmasked);
-  }
+  },
 };
 </script>

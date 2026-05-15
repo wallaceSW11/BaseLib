@@ -5,13 +5,13 @@
 </template>
 
 <script setup lang="ts">
-import BaseButton, { type BaseButtonProps } from './BaseButton.vue'
+import BaseButton, { type BaseButtonProps } from './BaseButton.vue';
 
-interface Props extends Omit<BaseButtonProps, 'color' | 'variant'> {}
+type Props = Omit<BaseButtonProps, 'color' | 'variant'>;
 
-defineProps<Props>()
+defineProps<Props>();
 
 defineEmits<{
-  click: [event: MouseEvent]
-}>()
+  click: [event: MouseEvent];
+}>();
 </script>

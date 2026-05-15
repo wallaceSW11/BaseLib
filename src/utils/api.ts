@@ -1,11 +1,7 @@
-import axios, {
-  type InternalAxiosRequestConfig,
-  type AxiosResponse,
-  type AxiosError,
-} from "axios";
-import { loading } from "./loading";
-import { notify } from "./notify";
-import { API_TIMEOUT } from "./types";
+import axios, { type InternalAxiosRequestConfig, type AxiosResponse, type AxiosError } from 'axios';
+import { loading } from './loading';
+import { notify } from './notify';
+import { API_TIMEOUT } from './types';
 
 export interface ApiConfig {
   baseURL?: string;
@@ -17,14 +13,14 @@ export interface ApiConfig {
 }
 
 const defaultConfig: ApiConfig = {
-  baseURL: import.meta.env.VITE_API_BASE_URL || "/api",
+  baseURL: import.meta.env.VITE_API_BASE_URL || '/api',
   timeout: API_TIMEOUT,
   showLoadingOnMutations: true,
   showErrorNotifications: true,
-  authTokenKey: "auth_token",
+  authTokenKey: 'auth_token',
   onUnauthorized: () => {
-    localStorage.removeItem("auth_token");
-    window.location.href = "/login";
+    localStorage.removeItem('auth_token');
+    window.location.href = '/login';
   },
 };
 
@@ -34,13 +30,13 @@ const api = axios.create({
   baseURL: currentConfig.baseURL,
   timeout: currentConfig.timeout,
   headers: {
-    "Content-Type": "application/json",
+    'Content-Type': 'application/json',
   },
 });
 
 export function configureApi(config: Partial<ApiConfig>) {
   currentConfig = { ...currentConfig, ...config };
-  
+
   if (config.baseURL) {
     api.defaults.baseURL = config.baseURL;
   }
@@ -58,8 +54,8 @@ function addAuthTokenToRequest(config: InternalAxiosRequestConfig) {
 }
 
 function showLoadingForMutations(config: InternalAxiosRequestConfig) {
-  if (currentConfig.showLoadingOnMutations && config.method !== "get") {
-    loading.show("Processing...");
+  if (currentConfig.showLoadingOnMutations && config.method !== 'get') {
+    loading.show('Processing...');
   }
 }
 
@@ -72,12 +68,12 @@ api.interceptors.request.use(
   (error: AxiosError) => {
     loading.hide();
     return Promise.reject(error);
-  }
+  },
 );
 
 function handleUnauthorized() {
   if (currentConfig.showErrorNotifications) {
-    notify.error("Unauthorized", "Please log in again");
+    notify.error('Unauthorized', 'Please log in again');
   }
   if (currentConfig.onUnauthorized) {
     currentConfig.onUnauthorized();
@@ -91,37 +87,31 @@ function handleErrorResponse(error: AxiosError) {
 
   if (!error.response) {
     if (error.request) {
-      notify.error("Network Error", "Unable to connect to the server");
+      notify.error('Network Error', 'Unable to connect to the server');
     } else {
-      notify.error("Error", error.message);
+      notify.error('Error', error.message);
     }
     return;
   }
 
   const status = error.response.status;
-  const message = (error.response.data as any)?.message || "An error occurred";
+  const message = (error.response.data as any)?.message || 'An error occurred';
 
   switch (status) {
     case 401:
       handleUnauthorized();
       break;
     case 403:
-      notify.error(
-        "Forbidden",
-        "You do not have permission to perform this action"
-      );
+      notify.error('Forbidden', 'You do not have permission to perform this action');
       break;
     case 404:
-      notify.error("Not Found", "The requested resource was not found");
+      notify.error('Not Found', 'The requested resource was not found');
       break;
     case 500:
-      notify.error(
-        "Server Error",
-        "Internal server error. Please try again later."
-      );
+      notify.error('Server Error', 'Internal server error. Please try again later.');
       break;
     default:
-      notify.error("Error", message);
+      notify.error('Error', message);
   }
 }
 
@@ -134,7 +124,7 @@ api.interceptors.response.use(
     loading.hide();
     handleErrorResponse(error);
     return Promise.reject(error);
-  }
+  },
 );
 
 export default api;

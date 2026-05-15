@@ -18,15 +18,15 @@
 
 <script setup lang="ts">
 export interface BaseButtonProps {
-  prependIcon?: string
-  appendIcon?: string
-  text?: string
-  disabled?: boolean
-  loading?: boolean
-  color?: string
-  variant?: 'flat' | 'text' | 'elevated' | 'tonal' | 'outlined' | 'plain'
-  size?: 'x-small' | 'small' | 'default' | 'large' | 'x-large'
-  block?: boolean
+  prependIcon?: string;
+  appendIcon?: string;
+  text?: string;
+  disabled?: boolean;
+  loading?: boolean;
+  color?: string;
+  variant?: 'flat' | 'text' | 'elevated' | 'tonal' | 'outlined' | 'plain';
+  size?: 'x-small' | 'small' | 'default' | 'large' | 'x-large';
+  block?: boolean;
 }
 
 withDefaults(defineProps<BaseButtonProps>(), {
@@ -39,13 +39,13 @@ withDefaults(defineProps<BaseButtonProps>(), {
   variant: 'elevated',
   size: 'default',
   block: false,
-})
+});
 
 const emit = defineEmits<{
-  click: [event: MouseEvent]
-}>()
+  click: [event: MouseEvent];
+}>();
 
 const handleClick = (event: MouseEvent) => {
-  emit('click', event)
-}
+  emit('click', event);
+};
 </script>

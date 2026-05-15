@@ -19,21 +19,11 @@
     </v-col>
 
     <v-col cols="12" md="3">
-      <v-text-field
-        v-model="internal.number"
-        :label="l.number"
-        :disabled="disabled"
-        :variant="variant"
-      />
+      <v-text-field v-model="internal.number" :label="l.number" :disabled="disabled" :variant="variant" />
     </v-col>
 
     <v-col cols="12" md="5">
-      <v-text-field
-        v-model="internal.complement"
-        :label="l.complement"
-        :disabled="disabled"
-        :variant="variant"
-      />
+      <v-text-field v-model="internal.complement" :label="l.complement" :disabled="disabled" :variant="variant" />
     </v-col>
 
     <v-col cols="12" md="4">
@@ -122,13 +112,13 @@ try {
 }
 
 const l = computed(() => ({
-  zipCode:      props.labels.zipCode      ?? t('address.zipCode'),
-  street:       props.labels.street       ?? t('address.street'),
-  number:       props.labels.number       ?? t('address.number'),
-  complement:   props.labels.complement   ?? t('address.complement'),
+  zipCode: props.labels.zipCode ?? t('address.zipCode'),
+  street: props.labels.street ?? t('address.street'),
+  number: props.labels.number ?? t('address.number'),
+  complement: props.labels.complement ?? t('address.complement'),
   neighborhood: props.labels.neighborhood ?? t('address.neighborhood'),
-  city:         props.labels.city         ?? t('address.city'),
-  state:        props.labels.state        ?? t('address.state'),
+  city: props.labels.city ?? t('address.city'),
+  state: props.labels.state ?? t('address.state'),
 }));
 
 const internal = reactive<Address>({
@@ -160,14 +150,10 @@ function onAddressNotFound() {
 watch(
   () => props.modelValue,
   (val) => Object.assign(internal, val),
-  { deep: true }
+  { deep: true },
 );
 
-watch(
-  internal,
-  (val) => emit('update:modelValue', { ...val }),
-  { deep: true }
-);
+watch(internal, (val) => emit('update:modelValue', { ...val }), { deep: true });
 
 const brazilianStates = [
   { uf: 'AC', name: 'AC - Acre' },

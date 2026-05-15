@@ -1,13 +1,13 @@
-import { getCurrentInstance } from "vue";
-import type { notify as notifyFn } from "../utils/notify";
-import type { loading as loadingFn } from "../utils/loading";
-import type { confirm as confirmFn } from "../utils/confirm";
+import { getCurrentInstance } from 'vue';
+import type { notify as notifyFn } from '../utils/notify';
+import type { loading as loadingFn } from '../utils/loading';
+import type { confirm as confirmFn } from '../utils/confirm';
 
 export function useGlobals() {
   const instance = getCurrentInstance();
 
   if (!instance) {
-    throw new Error("useGlobals must be called within setup()");
+    throw new Error('useGlobals must be called within setup()');
   }
 
   const $notify = instance.appContext.config.globalProperties.$notify;

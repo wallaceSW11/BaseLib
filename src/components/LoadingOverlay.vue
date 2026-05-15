@@ -15,42 +15,42 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useI18n } from 'vue-i18n'
-import { LOADING_CONTENT_DELAY } from '../utils/types'
-import { useThemeStore } from '../stores/theme'
+import { ref } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { LOADING_CONTENT_DELAY } from '../utils/types';
+import { useThemeStore } from '../stores/theme';
 
-const { t } = useI18n()
-const themeStore = useThemeStore()
+const { t } = useI18n();
+const themeStore = useThemeStore();
 
-const isVisible = ref(false)
-const showContent = ref(false)
-const currentMessage = ref(t('common.loading'))
-let contentTimeoutId: ReturnType<typeof setTimeout> | null = null
+const isVisible = ref(false);
+const showContent = ref(false);
+const currentMessage = ref(t('common.loading'));
+let contentTimeoutId: ReturnType<typeof setTimeout> | null = null;
 
 const show = (message?: string) => {
-  currentMessage.value = message || t('common.loading')
-  isVisible.value = true
+  currentMessage.value = message || t('common.loading');
+  isVisible.value = true;
 
   // Show content after configured delay
   contentTimeoutId = setTimeout(() => {
-    showContent.value = true
-  }, LOADING_CONTENT_DELAY)
-}
+    showContent.value = true;
+  }, LOADING_CONTENT_DELAY);
+};
 
 const hide = () => {
   if (contentTimeoutId) {
-    clearTimeout(contentTimeoutId)
-    contentTimeoutId = null
+    clearTimeout(contentTimeoutId);
+    contentTimeoutId = null;
   }
-  showContent.value = false
-  isVisible.value = false
-}
+  showContent.value = false;
+  isVisible.value = false;
+};
 
 defineExpose({
   show,
   hide,
-})
+});
 </script>
 
 <style scoped>

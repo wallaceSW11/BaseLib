@@ -37,7 +37,7 @@ import {
   VList,
   VListItem,
   VListItemTitle,
-} from "vuetify/components";
+} from 'vuetify/components';
 
 export const requiredVuetifyComponents: Record<string, any> = {
   VAlert,

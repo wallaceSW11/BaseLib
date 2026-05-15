@@ -1,25 +1,14 @@
-import { computed } from "vue";
-import { useI18n } from "vue-i18n";
-import {
-  defaultAvailableLocales,
-  type LocaleCode,
-  type LocaleOption,
-} from "../locales";
+import { computed } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { defaultAvailableLocales, type LocaleCode, type LocaleOption } from '../locales';
 
-function loadSavedLocale(
-  availableLocales: readonly LocaleOption[]
-): LocaleCode | null {
-  const savedLocale = localStorage.getItem("locale") as LocaleCode | null;
-  return savedLocale &&
-    availableLocales.some((l: { code: string }) => l.code === savedLocale)
-    ? savedLocale
-    : null;
+function loadSavedLocale(availableLocales: readonly LocaleOption[]): LocaleCode | null {
+  const savedLocale = localStorage.getItem('locale') as LocaleCode | null;
+  return savedLocale && availableLocales.some((l: { code: string }) => l.code === savedLocale) ? savedLocale : null;
 }
 
-export function useLocale(
-  customLocales?: readonly LocaleOption[]
-): {
-  locale: import("vue").ComputedRef<LocaleCode>;
+export function useLocale(customLocales?: readonly LocaleOption[]): {
+  locale: import('vue').ComputedRef<LocaleCode>;
   locales: readonly LocaleOption[];
   setLocale: (newLocale: LocaleCode) => void;
   t: (key: string) => string;
@@ -33,7 +22,7 @@ export function useLocale(
     get: () => locale.value as LocaleCode,
     set: (value: LocaleCode) => {
       locale.value = value;
-      localStorage.setItem("locale", value);
+      localStorage.setItem('locale', value);
     },
   });
 

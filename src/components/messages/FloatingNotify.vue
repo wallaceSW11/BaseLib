@@ -14,44 +14,44 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import { NOTIFY_DURATION, type NotifyType } from '../../utils/types'
+import { ref } from 'vue';
+import { NOTIFY_DURATION, type NotifyType } from '../../utils/types';
 
-const isVisible = ref(false)
-const currentType = ref<NotifyType>('info')
-const currentTitle = ref('')
-const currentMessage = ref('')
-let timeoutId: ReturnType<typeof setTimeout> | null = null
+const isVisible = ref(false);
+const currentType = ref<NotifyType>('info');
+const currentTitle = ref('');
+const currentMessage = ref('');
+let timeoutId: ReturnType<typeof setTimeout> | null = null;
 
 const show = (type: NotifyType, title: string, message = '') => {
   // Clear existing timeout if any
   if (timeoutId) {
-    clearTimeout(timeoutId)
+    clearTimeout(timeoutId);
   }
 
-  currentType.value = type
-  currentTitle.value = title
-  currentMessage.value = message
-  isVisible.value = true
+  currentType.value = type;
+  currentTitle.value = title;
+  currentMessage.value = message;
+  isVisible.value = true;
 
   // Auto-hide after configured duration
   timeoutId = setTimeout(() => {
-    hide()
-  }, NOTIFY_DURATION)
-}
+    hide();
+  }, NOTIFY_DURATION);
+};
 
 const hide = () => {
-  isVisible.value = false
+  isVisible.value = false;
   if (timeoutId) {
-    clearTimeout(timeoutId)
-    timeoutId = null
+    clearTimeout(timeoutId);
+    timeoutId = null;
   }
-}
+};
 
 defineExpose({
   show,
   hide,
-})
+});
 </script>
 
 <style scoped>

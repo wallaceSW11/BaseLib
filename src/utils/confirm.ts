@@ -1,16 +1,16 @@
-import { defineStore } from "pinia";
-import type { ComponentPublicInstance } from "vue";
-import type { ConfirmComponentRef } from "./types";
+import { defineStore } from 'pinia';
+import type { ComponentPublicInstance } from 'vue';
+import type { ConfirmComponentRef } from './types';
 
 export interface ConfirmOptions {
-  persistent?: boolean
-  confirmText?: string
-  cancelText?: string
-  confirmColor?: string
-  cancelColor?: string
+  persistent?: boolean;
+  confirmText?: string;
+  cancelText?: string;
+  confirmColor?: string;
+  cancelColor?: string;
 }
 
-export const useConfirmStore = defineStore("confirm", {
+export const useConfirmStore = defineStore('confirm', {
   state: () => ({
     confirmRef: null as ComponentPublicInstance | null,
   }),
@@ -22,16 +22,12 @@ export const useConfirmStore = defineStore("confirm", {
 });
 
 export const confirm = {
-  show: (
-    title: string, 
-    message: string, 
-    options?: ConfirmOptions
-  ): Promise<boolean> => {
+  show: (title: string, message: string, options?: ConfirmOptions): Promise<boolean> => {
     const store = useConfirmStore();
     const confirmInstance = store.confirmRef as ConfirmComponentRef | null;
 
     if (!confirmInstance || !confirmInstance.ConfirmDialog) {
-      console.error("ConfirmDialog component is not registered");
+      console.error('ConfirmDialog component is not registered');
       return Promise.resolve(false);
     }
 

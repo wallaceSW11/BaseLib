@@ -1,16 +1,16 @@
-import type { App } from "vue";
-import * as componentExports from "./components";
-import globalsPlugin from "./plugins";
-import { ensureVuetify } from "./utils/vuetify-check";
+import type { App } from 'vue';
+import * as componentExports from './components';
+import globalsPlugin from './plugins';
+import { ensureVuetify } from './utils/vuetify-check';
 
 export const components = componentExports;
-export * from "./components";
-export * from "./utils";
-export * from "./composables";
-export * from "./locales";
-export * from "./stores";
-export { default as globalsPlugin } from "./plugins";
-export { requiredVuetifyComponents } from "./vuetifyComponents";
+export * from './components';
+export * from './utils';
+export * from './composables';
+export * from './locales';
+export * from './stores';
+export { default as globalsPlugin } from './plugins';
+export { requiredVuetifyComponents } from './vuetifyComponents';
 
 export default function registerLibComponents(app: App) {
   Object.entries(components).forEach(([name, component]) => {

@@ -1,6 +1,6 @@
 <template>
   <v-tooltip :text="tooltip ?? text" location="top" :disabled="!(tooltip ?? text)">
-    <template v-slot:activator="{ props: tooltipProps }">
+    <template #activator="{ props: tooltipProps }">
       <v-btn
         v-bind="tooltipProps"
         :icon="icon"
@@ -15,11 +15,11 @@
 
 <script setup lang="ts">
 interface Props {
-  icon: string
-  text?: string
-  tooltip?: string
-  color?: string
-  asButton?: boolean
+  icon: string;
+  text?: string;
+  tooltip?: string;
+  color?: string;
+  asButton?: boolean;
 }
 
 withDefaults(defineProps<Props>(), {
@@ -27,9 +27,9 @@ withDefaults(defineProps<Props>(), {
   tooltip: undefined,
   color: 'primary',
   asButton: false,
-})
+});
 
 defineEmits<{
-  (e: 'click', event: MouseEvent): void
-}>()
+  (e: 'click', event: MouseEvent): void;
+}>();
 </script>

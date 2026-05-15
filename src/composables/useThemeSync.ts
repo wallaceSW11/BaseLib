@@ -1,6 +1,6 @@
-import { watch, onMounted } from "vue";
-import { useTheme as useVuetifyTheme } from "vuetify";
-import { useThemeStore } from "../stores/theme";
+import { watch, onMounted } from 'vue';
+import { useTheme as useVuetifyTheme } from 'vuetify';
+import { useThemeStore } from '../stores/theme';
 
 export function useThemeSync() {
   const themeStore = useThemeStore();
@@ -12,8 +12,7 @@ export function useThemeSync() {
     const colors = themeStore.currentColors;
     Object.keys(colors).forEach((key) => {
       if (vuetifyTheme.themes.value[themeStore.currentMode]) {
-        vuetifyTheme.themes.value[themeStore.currentMode].colors[key] =
-          colors[key];
+        vuetifyTheme.themes.value[themeStore.currentMode].colors[key] = colors[key];
       }
     });
   }
@@ -37,7 +36,7 @@ export function useThemeSync() {
     () => themeStore.currentMode,
     () => {
       syncTheme();
-    }
+    },
   );
 
   watch(
@@ -45,7 +44,7 @@ export function useThemeSync() {
     () => {
       syncTheme();
     },
-    { deep: true }
+    { deep: true },
   );
 
   return {

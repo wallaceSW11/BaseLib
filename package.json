@@ -80,6 +80,7 @@
     "vuetify": "^3.0.0"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@mdi/font": "^7.4.47",
     "@types/node": "^24.10.0",
     "@vitejs/plugin-vue": "^6.0.4",
@@ -87,9 +88,12 @@
     "@vue/test-utils": "^2.4.6",
     "axios": "^1.13.5",
     "eslint": "^9.39.0",
+    "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-vue": "^10.8.0",
     "pinia": "^3.0.4",
+    "prettier": "^3.8.3",
     "typescript": "^5.9.3",
+    "typescript-eslint": "^8.59.3",
     "vite": "^7.3.1",
     "vite-plugin-dts": "^4.3.0",
     "vite-plugin-vuetify": "^2.1.3",

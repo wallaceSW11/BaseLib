@@ -1,9 +1,9 @@
-import type { App } from "vue";
-import { notify } from "../utils/notify";
-import { loading } from "../utils/loading";
-import { confirm } from "../utils/confirm";
+import type { App } from 'vue';
+import { notify } from '../utils/notify';
+import { loading } from '../utils/loading';
+import { confirm } from '../utils/confirm';
 
-declare module "vue" {
+declare module 'vue' {
   interface ComponentCustomProperties {
     $notify: typeof notify;
     $loading: typeof loading;

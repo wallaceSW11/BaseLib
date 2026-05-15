@@ -1,8 +1,8 @@
 <template>
-  <v-dialog 
-    v-model="isOpen" 
-    :max-width="maxWidth" 
-    :persistent="persistent" 
+  <v-dialog
+    v-model="isOpen"
+    :max-width="maxWidth"
+    :persistent="persistent"
     :content-class="contentClass ? `${dialogThemeClass} ${contentClass}` : dialogThemeClass"
     :fullscreen="fullscreen"
     scrollable
@@ -10,7 +10,11 @@
     @keydown="handleDialogKeydown"
   >
     <v-card>
-      <v-card-title v-if="title" class="text-h5 d-flex align-center px-6 pt-6" style="word-break: break-word; white-space: normal;">
+      <v-card-title
+        v-if="title"
+        class="text-h5 d-flex align-center px-6 pt-6"
+        style="word-break: break-word; white-space: normal"
+      >
         <v-icon v-if="titleIcon" class="mr-2">{{ titleIcon }}</v-icon>
         <span>{{ title }}</span>
       </v-card-title>
@@ -41,41 +45,41 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, computed, onMounted, onUnmounted } from 'vue'
-import { useTheme } from 'vuetify'
+import { ref, watch, computed, onMounted, onUnmounted } from 'vue';
+import { useTheme } from 'vuetify';
 
-const theme = useTheme()
-const dialogThemeClass = computed(() => `v-theme--${theme.global.name.value}`)
+const theme = useTheme();
+const dialogThemeClass = computed(() => `v-theme--${theme.global.name.value}`);
 
 export interface ModalAction {
-  text: string
-  icon?: string
-  color?: string
-  variant?: 'text' | 'flat' | 'elevated' | 'tonal' | 'outlined' | 'plain'
-  handler?: () => void | Promise<void>
+  text: string;
+  icon?: string;
+  color?: string;
+  variant?: 'text' | 'flat' | 'elevated' | 'tonal' | 'outlined' | 'plain';
+  handler?: () => void | Promise<void>;
 }
 
 interface Props {
-  modelValue: boolean
-  title?: string
-  message?: string
-  maxWidth?: string | number
-  persistent?: boolean
-  actions?: ModalAction[]
+  modelValue: boolean;
+  title?: string;
+  message?: string;
+  maxWidth?: string | number;
+  persistent?: boolean;
+  actions?: ModalAction[];
   /**
    * Classes CSS customizadas para o conteúdo do dialog
    */
-  contentClass?: string
+  contentClass?: string;
   /**
    * Se true, o dialog ocupará toda a tela
    * @default false
    */
-  fullscreen?: boolean
+  fullscreen?: boolean;
   /**
    * Ícone a ser exibido ao lado do título
    * @default undefined
    */
-  titleIcon?: string
+  titleIcon?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -87,101 +91,100 @@ const props = withDefaults(defineProps<Props>(), {
   contentClass: undefined,
   fullscreen: false,
   titleIcon: undefined,
-})
+});
 
 const emit = defineEmits<{
-  'update:modelValue': [value: boolean]
-  close: []
-}>()
+  'update:modelValue': [value: boolean];
+  close: [];
+}>();
 
-const isOpen = ref(props.modelValue)
+const isOpen = ref(props.modelValue);
 
-watch(() => props.modelValue, (newVal) => {
-  isOpen.value = newVal
-})
+watch(
+  () => props.modelValue,
+  (newVal) => {
+    isOpen.value = newVal;
+  },
+);
 
 watch(isOpen, (newVal) => {
-  emit('update:modelValue', newVal)
-})
+  emit('update:modelValue', newVal);
+});
 
 const handleAction = async (action: ModalAction) => {
   if (action.handler) {
-    await action.handler()
+    await action.handler();
   }
-}
+};
 
 // Keyboard shortcuts - captura direto do dialog
 const handleDialogKeydown = (e: KeyboardEvent) => {
-  if (props.actions.length === 0) return
+  if (props.actions.length === 0) return;
 
   // ESC - aciona o botão secundário (cancelar)
   if (e.key === 'Escape') {
-    const cancelAction = props.actions.find(a => 
-      a.color === 'secondary' || a.color === 'error'
-    )
+    const cancelAction = props.actions.find((a) => a.color === 'secondary' || a.color === 'error');
     if (cancelAction) {
-      e.preventDefault()
-      e.stopPropagation()
-      handleAction(cancelAction)
+      e.preventDefault();
+      e.stopPropagation();
+      handleAction(cancelAction);
     }
   }
 
   // ENTER - aciona o botão primário (confirmar)
   if (e.key === 'Enter' && !e.shiftKey && !e.ctrlKey && !e.altKey) {
     // Ignora se o foco está em um textarea
-    const target = e.target as HTMLElement
-    if (target.tagName === 'TEXTAREA') return
+    const target = e.target as HTMLElement;
+    if (target.tagName === 'TEXTAREA') return;
 
-    const primaryAction = props.actions.find(a => 
-      a.color === 'primary' || (!a.color && props.actions.indexOf(a) === props.actions.length - 1)
-    )
+    const primaryAction = props.actions.find(
+      (a) => a.color === 'primary' || (!a.color && props.actions.indexOf(a) === props.actions.length - 1),
+    );
     if (primaryAction) {
-      e.preventDefault()
-      e.stopPropagation()
-      handleAction(primaryAction)
+      e.preventDefault();
+      e.stopPropagation();
+      handleAction(primaryAction);
     }
   }
-}
+};
 
 // Keyboard shortcuts globais (fallback)
 onMounted(() => {
   const handleKeydown = (e: KeyboardEvent) => {
     // Só processa se o modal estiver aberto
-    if (!isOpen.value || props.actions.length === 0) return
+    if (!isOpen.value || props.actions.length === 0) return;
 
     // ESC - aciona o botão secundário (cancelar)
     if (e.key === 'Escape' && !props.persistent) {
-      const cancelAction = props.actions.find(a => 
-        a.color === 'secondary' || a.color === 'error'
-      )
+      const cancelAction = props.actions.find((a) => a.color === 'secondary' || a.color === 'error');
       if (cancelAction) {
-        e.preventDefault()
-        handleAction(cancelAction)
+        e.preventDefault();
+        handleAction(cancelAction);
       }
     }
 
     // ENTER - aciona o botão primário (confirmar)
     if (e.key === 'Enter' && !e.shiftKey && !e.ctrlKey && !e.altKey) {
       // Ignora se o foco está em um textarea ou input de múltiplas linhas
-      const target = e.target as HTMLElement
-      if (target.tagName === 'TEXTAREA') return
+      const target = e.target as HTMLElement;
+      if (target.tagName === 'TEXTAREA') return;
 
-      const primaryAction = props.actions.find(a => 
-        a.color === 'primary' || (!a.color && props.actions.indexOf(a) === props.actions.length - 1)
-      )
+      const primaryAction = props.actions.find(
+        (a) => a.color === 'primary' || (!a.color && props.actions.indexOf(a) === props.actions.length - 1),
+      );
       if (primaryAction) {
-        e.preventDefault()
-        handleAction(primaryAction)
+        e.preventDefault();
+        handleAction(primaryAction);
       }
     }
-  }
+  };
 
-  window.addEventListener('keydown', handleKeydown)
+  window.addEventListener('keydown', handleKeydown);
 
   onUnmounted(() => {
-    window.removeEventListener('keydown', handleKeydown)
-  })
-})
+    window.removeEventListener('keydown', handleKeydown);
+  });
+});
 </script>
 
 <style>

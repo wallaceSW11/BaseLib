@@ -1,0 +1,30 @@
+declare const _default: {
+    common: {
+        loading: string;
+        save: string;
+        cancel: string;
+        confirm: string;
+        delete: string;
+        edit: string;
+        close: string;
+        back: string;
+        next: string;
+        yes: string;
+        no: string;
+    };
+    validation: {
+        required: string;
+        invalidEmail: string;
+    };
+    address: {
+        zipCode: string;
+        street: string;
+        number: string;
+        complement: string;
+        neighborhood: string;
+        city: string;
+        state: string;
+    };
+};
+export default _default;
+//# sourceMappingURL=pt-BR.d.ts.map

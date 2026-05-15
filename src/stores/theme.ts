@@ -1,5 +1,5 @@
-import { defineStore } from "pinia";
-import { ref, computed } from "vue";
+import { defineStore } from 'pinia';
+import { ref, computed } from 'vue';
 
 export interface ThemeConfig {
   name: string;
@@ -24,55 +24,49 @@ export interface ThemeConfig {
   };
 }
 
-export const useThemeStore = defineStore("theme", () => {
+export const useThemeStore = defineStore('theme', () => {
   const themeConfig = ref<ThemeConfig | null>(null);
   const isDark = ref(false);
   const isLoading = ref(true);
 
-  const currentMode = computed(() => (isDark.value ? "dark" : "light"));
-  const currentLogo = computed(
-    () => themeConfig.value?.logo[currentMode.value] || ""
-  );
-  const currentColors = computed(
-    () => themeConfig.value?.colors[currentMode.value] || {}
-  );
-  const appName = computed(
-    () => themeConfig.value?.customization.appName || "Vue3 Base"
-  );
-  const favicon = computed(() => themeConfig.value?.logo.favicon || "");
+  const currentMode = computed(() => (isDark.value ? 'dark' : 'light'));
+  const currentLogo = computed(() => themeConfig.value?.logo[currentMode.value] || '');
+  const currentColors = computed(() => themeConfig.value?.colors[currentMode.value] || {});
+  const appName = computed(() => themeConfig.value?.customization.appName || 'Vue3 Base');
+  const favicon = computed(() => themeConfig.value?.logo.favicon || '');
 
   function loadSavedThemePreference() {
-    const savedTheme = localStorage.getItem("app-theme");
-    isDark.value = savedTheme === "dark";
+    const savedTheme = localStorage.getItem('app-theme');
+    isDark.value = savedTheme === 'dark';
   }
 
   function applyThemeToVuetify() {
     if (!themeConfig.value) return;
 
     const html = document.documentElement;
-    html.setAttribute("data-theme", currentMode.value);
+    html.setAttribute('data-theme', currentMode.value);
 
     // Update favicon
     updateFavicon();
 
     window.dispatchEvent(
-      new CustomEvent("theme-changed", {
+      new CustomEvent('theme-changed', {
         detail: {
           mode: currentMode.value,
           colors: currentColors.value,
         },
-      })
+      }),
     );
   }
 
   function updateFavicon() {
     if (!favicon.value) return;
 
-    const existingLinks = document.querySelectorAll("link[rel*='icon']");
+    const existingLinks = document.querySelectorAll('link[rel*=\'icon\']');
     existingLinks.forEach((link) => link.remove());
 
-    const link = document.createElement("link");
-    link.rel = "icon";
+    const link = document.createElement('link');
+    link.rel = 'icon';
     link.href = favicon.value;
     document.head.appendChild(link);
   }
@@ -80,16 +74,16 @@ export const useThemeStore = defineStore("theme", () => {
   async function loadTheme() {
     try {
       isLoading.value = true;
-      const response = await fetch("/theme.json");
+      const response = await fetch('/theme.json');
       if (!response.ok) {
-        throw new Error("Failed to load theme configuration");
+        throw new Error('Failed to load theme configuration');
       }
       themeConfig.value = await response.json();
 
       loadSavedThemePreference();
       applyThemeToVuetify();
     } catch (error) {
-      console.error("Error loading theme:", error);
+      console.error('Error loading theme:', error);
     } finally {
       isLoading.value = false;
     }
@@ -97,13 +91,13 @@ export const useThemeStore = defineStore("theme", () => {
 
   function toggleTheme() {
     isDark.value = !isDark.value;
-    localStorage.setItem("app-theme", currentMode.value);
+    localStorage.setItem('app-theme', currentMode.value);
     applyThemeToVuetify();
   }
 
-  function setTheme(mode: "light" | "dark") {
-    isDark.value = mode === "dark";
-    localStorage.setItem("app-theme", mode);
+  function setTheme(mode: 'light' | 'dark') {
+    isDark.value = mode === 'dark';
+    localStorage.setItem('app-theme', mode);
     applyThemeToVuetify();
   }
 

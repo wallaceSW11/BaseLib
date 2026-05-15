@@ -30,13 +30,13 @@ In `tsconfig.json`:
 In `vite.config.ts`:
 
 ```typescript
-import { fileURLToPath, URL } from "node:url";
+import { fileURLToPath, URL } from 'node:url';
 
 export default defineConfig({
   resolve: {
     alias: {
-      "@": fileURLToPath(new URL("./src", import.meta.url)),
-      "@lib": fileURLToPath(new URL("./src/lib", import.meta.url)),
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+      '@lib': fileURLToPath(new URL('./src/lib', import.meta.url)),
     },
   },
 });
@@ -45,7 +45,7 @@ export default defineConfig({
 ### 3. Register in `main.ts`
 
 ```typescript
-import { setupLib } from "@lib/index";
+import { setupLib } from '@lib/index';
 
 const app = createApp(App);
 const pinia = createPinia();
@@ -58,14 +58,14 @@ setupLib(app); // Registers components and global plugins
 
 ```vue
 <script setup lang="ts">
-import { useGlobals } from "@lib/index";
+import { useGlobals } from '@lib/index';
 
 const { notify, loading, confirm } = useGlobals();
 
 // Use directly
-notify("success", "Title", "Message");
-loading(true, "Loading...");
-const confirmed = await confirm("Title", "Message");
+notify('success', 'Title', 'Message');
+loading(true, 'Loading...');
+const confirmed = await confirm('Title', 'Message');
 </script>
 
 <template>
@@ -98,7 +98,7 @@ const confirmed = await confirm("Title", "Message");
 ### Utilities (Composables)
 
 ```typescript
-import { useGlobals } from "@lib/index";
+import { useGlobals } from '@lib/index';
 const { notify, loading, confirm } = useGlobals();
 ```
 
@@ -110,9 +110,9 @@ const { notify, loading, confirm } = useGlobals();
 ### Direct Imports (if preferred)
 
 ```typescript
-import { notify, loading, confirm } from "@lib/utils";
-import { useNotifyStore, useLoadingStore, useConfirmStore } from "@lib/utils";
-import { useThemeStore } from "@lib/stores/theme";
+import { notify, loading, confirm } from '@lib/utils';
+import { useNotifyStore, useLoadingStore, useConfirmStore } from '@lib/utils';
+import { useThemeStore } from '@lib/stores/theme';
 ```
 
 ## 🎯 Included Stores
@@ -154,8 +154,8 @@ For the utilities to work, you need to include the components in App.vue:
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
-import { useNotifyStore, useLoadingStore, useConfirmStore } from "@lib/utils";
+import { ref, onMounted } from 'vue';
+import { useNotifyStore, useLoadingStore, useConfirmStore } from '@lib/utils';
 
 const floatingNotifyRef = ref();
 const loadingOverlayRef = ref();
@@ -188,9 +188,9 @@ onMounted(registerGlobalComponentRefs);
      // locales/en-US.ts
      export default {
        common: {
-         yes: "Yes",
-         no: "No",
-         loading: "Loading...",
+         yes: 'Yes',
+         no: 'No',
+         loading: 'Loading...',
        },
      };
      ```
@@ -201,24 +201,21 @@ onMounted(registerGlobalComponentRefs);
 
 ```vue
 <script setup lang="ts">
-import { useGlobals } from "@lib/index";
+import { useGlobals } from '@lib/index';
 
 const { notify, loading, confirm } = useGlobals();
 
 async function handleDelete() {
-  const confirmed = await confirm(
-    "Confirm deletion",
-    "Do you really want to delete?"
-  );
+  const confirmed = await confirm('Confirm deletion', 'Do you really want to delete?');
 
   if (confirmed) {
-    loading(true, "Deleting...");
+    loading(true, 'Deleting...');
 
     try {
-      await api.delete("/item/123");
-      notify("success", "Success!", "Item deleted");
+      await api.delete('/item/123');
+      notify('success', 'Success!', 'Item deleted');
     } catch (error) {
-      notify("error", "Error!", "Failed to delete");
+      notify('error', 'Error!', 'Failed to delete');
     } finally {
       loading(false);
     }

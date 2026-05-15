@@ -1,8 +1,8 @@
-import { defineStore } from "pinia";
-import { ref } from "vue";
-import type { LoadingComponentRef } from "./types";
+import { defineStore } from 'pinia';
+import { ref } from 'vue';
+import type { LoadingComponentRef } from './types';
 
-export const useLoadingStore = defineStore("loading", () => {
+export const useLoadingStore = defineStore('loading', () => {
   const loadingRef = ref<LoadingComponentRef | null>(null);
 
   const setLoadingRef = (ref: LoadingComponentRef) => {
