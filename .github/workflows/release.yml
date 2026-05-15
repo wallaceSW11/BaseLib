@@ -28,13 +28,13 @@ jobs:
 
       - run: pnpm build
 
-      - run: pnpm publish
+      - run: pnpm publish --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Create GitHub Release
         run: |
-          VERSION=$(node -p "require('./package.json').version")
+          VERSION=$(pnpm pkg get version | tr -d '"')
           gh release create "v$VERSION" \
             --title "v$VERSION" \
             --generate-notes
