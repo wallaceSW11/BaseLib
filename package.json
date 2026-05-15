@@ -1,7 +1,10 @@
 {
   "name": "@wallacesw11/base-lib",
-  "version": "1.0.3",
+  "version": "1.0.0",
   "description": "Reusable Vue 3 components and utilities library with TypeScript support",
+  "publishConfig": {
+    "access": "public"
+  },
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -47,8 +50,8 @@
     "dev:playground": "vite --config playground/vite.config.ts",
     "build": "vite build && vue-tsc --declaration --emitDeclarationOnly --outDir dist",
     "build:playground": "vite build --config playground/vite.config.ts --outDir playground/dist",
-    "prepublishOnly": "npm run build",
-    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix",
+    "prepublishOnly": "pnpm build",
+    "lint": "eslint . --fix",
     "test": "vitest run",
     "test:watch": "vitest"
   },

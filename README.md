@@ -1,595 +1,163 @@
 # @wallacesw11/base-lib
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![GitHub](https://img.shields.io/badge/Source-GitHub-blue.svg)](https://github.com/wallaceSW11/BaseLib)
+Reusable Vue 3 + TypeScript + Vuetify 3 component library.
 
-Vue 3 + Vuetify 3 component library with standardized UI patterns: notifications, confirmations, modals, theme switching, and internationalization.
-
-```bash
-pnpm add github:wallacesw11/BaseLib#main
-```
-
-## 🆕 Recent Changes
-
-**v1.1.0** - Modal improvements:
-- ✅ `attach="body"` is now default in ModalBase (no configuration needed)
-- ✅ Manual modal close control - handlers decide when to close
-- ✅ ConfirmDialog auto-closes on Yes/No clicks
-- ✅ Better support for multi-step workflows (e.g., "Save & Continue" vs "Save & Close")
-
-## 🚨 Common Issues & Quick Fixes
-
-| Problem | Solution |
-|---------|----------|
-| `Failed to resolve component: v-card-title` | Register Vuetify **BEFORE** `setupLib()` in `main.ts` |
-| Notifications not showing | Add `<FloatingNotify ref="notifyRef" />` to `App.vue` and register ref |
-| Theme not loading | Create `public/theme.json` and call `loadTheme()` |
-| API auth token missing | Store in localStorage: `localStorage.setItem('auth_token', token)` |
-
-## ✨ What's Included
-
-- **🔔 Notifications** - Toast messages (success, error, warning, info)
-- **❓ Confirmations** - Yes/No dialog with async/await
-- **🪟 Modal Base** - Customizable modal with actions
-- **🎨 Theme Toggle** - Light/dark mode with persistence
-- **🌍 i18n** - Multi-language support (pt-BR, en-US)
-- **🎯 Buttons** - PrimaryButton, SecondaryButton, TertiaryButton, QuartenaryButton
-- **⏳ Loading Overlay** - Full-screen loading state
-- **🔧 API Client** - Axios with auth and interceptors
-- **💰 Input Fields** - MoneyField, EmailField, NumberField with validation and formatting
-
-## 📦 Installation
+## Installation
 
 ```bash
-pnpm add github:wallacesw11/BaseLib#main
+pnpm add @wallacesw11/base-lib
 ```
 
-**Peer Dependencies**:
+Peer dependencies (install in your project):
+
 ```bash
-pnpm add vue@^3.5.0 vuetify@^3.0.0 pinia@^3.0.0 vue-i18n@^11.0.0 axios@^1.0.0
+pnpm add vue vuetify pinia vue-i18n axios
 ```
 
-## 🔧 Setup
+## Setup
 
-### 📦 Bundle Optimization
-
-**IMPORTANTE**: A biblioteca suporta duas formas de uso:
-
-1. **Registro Global** (mais fácil, bundle maior ~650 KB)
-2. **Importação Seletiva** (recomendado, bundle menor ~50-100 KB)
-
-Para projetos em produção, recomendamos a **importação seletiva**. Veja [BUNDLE_OPTIMIZATION.md](./BUNDLE_OPTIMIZATION.md) para detalhes.
-
-### 1. Register in main.ts
-
-**⚠️ CRITICAL: Vuetify MUST be registered BEFORE BaseLib!**
-
-```typescript
-import { createApp } from "vue";
-import { createPinia } from "pinia";
-import { createI18n } from "vue-i18n";
-import { createVuetify } from "vuetify";
-import "vuetify/styles";
-import { setupLib, defaultMessages, defaultLocale } from "@wallacesw11/base-lib";
-import "@wallacesw11/base-lib/style.css";
-import App from "./App.vue";
+```ts
+import { createApp } from 'vue';
+import { createPinia } from 'pinia';
+import { createVuetify } from 'vuetify';
+import { setupLib, requiredVuetifyComponents } from '@wallacesw11/base-lib';
+import '@wallacesw11/base-lib/style.css';
 
 const app = createApp(App);
-
-// 1. Pinia
-app.use(createPinia());
-
-// 2. Vuetify (BEFORE BaseLib!)
-const vuetify = createVuetify({ theme: { defaultTheme: "light" } });
-app.use(vuetify);
-
-// 3. i18n
-const i18n = createI18n({
-  legacy: false,
-  locale: defaultLocale,
-  fallbackLocale: "en-US",
-  messages: defaultMessages,
+const pinia = createPinia();
+const vuetify = createVuetify({
+  components: requiredVuetifyComponents,
 });
-app.use(i18n);
 
-// 4. BaseLib (LAST!)
-setupLib(app); // Registra TODOS os componentes (bundle ~650 KB)
-
-// OU para bundle otimizado (~50-100 KB):
-// import { registerLibPlugins, PrimaryButton, SecondaryButton } from '@wallacesw11/base-lib'
-// registerLibPlugins(app) // Apenas utilitários globais
-// app.component('PrimaryButton', PrimaryButton) // Registra apenas o que você usa
-// Veja BUNDLE_OPTIMIZATION.md para mais detalhes
-
-app.mount("#app");
+app.use(pinia);
+app.use(vuetify);
+setupLib(app);
+app.mount('#app');
 ```
 
-### 2. Add Required Components to App.vue
-
-```vue
-<template>
-  <v-app>
-    <router-view />
-    <FloatingNotify ref="notifyRef" />
-    <LoadingOverlay ref="loadingRef" />
-    <ConfirmDialog ref="confirmRef" />
-  </v-app>
-</template>
-
-<script setup lang="ts">
-import { onMounted, ref } from 'vue'
-import { FloatingNotify, LoadingOverlay, ConfirmDialog } from '@wallacesw11/base-lib'
-import { useNotifyStore, useLoadingStore, useConfirmStore } from '@wallacesw11/base-lib/utils'
-
-const notifyRef = ref()
-const loadingRef = ref()
-const confirmRef = ref()
-
-onMounted(() => {
-  useNotifyStore().setNotifyRef(notifyRef.value)
-  useLoadingStore().setLoadingRef(loadingRef.value)
-  useConfirmStore().setConfirmRef(confirmRef.value)
-})
-</script>
-```
-
-## 📚 Usage
-
-### Notifications
-
-```typescript
-import { notify } from "@wallacesw11/base-lib";
-
-notify.success("Success!", "Operation completed");
-notify.error("Error!", "Something went wrong");
-notify.warning("Warning", "Be careful");
-notify.info("Info", "Just so you know");
-```
-
-### Confirmation Dialog
-
-Custom confirmation dialog with full control over button text and colors:
-
-```typescript
-import { confirm } from "@wallacesw11/base-lib";
-
-// Default (Yes/No)
-const confirmed = await confirm.show("Confirm Action", "Are you sure?");
-if (confirmed) {
-  // User clicked "Yes"
-} else {
-  // User clicked "No"
-}
-
-// Custom buttons (Delete/Cancel)
-const deleted = await confirm.show(
-  "Delete Item", 
-  "This action cannot be undone.",
-  {
-    confirmText: "Delete",
-    cancelText: "Cancel",
-    confirmColor: "error",
-    cancelColor: "grey"
-  }
-);
-
-// OK dialog
-await confirm.show(
-  "Information",
-  "Operation completed successfully.",
-  {
-    confirmText: "OK",
-    cancelText: "Close"
-  }
-);
-```
-
-**Options**:
-```typescript
-interface ConfirmOptions {
-  persistent?: boolean        // Prevent closing on outside click (default: true)
-  confirmText?: string        // Confirm button text (default: "Yes")
-  cancelText?: string         // Cancel button text (default: "No")
-  confirmColor?: string       // Confirm button color (default: "primary")
-  cancelColor?: string        // Cancel button color (default: "grey")
-}
-```
-
-**Features**:
-- ✅ Custom overlay with proper z-index
-- ✅ Always respects screen width (16px margin on mobile)
-- ✅ Buttons wrap on small screens
-- ✅ Smooth animations
-- ✅ Fully customizable button text and colors
-- ✅ Auto-closes on button click
-
-**Note**: ConfirmDialog automatically closes when user clicks any button.
-
-### Loading Overlay
-
-```typescript
-import { loading } from "@wallacesw11/base-lib";
-
-loading.show("Processing...");
-await someAsyncOperation();
-loading.hide();
-```
+## Components
 
 ### Buttons
 
 ```vue
-<script setup lang="ts">
-import { PrimaryButton, SecondaryButton, TertiaryButton, QuartenaryButton } from "@wallacesw11/base-lib";
-</script>
-
 <template>
   <PrimaryButton text="Save" prepend-icon="mdi-content-save" @click="save" />
   <SecondaryButton text="Cancel" @click="cancel" />
-  <TertiaryButton text="Info" />
-  <QuartenaryButton text="Warning" />
+  <TertiaryButton text="Delete" color="error" />
+  <QuartenaryButton text="More" />
+  <IconToolTip icon="mdi-pencil" tooltip="Edit" @click="edit" />
 </template>
 ```
 
-**Props**: `text`, `prependIcon`, `appendIcon`, `disabled`, `loading`, `block`, `size`, `color`, `variant`
+### Inputs
 
-### Modal Base
+```vue
+<template>
+  <MoneyField v-model="price" label="Price" />
+  <EmailField v-model="email" label="Email" required />
+  <PhoneField v-model="phone" label="Phone" />
+  <CepField v-model="zipCode" label="CEP" @address-found="onAddress" />
+  <FullAddress v-model="address" />
+  <NumberField v-model="quantity" label="Quantity" :decimal-places="0" />
+</template>
+```
+
+### Modals
 
 ```vue
 <script setup lang="ts">
-import { ref } from 'vue'
-import { ModalBase, useBreakpoint } from '@wallacesw11/base-lib'
-import type { ModalAction } from '@wallacesw11/base-lib/components'
+import { ref } from 'vue';
+import { ModalBase } from '@wallacesw11/base-lib';
+import type { ModalAction } from '@wallacesw11/base-lib/components';
 
-const isOpen = ref(false)
-const { isMobileOrTablet } = useBreakpoint()
+const open = ref(false);
 
 const actions: ModalAction[] = [
-  { 
-    text: 'Save & Continue', 
-    color: 'primary', 
-    handler: async () => {
-      await save()
-      clearFields() // Modal stays open
-    }
-  },
-  { 
-    text: 'Save & Close', 
-    color: 'primary', 
-    handler: async () => {
-      await save()
-      isOpen.value = false // Close modal
-    }
-  },
-  { 
-    text: 'Cancel', 
-    color: 'grey', 
-    handler: () => isOpen.value = false 
-  }
-]
+  { text: 'Save', color: 'primary', handler: () => { save(); open.value = false; } },
+  { text: 'Cancel', handler: () => open.value = false },
+];
 </script>
 
 <template>
-  <ModalBase 
-    v-model="isOpen" 
-    title="Title" 
-    message="Message" 
-    :actions="actions"
-    :max-width="600"
-    :fullscreen="isMobileOrTablet"
-  />
+  <ModalBase v-model="open" title="Edit Product" :actions="actions">
+    <!-- content -->
+  </ModalBase>
 </template>
 ```
 
-**Props**:
-- `modelValue` (boolean) - Controls modal visibility (v-model)
-- `title` (string) - Modal title
-- `titleIcon` (string) - Icon to display next to title
-- `message` (string) - Modal message content
-- `maxWidth` (string | number) - Maximum width (default: 500)
-- `persistent` (boolean) - Prevents closing on outside click (default: true)
-- `actions` (ModalAction[]) - Array of action buttons
-- `contentClass` (string) - Custom CSS classes for dialog content
-- `fullscreen` (boolean) - Makes modal fullscreen (default: false)
+### Notifications
 
-**ModalAction Interface**:
-```typescript
-{
-  text: string
-  icon?: string
-  color?: string
-  variant?: 'text' | 'flat' | 'elevated' | 'tonal' | 'outlined' | 'plain'
-  handler?: () => void | Promise<void>
+```vue
+<script setup lang="ts">
+import { notify } from '@wallacesw11/base-lib';
+
+notify.success('Saved', 'Product saved successfully');
+notify.error('Error', 'Failed to save product');
+notify.warning('Warning', 'Stock is low');
+notify.info('Info', 'Product updated');
+</script>
+```
+
+### Confirm Dialog
+
+```vue
+<script setup lang="ts">
+import { confirm } from '@wallacesw11/base-lib';
+
+async function handleDelete() {
+  const ok = await confirm.show('Delete', 'This cannot be undone.');
+  if (ok) deleteItem();
 }
-```
-
-**Important**: Modal does NOT close automatically when buttons are clicked. You must explicitly close it in the handler by setting `isOpen.value = false` if needed. This allows flexible workflows like "save and continue" vs "save and close".
-
-### Theme Switching
-
-```vue
-<script setup lang="ts">
-import { ThemeToggle } from '@wallacesw11/base-lib'
-import { useThemeStore } from '@wallacesw11/base-lib/stores'
-
-const themeStore = useThemeStore()
-
-// Programmatic
-themeStore.toggleTheme()
-themeStore.setTheme('dark')
-</script>
-
-<template>
-  <ThemeToggle />
-</template>
-```
-
-### Input Fields
-
-#### MoneyField
-
-Currency input with automatic formatting and mask:
-
-```vue
-<script setup lang="ts">
-import { ref } from 'vue'
-import { MoneyField } from '@wallacesw11/base-lib'
-
-const amount = ref(1250.50)
-</script>
-
-<template>
-  <MoneyField 
-    v-model="amount" 
-    label="Amount"
-    hint="Enter amount"
-    currency="BRL"
-    locale="pt-BR"
-  />
-</template>
-```
-
-**Props**:
-- `modelValue` (number) - The numeric value
-- `label` (string) - Field label
-- `rules` (array) - Validation rules
-- `disabled` (boolean) - Disabled state
-- `hint` (string) - Helper text
-- `persistentHint` (boolean) - Always show hint
-- `currency` (string) - Currency code (BRL, USD, EUR, GBP) - default: 'BRL'
-- `locale` (string) - Locale for formatting - default: 'pt-BR'
-
-**Features**:
-- Automatic currency formatting (R$ 1.250,50)
-- Mask stays visible when typing/deleting
-- Supports negative values
-- Backspace removes digits one by one
-- Cursor always at the end
-
-#### EmailField
-
-Email input with validation and visual feedback:
-
-```vue
-<script setup lang="ts">
-import { ref } from 'vue'
-import { EmailField } from '@wallacesw11/base-lib'
-
-const email = ref('')
-const isValid = ref(false)
-</script>
-
-<template>
-  <EmailField 
-    v-model="email" 
-    label="Email Address"
-    hint="Enter your email"
-    required
-    @valid="(valid) => isValid = valid"
-  />
-</template>
-```
-
-**Props**:
-- `modelValue` (string) - The email value
-- `label` (string) - Field label - default: 'Email'
-- `rules` (array) - Additional validation rules
-- `disabled` (boolean) - Disabled state
-- `hint` (string) - Helper text
-- `persistentHint` (boolean) - Always show hint
-- `required` (boolean) - Required field - default: false
-- `validateOnBlur` (boolean) - Validate on blur only - default: true
-
-**Events**:
-- `@valid` - Emits boolean when validation state changes
-
-**Features**:
-- Email regex validation (supports + sign: user+tag@example.com)
-- Icon changes color when valid (green check)
-- Real-time or on-blur validation
-- Autocomplete and inputmode optimized
-
-#### NumberField
-
-Numeric input with configurable decimal places and formatting:
-
-```vue
-<script setup lang="ts">
-import { ref } from 'vue'
-import { NumberField } from '@wallacesw11/base-lib'
-
-const quantity = ref(1234)
-const price = ref(99.99)
-</script>
-
-<template>
-  <!-- Integer -->
-  <NumberField 
-    v-model="quantity" 
-    label="Quantity"
-    :decimal-places="0"
-  />
-  
-  <!-- Decimal -->
-  <NumberField 
-    v-model="price" 
-    label="Price"
-    :decimal-places="2"
-  />
-</template>
-```
-
-**Props**:
-- `modelValue` (number) - The numeric value
-- `label` (string) - Field label
-- `rules` (array) - Validation rules
-- `disabled` (boolean) - Disabled state
-- `hint` (string) - Helper text
-- `persistentHint` (boolean) - Always show hint
-- `decimalPlaces` (number) - Number of decimal places - default: 0
-- `locale` (string) - Locale for formatting - default: 'pt-BR'
-- `allowNegative` (boolean) - Allow negative values - default: true
-
-**Features**:
-- No spinner arrows (clean input)
-- Automatic thousand separators (1.234)
-- Configurable decimal places (0 to 4+)
-- Mask stays visible when typing/deleting
-- Backspace removes digits one by one
-- Right-aligned text
-- Supports negative values (optional)
-
-### Breakpoint Detection
-
-Detect screen size for responsive behavior using Vuetify's breakpoint system:
-
-```vue
-<script setup lang="ts">
-import { useBreakpoint } from '@wallacesw11/base-lib'
-
-const { isMobile, isMobileOrTablet } = useBreakpoint()
-
-// isMobile.value -> true on xs screens (< 600px)
-// isMobileOrTablet.value -> true on xs and sm screens (< 960px)
-</script>
-
-<template>
-  <div>
-    <p v-if="isMobile">Mobile view</p>
-    <p v-else-if="isMobileOrTablet">Tablet view</p>
-    <p v-else>Desktop view</p>
-  </div>
-</template>
-```
-
-**Composable Returns**:
-- `isMobile` - Returns `true` for extra small screens (xs, < 600px)
-- `isMobileOrTablet` - Returns `true` for small and down (sm and xs, < 960px)
-
-### Internationalization
-
-```vue
-<script setup lang="ts">
-import { LanguageSelector } from '@wallacesw11/base-lib'
-import { defaultAvailableLocales } from '@wallacesw11/base-lib/locales'
-</script>
-
-<template>
-  <LanguageSelector :available-locales="defaultAvailableLocales" />
-</template>
-```
-
-**Supported locales**: `pt-BR` (default), `en-US`
-
-### API Client
-
-```typescript
-import { api, configureApi } from "@wallacesw11/base-lib";
-
-// Configure (optional)
-configureApi({
-  baseURL: "https://api.example.com",
-  authTokenKey: "auth_token",
-  onUnauthorized: () => window.location.href = "/login"
-});
-
-// Use
-const users = await api.get("/users");
-await api.post("/users", { name: "John" });
-```
-
-## 🎨 Theme & White-Label
-
-Create `public/theme.json`:
-
-```json
-{
-  "logo": { "light": "/logo-light.svg", "dark": "/logo-dark.svg" },
-  "colors": {
-    "light": { "primary": "#1976D2", "secondary": "#424242" },
-    "dark": { "primary": "#2196F3", "secondary": "#616161" }
-  },
-  "customization": { "appName": "My App" }
-}
-```
-
-Load in App.vue:
-
-```vue
-<script setup lang="ts">
-import { onMounted } from 'vue'
-import { useThemeStore } from '@wallacesw11/base-lib/stores'
-import { useThemeSync } from '@wallacesw11/base-lib/composables'
-
-onMounted(async () => {
-  const themeStore = useThemeStore()
-  const { syncTheme } = useThemeSync()
-  await themeStore.loadTheme()
-  syncTheme()
-})
 </script>
 ```
 
-## 📚 TypeScript Types
+### Loading Overlay
 
-```typescript
-import type { NotifyType, LoadingComponentRef, ConfirmComponentRef, ApiConfig } from '@wallacesw11/base-lib/utils'
-import type { ModalAction } from '@wallacesw11/base-lib/components'
-import type { ThemeConfig } from '@wallacesw11/base-lib/stores'
-import type { LocaleOption } from '@wallacesw11/base-lib/locales'
+```vue
+<script setup lang="ts">
+import { loading } from '@wallacesw11/base-lib';
+
+loading.show('Saving...');
+await doSomething();
+loading.hide();
+</script>
 ```
 
-## 🔄 Update Library
+### Theming
+
+```vue
+<script setup lang="ts">
+import { ThemeToggle, LanguageSelector } from '@wallacesw11/base-lib';
+
+// ThemeToggle — switches between light/dark mode
+// LanguageSelector — toggles locale (requires vue-i18n)
+</script>
+```
+
+## Composables
+
+```ts
+import { useBreakpoint } from '@wallacesw11/base-lib';
+
+const { isMobile, isMobileOrTablet } = useBreakpoint();
+```
+
+```ts
+import { useGlobals } from '@wallacesw11/base-lib';
+
+const { notify, loading, confirm } = useGlobals();
+```
+
+## Development
 
 ```bash
-pnpm update @wallacesw11/base-lib
-# or force reinstall
-pnpm add github:wallacesw11/BaseLib#main --force
+pnpm dev           # watch mode
+pnpm build         # build + type declarations
+pnpm lint          # eslint
+pnpm test          # vitest
+pnpm dev:playground  # visual test environment
 ```
 
-## 🤖 For Developers & AI Assistants
+## License
 
-**Internal Playground**: Test components during development with `pnpm dev:playground`
-
-**Key Workflow**:
-1. Make changes in `src/`
-2. Test in playground: `pnpm dev:playground`
-3. Run tests: `pnpm test`
-4. Build: `pnpm build`
-5. Commit and push to GitHub
-6. Users update: `pnpm update @wallacesw11/base-lib`
-
-**Key Files**:
-- `src/index.ts` - Main exports
-- `src/utils/vuetify-check.ts` - Vuetify detection
-- `src/plugins/globals.ts` - Global utilities
-- `package.json` - Dependencies & exports
-
-**Distribution**: GitHub-based (not npm). Updates via git push.
-
-## 📄 License
-
-MIT © [wallaceSW11](https://github.com/wallaceSW11)
-
----
-
-**Links**: [Repository](https://github.com/wallaceSW11/BaseLib) | [Issues](https://github.com/wallaceSW11/BaseLib/issues) | [Troubleshooting](./TROUBLESHOOTING.md)
+MIT
