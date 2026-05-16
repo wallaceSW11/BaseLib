@@ -23,22 +23,25 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, nextTick } from 'vue';
+import { toRef } from 'vue';
+import { useNumericInput, NAVIGATION_KEYS } from '@/composables/useNumericInput';
 import type { TextFieldVariant } from '@/utils/types';
 
+type ValidationRule = (value: string) => boolean | string;
+
 interface Props {
-  modelValue?: number | null;
-  label?: string;
-  rules?: any[];
-  disabled?: boolean;
-  hint?: string;
-  persistentHint?: boolean;
-  decimalPlaces?: number;
-  locale?: string;
-  allowNegative?: boolean;
-  variant?: TextFieldVariant;
-  max?: number;
-  min?: number;
+  modelValue?: number | null
+  label?: string
+  rules?: ValidationRule[]
+  disabled?: boolean
+  hint?: string
+  persistentHint?: boolean
+  decimalPlaces?: number
+  locale?: string
+  allowNegative?: boolean
+  variant?: TextFieldVariant
+  max?: number
+  min?: number
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -57,10 +60,8 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const emit = defineEmits<{
-  'update:modelValue': [value: number];
+  'update:modelValue': [value: number]
 }>();
-
-const formattedValue = ref('0');
 
 function formatNumber(value: number): string {
   const absValue = Math.abs(value);
@@ -93,32 +94,43 @@ function parseNumberInput(input: string): number {
   return isNegative && props.allowNegative ? -rounded : rounded;
 }
 
-function handleInput(value: string) {
-  const numericValue = parseNumberInput(value);
-  emit('update:modelValue', numericValue);
+const { formattedValue, moveCursorToEnd, handleInput, handleFocus, handleClick } = useNumericInput(
+  toRef(props, 'modelValue'),
+  (val: number) => emit('update:modelValue', val),
+  formatNumber,
+  parseNumberInput,
+);
 
-  // Força a atualização da formatação após o emit
-  nextTick(() => {
-    formattedValue.value = formatNumber(numericValue);
-  });
+function updateValue(newValue: number) {
+  if (props.max !== undefined && newValue > props.max) return;
+
+  if (props.min !== undefined && newValue < props.min) return;
+
+  emit('update:modelValue', newValue);
+  formattedValue.value = formatNumber(newValue);
+  moveCursorToEnd();
 }
 
-function handleFocus(event: FocusEvent) {
-  const input = event.target as HTMLInputElement | null;
-  nextTick(() => {
-    if (!input || input.value == null) return;
-
-    input.setSelectionRange(input.value.length, input.value.length);
-  });
+function parseFromDisplay() {
+  return {
+    digits: formattedValue.value.replace(/\D/g, ''),
+    isNegative: formattedValue.value.startsWith('-'),
+  };
 }
 
-function handleClick(event: MouseEvent) {
-  const input = event.target as HTMLInputElement | null;
-  nextTick(() => {
-    if (!input || input.value == null) return;
+function computeValue(digits: string): number {
+  if (!digits) return 0;
 
-    input.setSelectionRange(input.value.length, input.value.length);
-  });
+  let value: number;
+
+  if (props.decimalPlaces === 0) {
+    value = parseInt(digits);
+  } else {
+    const divisor = Math.pow(10, props.decimalPlaces);
+    value = parseInt(digits) / divisor;
+  }
+
+  return Number(value.toFixed(props.decimalPlaces));
 }
 
 function handleKeydown(event: KeyboardEvent) {
@@ -126,120 +138,54 @@ function handleKeydown(event: KeyboardEvent) {
 
   if (!input) return;
 
-  const currentValue = formattedValue.value;
+  const isNavigationKey = NAVIGATION_KEYS.includes(event.key) || event.ctrlKey || event.metaKey;
 
-  // Permite teclas de navegação e controle
-  const allowedKeys = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', 'Home', 'End'];
-
-  if (allowedKeys.includes(event.key) || event.ctrlKey || event.metaKey) {
+  if (isNavigationKey) {
     if (event.key === 'Backspace' || event.key === 'Delete') {
       event.preventDefault();
 
-      // Extrai apenas os números do valor atual
-      const numbers = currentValue.replace(/\D/g, '');
+      const { digits, isNegative } = parseFromDisplay();
 
-      if (numbers.length > 0) {
-        // Remove o último dígito
-        const newNumbers = numbers.slice(0, -1);
-        let newValue: number;
+      if (digits.length > 0) {
+        const newDigits = digits.slice(0, -1);
+        let newValue = computeValue(newDigits);
 
-        if (!newNumbers) {
-          newValue = 0;
-        } else if (props.decimalPlaces === 0) {
-          newValue = parseInt(newNumbers);
-        } else {
-          const divisor = Math.pow(10, props.decimalPlaces);
-          newValue = parseInt(newNumbers) / divisor;
-        }
+        if (isNegative && props.allowNegative && newValue !== 0) newValue = -newValue;
 
-        // Mantém o sinal negativo se estava presente
-        const isNegative = currentValue.startsWith('-');
-
-        if (isNegative && props.allowNegative && newValue !== 0) {
-          newValue = -newValue;
-        }
-
-        emit('update:modelValue', newValue);
-        formattedValue.value = formatNumber(newValue);
-
-        // Mantém o cursor no final
-        nextTick(() => {
-          if (!input || input.value == null) return;
-
-          input.setSelectionRange(input.value.length, input.value.length);
-        });
+        updateValue(newValue);
       }
     }
 
     return;
   }
 
-  // Permite apenas números e sinal de menos
   if (!/[\d-]/.test(event.key)) {
     event.preventDefault();
 
     return;
   }
 
-  // Previne o comportamento padrão para processar manualmente
   event.preventDefault();
 
   if (event.key === '-' && props.allowNegative) {
-    // Inverte o sinal
-    const currentNumeric = parseNumberInput(currentValue);
+    const currentNumeric = parseNumberInput(formattedValue.value);
     const newValue = -currentNumeric;
 
-    if (props.min !== undefined && newValue < props.min) return;
+    updateValue(newValue);
 
-    if (props.max !== undefined && newValue > props.max) return;
-
-    emit('update:modelValue', newValue);
-    formattedValue.value = formatNumber(newValue);
-  } else if (event.key !== '-') {
-    // Adiciona o novo dígito
-    const numbers = currentValue.replace(/\D/g, '');
-    const newNumbers = numbers + event.key;
-
-    let newValue: number;
-
-    if (props.decimalPlaces === 0) {
-      newValue = parseInt(newNumbers);
-    } else {
-      const divisor = Math.pow(10, props.decimalPlaces);
-      newValue = parseInt(newNumbers) / divisor;
-    }
-
-    // Mantém o sinal negativo se estava presente
-    const isNegative = currentValue.startsWith('-');
-
-    if (isNegative && props.allowNegative) {
-      newValue = -newValue;
-    }
-
-    if (props.max !== undefined && newValue > props.max) return;
-
-    if (props.min !== undefined && newValue < props.min) return;
-
-    emit('update:modelValue', newValue);
-    formattedValue.value = formatNumber(newValue);
+    return;
   }
 
-  // Mantém o cursor no final
-  nextTick(() => {
-    if (!input || input.value == null) return;
+  if (event.key === '-') return;
 
-    input.setSelectionRange(input.value.length, input.value.length);
-  });
+  const { digits, isNegative } = parseFromDisplay();
+  const newDigits = digits + event.key;
+  let newValue = computeValue(newDigits);
+
+  if (isNegative && props.allowNegative) newValue = -newValue;
+
+  updateValue(newValue);
 }
-
-watch(
-  () => props.modelValue,
-  (newVal) => {
-    const value = newVal ?? 0;
-    formattedValue.value = formatNumber(value);
-  },
-  { immediate: true },
-);
 </script>
 
 <style scoped>
@@ -247,7 +193,6 @@ watch(
   text-align: right;
 }
 
-/* Remove as setinhas do input number */
 :deep(input[type='number']::-webkit-inner-spin-button),
 :deep(input[type='number']::-webkit-outer-spin-button) {
   -webkit-appearance: none;

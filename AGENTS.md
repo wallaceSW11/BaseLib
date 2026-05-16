@@ -11,6 +11,10 @@ Reusable Vue 3 + TypeScript + Vuetify 3 component library.
 - **Test watch**: `pnpm test:watch` — iterative mode
 - **Playground**: `pnpm dev:playground` — visual test environment
 
+## Before making changes
+
+Load the `code-style-frontend` skill — it contains the exact code rules and examples for this project. Follow it strictly.
+
 ## Verification after changes
 
 Always run in this order:

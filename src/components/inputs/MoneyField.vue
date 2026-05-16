@@ -9,8 +9,8 @@
     :variant="variant"
     inputmode="decimal"
     @update:model-value="handleInput"
-    @focus="moveCursorToEnd"
-    @click="moveCursorToEnd"
+    @focus="handleFocus"
+    @click="handleClick"
     @keydown="handleKeydown"
   >
     <template v-if="$slots.prepend" #prepend>
@@ -23,7 +23,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, nextTick } from 'vue';
+import { toRef } from 'vue';
+import { useNumericInput, NAVIGATION_KEYS } from '@/composables/useNumericInput';
 import type { TextFieldVariant } from '@/utils/types';
 
 type ValidationRule = (value: string) => boolean | string;
@@ -60,10 +61,6 @@ const emit = defineEmits<{
   'update:modelValue': [value: number]
 }>();
 
-const formattedValue = ref('R$ 0,00');
-
-const NAVIGATION_KEYS = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', 'Home', 'End'];
-
 function getCurrencySymbol(): string {
   const symbols: Record<string, string> = {
     BRL: 'R$',
@@ -99,15 +96,12 @@ function parseMoneyInput(input: string): number {
   return rounded;
 }
 
-function moveCursorToEnd() {
-  const input = document.activeElement as HTMLInputElement | null;
-
-  nextTick(() => {
-    if (!input || input.value == null) return;
-
-    input.setSelectionRange(input.value.length, input.value.length);
-  });
-}
+const { formattedValue, moveCursorToEnd, handleInput, handleFocus, handleClick } = useNumericInput(
+  toRef(props, 'modelValue'),
+  (val: number) => emit('update:modelValue', val),
+  formatMoney,
+  parseMoneyInput,
+);
 
 function updateValue(newValue: number) {
   if (props.max !== undefined && newValue > props.max) return;
@@ -119,14 +113,10 @@ function updateValue(newValue: number) {
   moveCursorToEnd();
 }
 
-function handleInput(value: string) {
-  const numericValue = parseMoneyInput(value);
+function updateFromDigits(digits: string) {
+  const newValue = digits ? parseInt(digits) / 100 : 0;
 
-  emit('update:modelValue', numericValue);
-
-  nextTick(() => {
-    formattedValue.value = formatMoney(numericValue);
-  });
+  updateValue(newValue);
 }
 
 function handleKeydown(event: KeyboardEvent) {
@@ -140,16 +130,9 @@ function handleKeydown(event: KeyboardEvent) {
     if (event.key === 'Backspace' || event.key === 'Delete') {
       event.preventDefault();
 
-      const numbers = formattedValue.value.replace(/\D/g, '');
+      const digits = formattedValue.value.replace(/\D/g, '');
 
-      if (numbers.length > 0) {
-        const newNumbers = numbers.slice(0, -1);
-        const newValue = newNumbers ? parseInt(newNumbers) / 100 : 0;
-
-        emit('update:modelValue', newValue);
-        formattedValue.value = formatMoney(newValue);
-        moveCursorToEnd();
-      }
+      if (digits.length > 0) updateFromDigits(digits.slice(0, -1));
     }
 
     return;
@@ -172,21 +155,10 @@ function handleKeydown(event: KeyboardEvent) {
     return;
   }
 
-  const numbers = formattedValue.value.replace(/\D/g, '');
-  const newNumbers = numbers + event.key;
-  const newValue = parseInt(newNumbers) / 100;
+  const digits = formattedValue.value.replace(/\D/g, '');
 
-  updateValue(newValue);
+  updateFromDigits(digits + event.key);
 }
-
-watch(
-  () => props.modelValue,
-  (newVal) => {
-    const value = newVal ?? 0;
-    formattedValue.value = formatMoney(value);
-  },
-  { immediate: true },
-);
 </script>
 
 <style scoped>
