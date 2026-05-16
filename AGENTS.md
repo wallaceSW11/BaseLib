@@ -14,9 +14,9 @@ Reusable Vue 3 + TypeScript + Vuetify 3 component library.
 ## Verification after changes
 
 Always run in this order:
+0. Load `code-review` skill and run through the checklist
 1. `pnpm lint` — zero warnings
 2. `pnpm build` — clean build, no type errors
-3. `pnpm test` — all tests passing
 
 ## Structure
 

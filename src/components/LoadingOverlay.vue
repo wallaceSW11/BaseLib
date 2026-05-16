@@ -1,11 +1,11 @@
 <template>
   <Transition name="fade">
-    <div v-if="isVisible" class="loading-overlay">
+    <div v-if="isLoading" class="loading-overlay">
       <Transition name="fade-delayed">
         <div v-if="showContent" class="loading-content">
           <v-progress-circular indeterminate color="primary" :size="30" :width="5" />
           <div class="loading-text mt-3">
-            {{ currentMessage }}
+            {{ message }}
           </div>
         </div>
       </Transition>
@@ -14,36 +14,41 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import { LOADING_CONTENT_DELAY } from '../utils/types';
+import { ref, watch, onBeforeUnmount } from 'vue';
 
-const isVisible = ref(false);
+interface Props {
+  isLoading?: boolean
+  message?: string
+  delay?: number
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  isLoading: false,
+  message: 'Carregando...',
+  delay: 300,
+});
+
 const showContent = ref(false);
-const currentMessage = ref('Carregando...');
 let contentTimeoutId: ReturnType<typeof setTimeout> | null = null;
 
-const show = (message?: string) => {
-  currentMessage.value = message || 'Carregando...';
-  isVisible.value = true;
+watch(() => props.isLoading, (val) => {
+  if (val) {
+    contentTimeoutId = setTimeout(() => {
+      showContent.value = true;
+    }, props.delay);
+  } else {
+    if (contentTimeoutId) {
+      clearTimeout(contentTimeoutId);
+      contentTimeoutId = null;
+    }
+    showContent.value = false;
+  }
+});
 
-  // Show content after configured delay
-  contentTimeoutId = setTimeout(() => {
-    showContent.value = true;
-  }, LOADING_CONTENT_DELAY);
-};
-
-const hide = () => {
+onBeforeUnmount(() => {
   if (contentTimeoutId) {
     clearTimeout(contentTimeoutId);
-    contentTimeoutId = null;
   }
-  showContent.value = false;
-  isVisible.value = false;
-};
-
-defineExpose({
-  show,
-  hide,
 });
 </script>
 

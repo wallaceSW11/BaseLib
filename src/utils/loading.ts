@@ -1,40 +1,14 @@
-import { defineStore } from 'pinia';
-import { ref } from 'vue';
-import type { LoadingComponentRef } from './types';
+import { useLoading } from '../composables/useLoading';
 
-export const useLoadingStore = defineStore('loading', () => {
-  const loadingRef = ref<LoadingComponentRef | null>(null);
+let _loading: ReturnType<typeof useLoading> | null = null;
 
-  const setLoadingRef = (ref: LoadingComponentRef) => {
-    loadingRef.value = ref;
-  };
+function getLoading() {
+  if (!_loading) _loading = useLoading();
 
-  const showLoading = (message?: string) => {
-    if (loadingRef.value) {
-      loadingRef.value.show(message);
-    }
-  };
-
-  const hideLoading = () => {
-    if (loadingRef.value) {
-      loadingRef.value.hide();
-    }
-  };
-
-  return {
-    setLoadingRef,
-    showLoading,
-    hideLoading,
-  };
-});
+  return _loading;
+}
 
 export const loading = {
-  show: (message?: string) => {
-    const store = useLoadingStore();
-    store.showLoading(message);
-  },
-  hide: () => {
-    const store = useLoadingStore();
-    store.hideLoading();
-  },
+  show: (message?: string) => getLoading().show(message),
+  hide: () => getLoading().hide(),
 };
