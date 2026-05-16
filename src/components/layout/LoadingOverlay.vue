@@ -1,10 +1,10 @@
 <template>
   <Transition name="fade">
-    <div v-if="isLoading" class="loading-overlay">
+    <div v-if="isLoading" class="loading-overlay d-flex align-center justify-center">
       <Transition name="fade-delayed">
-        <div v-if="showContent" class="loading-content">
+        <div v-if="showContent" class="d-flex flex-column align-center">
           <v-progress-circular indeterminate color="primary" :size="30" :width="5" />
-          <div class="loading-text mt-3">
+          <div class="text-white text-body-1 font-weight-medium mt-3">
             {{ message }}
           </div>
         </div>
@@ -60,22 +60,7 @@ onBeforeUnmount(() => {
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.7);
-  display: flex;
-  align-items: center;
-  justify-content: center;
   z-index: 9998;
-}
-
-.loading-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.loading-text {
-  color: white;
-  font-size: 1.2rem;
-  font-weight: 500;
 }
 
 .fade-enter-active,

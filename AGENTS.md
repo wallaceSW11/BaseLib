@@ -73,7 +73,7 @@ src/
 - **Stores**: `use` prefix, composition API style
 - **Interfaces**: exported for consumers (`ModalAction`, `Address`)
 - **Props**: sensible defaults with `withDefaults`
-- **CSS**: Vuetify utilities first, scoped CSS only when necessary
+- **CSS**: Vuetify utilities first, scoped CSS only when necessary (see `docs/ARCHITECTURE.md` for reference table)
 - **Peer deps**: Never in bundle — external in `vite.config.ts`
 - **Labels**: pt-BR hardcoded, no i18n. Every component accepts props to override.
 

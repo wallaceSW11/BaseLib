@@ -208,17 +208,62 @@ export const useThemeStore = defineStore('theme', () => {
 })
 ```
 
-## Vuetify
+## Vuetify — use utility classes, not custom CSS
 
-Utilities: `pa-*`, `ma-*`, `ga-*`, `d-flex`, `text-*`, `font-weight-*`.
+Prefer Vuetify utility classes over writing custom CSS. Only write scoped CSS when Vuetify has no utility for the property.
+
+| Property | Vuetify utility | Avoid |
+|----------|----------------|-------|
+| `display: flex` | `d-flex` | — |
+| `flex-direction: column` | `flex-column` | — |
+| `align-items: center` | `align-center` | — |
+| `justify-content: center` | `justify-center` | — |
+| `padding: 16px` | `pa-4` | — |
+| `padding-top: 8px` | `pt-2` | — |
+| `margin-top: 12px` | `mt-3` | — |
+| `gap: 16px` | `ga-4` | — |
+| `color: white` | `text-white` | — |
+| `font-size: 1rem` | `text-body-1` | — |
+| `font-weight: 500` | `font-weight-medium` | — |
+| `text-align: center` | `text-center` | — |
+
+```vue
+<!-- CORRECT: Vuetify utilities -->
+<div class="d-flex align-center ga-2 pa-4">
+  <v-icon>mdi-check</v-icon>
+  <span class="text-body-1 font-weight-medium">Salvo</span>
+</div>
+
+<!-- WRONG: custom CSS for something Vuetify covers -->
+<div class="saved-message">   // then  .saved-message { display: flex; align-items: center; gap: 8px; padding: 16px; }
+  <v-icon>mdi-check</v-icon>
+  <span>Salvo</span>
+</div>
+```
+
 Scoped CSS only when Vuetify does not cover it. Never `!important`.
 Use `:deep()` to style slots/inside Vuetify components.
 Vuetify is a peerDependency — never import as a direct dependency.
 
-## CSS
+## CSS (only for what Vuetify cannot do)
 
 ```vue
 <style scoped>
+/* CORRECT: position fixed + full-screen has no Vuetify utility */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9998;
+}
+
+/* CORRECT: Vue transition class names are required */
+.fade-enter-active {
+  transition: opacity 0.2s ease;
+}
+
 /* CORRECT: use :deep() for Vuetify internal elements */
 :deep(.v-field__input) {
   text-align: right;

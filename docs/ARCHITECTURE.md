@@ -77,6 +77,43 @@ parent script:
 - Or via `useGlobals()` composable in script setup
 - Internally use composables, not component refs
 
+## CSS — Vuetify utilities first
+
+Prefer Vuetify utility classes over custom CSS. Only write scoped CSS for what Vuetify cannot do (position: fixed, Vue transition names, etc.).
+
+```vue
+<!-- CORRECT: Vuetify classes for flex, spacing, typography -->
+<div class="d-flex align-center ga-2 pa-4">
+  <span class="text-body-1 font-weight-medium">Salvo</span>
+</div>
+
+<!-- AVOID: custom CSS when Vuetify covers it -->
+<style scoped>
+.message {
+  display: flex;         /* → d-flex */
+  align-items: center;   /* → align-center */
+  gap: 8px;              /* → ga-2 */
+  padding: 16px;         /* → pa-4 */
+}
+</style>
+```
+
+Common Vuetify utilities reference:
+
+| Property | Vuetify utility |
+|----------|----------------|
+| `display: flex` | `d-flex` / `d-inline-flex` |
+| `flex-direction: column` | `flex-column` |
+| `align-items: center/start/end` | `align-center` / `align-start` / `align-end` |
+| `justify-content: center` | `justify-center` |
+| `gap: 4/8/12/16px` | `ga-1` / `ga-2` / `ga-3` / `ga-4` |
+| `padding: 16px` | `pa-4` (p-1 to p-12 for 4px-48px) |
+| `margin-top: 8px` | `mt-2` |
+| `color: white / primary` | `text-white` / `text-primary` |
+| `font-size: 1rem / 1.25rem` | `text-body-1` / `text-h6` |
+| `font-weight: 500 / 700` | `font-weight-medium` / `font-weight-bold` |
+| `text-align: center` | `text-center` |
+
 ## Labels
 
 - All UI labels are hardcoded in pt-BR
