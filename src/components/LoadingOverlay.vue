@@ -16,20 +16,18 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { useI18n } from 'vue-i18n';
 import { LOADING_CONTENT_DELAY } from '../utils/types';
 import { useThemeStore } from '../stores/theme';
 
-const { t } = useI18n();
 const themeStore = useThemeStore();
 
 const isVisible = ref(false);
 const showContent = ref(false);
-const currentMessage = ref(t('common.loading'));
+const currentMessage = ref('Carregando...');
 let contentTimeoutId: ReturnType<typeof setTimeout> | null = null;
 
 const show = (message?: string) => {
-  currentMessage.value = message || t('common.loading');
+  currentMessage.value = message || 'Carregando...';
   isVisible.value = true;
 
   // Show content after configured delay

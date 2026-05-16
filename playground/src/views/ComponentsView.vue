@@ -430,8 +430,8 @@
               <v-btn 
                 color="primary" 
                 prepend-icon="mdi-send" 
-                @click="testEmailSubmit"
                 :disabled="!email1 || !isEmail1Valid"
+                @click="testEmailSubmit"
               >
                 Test Submit
               </v-btn>
@@ -686,9 +686,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-import { useThemeStore } from '@/stores'
-import { useGlobals, useBreakpoint } from '@/composables'
+import { ref, computed } from 'vue';
+import { useThemeStore } from '@/stores';
+import { useGlobals, useBreakpoint } from '@/composables';
 import {
   BaseButton,
   PrimaryButton,
@@ -705,53 +705,53 @@ import {
   FullAddress,
   type Address,
   type ModalAction
-} from '@/components'
+} from '@/components';
 
-const { notify, loading, confirm } = useGlobals()
-const { isMobileOrTablet } = useBreakpoint()
-const themeStore = useThemeStore()
-const showModal = ref(false)
-const observationText = ref('')
-const lastConfirmResult = ref<boolean | null>(null)
-const apiResponse = ref<{ success: boolean; message: string } | null>(null)
-const lastIconAction = ref<string | null>(null)
+const { notify, loading, confirm } = useGlobals();
+const { isMobileOrTablet } = useBreakpoint();
+const themeStore = useThemeStore();
+const showModal = ref(false);
+const observationText = ref('');
+const lastConfirmResult = ref<boolean | null>(null);
+const apiResponse = ref<{ success: boolean; message: string } | null>(null);
+const lastIconAction = ref<string | null>(null);
 
 // Money Field states
-const moneyBRL = ref(1250.50)
-const moneyUSD = ref(500.00)
-const moneyEUR = ref(750.00)
-const moneyDisabled = ref(999.99)
+const moneyBRL = ref(1250.50);
+const moneyUSD = ref(500.00);
+const moneyEUR = ref(750.00);
+const moneyDisabled = ref(999.99);
 
-const totalMoney = computed(() => moneyBRL.value + moneyUSD.value + moneyEUR.value)
+const totalMoney = computed(() => moneyBRL.value + moneyUSD.value + moneyEUR.value);
 
 // Email Field states
-const email1 = ref('')
-const email2 = ref('user+tag@example.com')
-const email3 = ref('')
-const isEmail1Valid = ref(false)
-const isEmail2Valid = ref(true)
-const isEmail3Valid = ref(false)
+const email1 = ref('');
+const email2 = ref('user+tag@example.com');
+const email3 = ref('');
+const isEmail1Valid = ref(false);
+const isEmail2Valid = ref(true);
+const isEmail3Valid = ref(false);
 
 // Number Field states
-const numberInteger = ref(1234)
-const numberDecimal1 = ref(123.45)
-const numberDecimal2 = ref(9.876)
-const numberDecimal3 = ref(1234.5678)
-const numberDisabled = ref(999)
+const numberInteger = ref(1234);
+const numberDecimal1 = ref(123.45);
+const numberDecimal2 = ref(9.876);
+const numberDecimal3 = ref(1234.5678);
+const numberDisabled = ref(999);
 
 // Phone Field states
-const phone1 = ref('21988887777')
-const phone2 = ref('2127421122')
-const phone3 = ref('1133334444')
+const phone1 = ref('21988887777');
+const phone2 = ref('2127421122');
+const phone3 = ref('1133334444');
 
 const resetPhones = () => {
-  phone1.value = ''
-  phone2.value = ''
-  notify.warning('Reset', 'Campos de telefone limpos')
-}
+  phone1.value = '';
+  phone2.value = '';
+  notify.warning('Reset', 'Campos de telefone limpos');
+};
 
 // CEP / Address states
-const cepOnly = ref('')
+const cepOnly = ref('');
 const fullAddress = ref<Address>({
   zipCode: '',
   street: '',
@@ -760,7 +760,7 @@ const fullAddress = ref<Address>({
   neighborhood: '',
   city: '',
   state: '',
-})
+});
 const fullAddressDisabledFields = ref<Address>({
   zipCode: '',
   street: '',
@@ -769,9 +769,9 @@ const fullAddressDisabledFields = ref<Address>({
   neighborhood: '',
   city: '',
   state: '',
-})
+});
 
-const currentTheme = computed(() => themeStore.currentMode)
+const currentTheme = computed(() => themeStore.currentMode);
 
 const modalActions: ModalAction[] = [
   {
@@ -780,9 +780,9 @@ const modalActions: ModalAction[] = [
     variant: 'elevated',
     icon: 'mdi-content-save',
     handler: () => {
-      console.log('Salvando...', observationText.value, selectedOption.value)
-      notify.success('Saved!', 'Observation saved successfully')
-      showModal.value = false
+      console.log('Salvando...', observationText.value, selectedOption.value);
+      notify.success('Saved!', 'Observation saved successfully');
+      showModal.value = false;
     }
   },
   {
@@ -791,17 +791,17 @@ const modalActions: ModalAction[] = [
     variant: 'outlined',
     icon: 'mdi-close',
     handler: () => {
-      observationText.value = ''
-      selectedOption.value = null
-      showModal.value = false // Aqui sim, fecha o modal
-      notify.info('Cancelled', 'No changes were made')
+      observationText.value = '';
+      selectedOption.value = null;
+      showModal.value = false; // Aqui sim, fecha o modal
+      notify.info('Cancelled', 'No changes were made');
     }
   }
-]
+];
 
 const handleButtonClick = (buttonType: string) => {
-  notify.info('Button Clicked', `You clicked the ${buttonType} button!`)
-}
+  notify.info('Button Clicked', `You clicked the ${buttonType} button!`);
+};
 
 const showNotification = (type: 'success' | 'error' | 'warning' | 'info') => {
   const messages = {
@@ -809,9 +809,9 @@ const showNotification = (type: 'success' | 'error' | 'warning' | 'info') => {
     error: { title: 'Error!', message: 'Something went wrong' },
     warning: { title: 'Warning!', message: 'Please check this carefully' },
     info: { title: 'Information', message: 'Here is some useful information' },
-  }
+  };
 
-  const { title, message } = messages[type]
+  const { title, message } = messages[type];
   
   switch(type) {
     case 'success': notify.success(title, message); break;
@@ -819,30 +819,30 @@ const showNotification = (type: 'success' | 'error' | 'warning' | 'info') => {
     case 'warning': notify.warning(title, message); break;
     case 'info': notify.info(title, message); break;
   }
-}
+};
 
 const showLoading = (duration: number, message?: string) => {
-  loading.show(message || 'Processing your request...')
+  loading.show(message || 'Processing your request...');
   setTimeout(() => {
-    loading.hide()
-    notify.success('Done!', 'Loading completed')
-  }, duration)
-}
+    loading.hide();
+    notify.success('Done!', 'Loading completed');
+  }, duration);
+};
 
 const showConfirmDialog = async () => {
   const confirmed = await confirm.show(
     'Confirm Action',
     'Are you sure you want to proceed with this action?'
-  )
+  );
   
-  lastConfirmResult.value = confirmed
+  lastConfirmResult.value = confirmed;
 
   if (confirmed) {
-    notify.success('Confirmed', 'You chose Yes')
+    notify.success('Confirmed', 'You chose Yes');
   } else {
-    notify.info('Cancelled', 'You chose No')
+    notify.info('Cancelled', 'You chose No');
   }
-}
+};
 
 const showDeleteConfirm = async () => {
   const confirmed = await confirm.show(
@@ -854,16 +854,16 @@ const showDeleteConfirm = async () => {
       confirmColor: 'error',
       cancelColor: 'grey'
     }
-  )
+  );
   
-  lastConfirmResult.value = confirmed
+  lastConfirmResult.value = confirmed;
 
   if (confirmed) {
-    notify.success('Deleted', 'Item was deleted')
+    notify.success('Deleted', 'Item was deleted');
   } else {
-    notify.info('Cancelled', 'Delete cancelled')
+    notify.info('Cancelled', 'Delete cancelled');
   }
-}
+};
 
 const showOkConfirm = async () => {
   const confirmed = await confirm.show(
@@ -875,109 +875,109 @@ const showOkConfirm = async () => {
       confirmColor: 'primary',
       cancelColor: 'grey'
     }
-  )
+  );
   
-  lastConfirmResult.value = confirmed
-}
+  lastConfirmResult.value = confirmed;
+};
 
 const openModal = () => {
-  showModal.value = true
-}
+  showModal.value = true;
+};
 
 const getContrastColor = (hexColor: string): string => {
   // Convert hex to RGB
-  const hex = hexColor.replace('#', '')
-  const r = parseInt(hex.substring(0, 2), 16)
-  const g = parseInt(hex.substring(2, 4), 16)
-  const b = parseInt(hex.substring(4, 6), 16)
+  const hex = hexColor.replace('#', '');
+  const r = parseInt(hex.substring(0, 2), 16);
+  const g = parseInt(hex.substring(2, 4), 16);
+  const b = parseInt(hex.substring(4, 6), 16);
   
   // Calculate luminance
-  const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255
+  const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
   
-  return luminance > 0.5 ? '#000000' : '#FFFFFF'
-}
+  return luminance > 0.5 ? '#000000' : '#FFFFFF';
+};
 
 const testApiSuccess = async () => {
-  loading.show('Making API request...')
+  loading.show('Making API request...');
   
   // Simulate API call
-  await new Promise(resolve => setTimeout(resolve, 1500))
+  await new Promise(resolve => setTimeout(resolve, 1500));
   
-  loading.hide()
-  notify.success('API Success', 'Request completed successfully')
-  apiResponse.value = { success: true, message: 'Data retrieved successfully' }
-}
+  loading.hide();
+  notify.success('API Success', 'Request completed successfully');
+  apiResponse.value = { success: true, message: 'Data retrieved successfully' };
+};
 
 const testApiError = async () => {
-  loading.show('Making API request...')
+  loading.show('Making API request...');
   
   // Simulate API call
-  await new Promise(resolve => setTimeout(resolve, 1500))
+  await new Promise(resolve => setTimeout(resolve, 1500));
   
-  loading.hide()
-  notify.error('API Error', 'Failed to retrieve data')
-  apiResponse.value = { success: false, message: 'Server returned error 500' }
-}
+  loading.hide();
+  notify.error('API Error', 'Failed to retrieve data');
+  apiResponse.value = { success: false, message: 'Server returned error 500' };
+};
 
 const options = ref([
   { text: 'Option 1', value: 'option1' },
   { text: 'Option 2', value: 'option2' },
   { text: 'Option 3', value: 'option3' }
-])
+]);
 
-const selectedOption = ref<string | null>(null)
+const selectedOption = ref<string | null>(null);
 
 const addMoney = () => {
-  moneyBRL.value += 100
-  notify.success('Added!', 'R$ 100,00 added to BRL field')
-}
+  moneyBRL.value += 100;
+  notify.success('Added!', 'R$ 100,00 added to BRL field');
+};
 
 const subtractMoney = () => {
-  moneyBRL.value = Math.max(0, moneyBRL.value - 50)
-  notify.info('Subtracted', 'R$ 50,00 subtracted from BRL field')
-}
+  moneyBRL.value = Math.max(0, moneyBRL.value - 50);
+  notify.info('Subtracted', 'R$ 50,00 subtracted from BRL field');
+};
 
 const resetMoney = () => {
-  moneyBRL.value = 0
-  moneyUSD.value = 0
-  moneyEUR.value = 0
-  notify.warning('Reset', 'All money fields reset to zero')
-}
+  moneyBRL.value = 0;
+  moneyUSD.value = 0;
+  moneyEUR.value = 0;
+  notify.warning('Reset', 'All money fields reset to zero');
+};
 
 const handleEmailValidation = (fieldName: string, isValid: boolean) => {
-  if (fieldName === 'email1') isEmail1Valid.value = isValid
-  if (fieldName === 'email2') isEmail2Valid.value = isValid
-  if (fieldName === 'email3') isEmail3Valid.value = isValid
-}
+  if (fieldName === 'email1') isEmail1Valid.value = isValid;
+  if (fieldName === 'email2') isEmail2Valid.value = isValid;
+  if (fieldName === 'email3') isEmail3Valid.value = isValid;
+};
 
 const testEmailSubmit = () => {
   if (isEmail1Valid.value && email1.value) {
-    notify.success('Valid Email', `Email ${email1.value} is valid and ready to submit!`)
+    notify.success('Valid Email', `Email ${email1.value} is valid and ready to submit!`);
   } else {
-    notify.error('Invalid Email', 'Please enter a valid email address')
+    notify.error('Invalid Email', 'Please enter a valid email address');
   }
-}
+};
 
 const incrementNumber = () => {
-  numberInteger.value += 10
-  notify.info('Incremented', `Added 10 to integer field`)
-}
+  numberInteger.value += 10;
+  notify.info('Incremented', 'Added 10 to integer field');
+};
 
 const decrementNumber = () => {
-  numberInteger.value = Math.max(0, numberInteger.value - 5)
-  notify.info('Decremented', `Subtracted 5 from integer field`)
-}
+  numberInteger.value = Math.max(0, numberInteger.value - 5);
+  notify.info('Decremented', 'Subtracted 5 from integer field');
+};
 
 const resetNumbers = () => {
-  numberInteger.value = 0
-  numberDecimal1.value = 0
-  numberDecimal2.value = 0
-  numberDecimal3.value = 0
-  notify.warning('Reset', 'All number fields reset to zero')
-}
+  numberInteger.value = 0;
+  numberDecimal1.value = 0;
+  numberDecimal2.value = 0;
+  numberDecimal3.value = 0;
+  notify.warning('Reset', 'All number fields reset to zero');
+};
 
 const handleDeleteClick = async () => {
-  lastIconAction.value = 'Delete clicked'
+  lastIconAction.value = 'Delete clicked';
   
   const confirmed = await confirm.show(
     'Confirm Delete',
@@ -988,21 +988,21 @@ const handleDeleteClick = async () => {
       confirmColor: 'error',
       cancelColor: 'grey'
     }
-  )
+  );
   
   if (confirmed) {
-    notify.success('Deleted!', 'Item was successfully deleted')
-    lastIconAction.value = 'Item deleted (Yes clicked)'
+    notify.success('Deleted!', 'Item was successfully deleted');
+    lastIconAction.value = 'Item deleted (Yes clicked)';
   } else {
-    notify.info('Cancelled', 'Delete action was cancelled')
-    lastIconAction.value = 'Delete cancelled (No clicked)'
+    notify.info('Cancelled', 'Delete action was cancelled');
+    lastIconAction.value = 'Delete cancelled (No clicked)';
   }
-}
+};
 
 const handleEditClick = () => {
-  lastIconAction.value = 'Edit clicked'
-  notify.info('Edit', 'Edit button was clicked')
-}
+  lastIconAction.value = 'Edit clicked';
+  notify.info('Edit', 'Edit button was clicked');
+};
 </script>
 
 <style scoped>

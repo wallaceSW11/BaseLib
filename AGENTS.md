@@ -27,7 +27,6 @@ src/
   stores/           ← Pinia stores (setup function style)
   utils/            ← Pure utility functions (notify, confirm, api, types)
   plugins/          ← Vue plugins (globalsPlugin)
-  locales/          ← Internationalization (pt-BR)
   index.ts          ← Main entry point
 ```
 
@@ -37,7 +36,6 @@ src/
 - TypeScript 5.9+ (strict mode)
 - Vuetify 3 (peer dependency)
 - Pinia 3 (peer dependency, setup stores)
-- Vue I18n 11 (peer dependency)
 - Vite 7 (build/bundler)
 - Vitest 4 (tests)
 - ESLint 9 (flat config)

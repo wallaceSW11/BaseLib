@@ -29,41 +29,41 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted } from 'vue';
 import {
   useNotifyStore,
   useLoadingStore,
   useConfirmStore
-} from '@/utils'
-import { useThemeSync } from '@/composables'
+} from '@/utils';
+import { useThemeSync } from '@/composables';
 import {
   FloatingNotify,
   LoadingOverlay,
   ConfirmDialog,
   LanguageSelector,
   ThemeToggle
-} from '@/components'
+} from '@/components';
 
-const floatingNotifyRef = ref()
-const loadingOverlayRef = ref()
-const confirmDialogRef = ref()
+const floatingNotifyRef = ref();
+const loadingOverlayRef = ref();
+const confirmDialogRef = ref();
 
 const availableLocales = [
   { code: 'pt-BR', name: 'Português (BR)', countryCode: 'BR' },
   { code: 'en-US', name: 'English (US)', countryCode: 'US' }
-]
+];
 
-useThemeSync()
+useThemeSync();
 
 function registerGlobalComponentRefs() {
-  const notifyStore = useNotifyStore()
-  const loadingStore = useLoadingStore()
-  const confirmStore = useConfirmStore()
+  const notifyStore = useNotifyStore();
+  const loadingStore = useLoadingStore();
+  const confirmStore = useConfirmStore();
 
-  notifyStore.setNotifyRef(floatingNotifyRef.value)
-  loadingStore.setLoadingRef(loadingOverlayRef.value)
-  confirmStore.setConfirmRef(confirmDialogRef.value)
+  notifyStore.setNotifyRef(floatingNotifyRef.value);
+  loadingStore.setLoadingRef(loadingOverlayRef.value);
+  confirmStore.setConfirmRef(confirmDialogRef.value);
 }
 
-onMounted(registerGlobalComponentRefs)
+onMounted(registerGlobalComponentRefs);
 </script>

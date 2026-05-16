@@ -60,7 +60,6 @@
 
 <script setup lang="ts">
 import { reactive, ref, watch, computed } from 'vue';
-import { useI18n } from 'vue-i18n';
 import { VRow, VCol, VTextField, VSelect } from 'vuetify/components';
 import CepField, { type ViaCepResponse } from './CepField.vue';
 
@@ -104,21 +103,14 @@ const emit = defineEmits<{
   'update:modelValue': [value: Address];
 }>();
 
-let t: (key: string) => string;
-try {
-  ({ t } = useI18n({ useScope: 'global' }));
-} catch {
-  t = (key: string) => key;
-}
-
 const l = computed(() => ({
-  zipCode: props.labels.zipCode ?? t('address.zipCode'),
-  street: props.labels.street ?? t('address.street'),
-  number: props.labels.number ?? t('address.number'),
-  complement: props.labels.complement ?? t('address.complement'),
-  neighborhood: props.labels.neighborhood ?? t('address.neighborhood'),
-  city: props.labels.city ?? t('address.city'),
-  state: props.labels.state ?? t('address.state'),
+  zipCode: props.labels.zipCode ?? 'CEP',
+  street: props.labels.street ?? 'Logradouro',
+  number: props.labels.number ?? 'Número',
+  complement: props.labels.complement ?? 'Complemento',
+  neighborhood: props.labels.neighborhood ?? 'Bairro',
+  city: props.labels.city ?? 'Cidade',
+  state: props.labels.state ?? 'Estado',
 }));
 
 const internal = reactive<Address>({

@@ -30,7 +30,6 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import { useI18n } from 'vue-i18n';
 
 type ValidationRule = (value: string) => boolean | string;
 
@@ -73,14 +72,6 @@ const emit = defineEmits<{
 
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-let t: ((key: string) => string) | undefined;
-try {
-  const { t: translate } = useI18n();
-  t = translate;
-} catch {
-  t = undefined;
-}
-
 const innerValue = computed({
   get: () => props.modelValue,
   set: (val: string) => {
@@ -98,25 +89,10 @@ const emailIcon = computed(() => (isValid.value ? 'mdi-email-check' : 'mdi-email
 
 const iconColor = computed(() => (isValid.value ? 'success' : undefined));
 
-function translateOrFallback(key: string, fallback: string): string {
-  if (key === 'required' && props.requiredMessage) return props.requiredMessage;
-
-  if (key === 'invalid' && props.invalidMessage) return props.invalidMessage;
-
-  if (!t) return fallback;
-
-  const translationKey = key === 'required' ? 'validation.required' : 'validation.invalidEmail';
-  const translated = t(translationKey);
-
-  if (translated && !translated.startsWith('validation.')) return translated;
-
-  return fallback;
-}
-
 function validateEmail(value: string): boolean | string {
-  if (!value) return props.required ? translateOrFallback('required', 'Email is required') : true;
+  if (!value) return props.required ? (props.requiredMessage || 'Email é obrigatório') : true;
 
-  if (!emailRegex.test(value)) return translateOrFallback('invalid', 'Invalid email format');
+  if (!emailRegex.test(value)) return (props.invalidMessage || 'Formato de e-mail inválido');
 
   return true;
 }

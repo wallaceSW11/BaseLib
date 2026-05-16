@@ -22,7 +22,6 @@ export default defineConfig({
         "composables/index": resolve(__dirname, "src/composables/index.ts"),
         "utils/index": resolve(__dirname, "src/utils/index.ts"),
         "stores/index": resolve(__dirname, "src/stores/index.ts"),
-        "locales/index": resolve(__dirname, "src/locales/index.ts"),
         "plugins/index": resolve(__dirname, "src/plugins/index.ts"),
       },
       formats: ["es"],
@@ -30,7 +29,6 @@ export default defineConfig({
     rollupOptions: {
       external: [
         "vue",
-        "vue-i18n",
         "vuetify",
         "vuetify/components",
         "vuetify/directives",
@@ -41,7 +39,6 @@ export default defineConfig({
       output: {
         globals: {
           vue: "Vue",
-          "vue-i18n": "VueI18n",
           vuetify: "Vuetify",
           pinia: "Pinia",
           axios: "axios",

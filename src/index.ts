@@ -7,7 +7,6 @@ export const components = componentExports;
 export * from './components';
 export * from './utils';
 export * from './composables';
-export * from './locales';
 export * from './stores';
 export { default as globalsPlugin } from './plugins';
 export { requiredVuetifyComponents } from './vuetifyComponents';

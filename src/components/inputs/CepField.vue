@@ -25,7 +25,6 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import { useI18n } from 'vue-i18n';
 import { vMaska } from 'maska/vue';
 import { Mask } from 'maska';
 
@@ -63,14 +62,7 @@ const emit = defineEmits<{
   'address-not-found': [];
 }>();
 
-let t: (key: string) => string;
-try {
-  ({ t } = useI18n({ useScope: 'global' }));
-} catch {
-  t = (key: string) => key;
-}
-
-const fieldLabel = computed(() => props.label ?? t('address.zipCode'));
+const fieldLabel = computed(() => props.label ?? 'CEP');
 
 const mask = new Mask({ mask: '#####-###', eager: true });
 const displayValue = computed(() => mask.masked(props.modelValue ?? ''));

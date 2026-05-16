@@ -33,9 +33,6 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { useI18n } from 'vue-i18n';
-
-const { t } = useI18n();
 
 const isOpen = ref(false);
 const currentTitle = ref('');
@@ -75,8 +72,8 @@ const ConfirmDialog = (title: string, message: string, options?: ConfirmOptions)
   currentTitle.value = title;
   currentMessage.value = message;
   persistent.value = options?.persistent ?? true;
-  confirmText.value = options?.confirmText || t('common.yes');
-  cancelText.value = options?.cancelText || t('common.no');
+  confirmText.value = options?.confirmText || 'Sim';
+  cancelText.value = options?.cancelText || 'Não';
   confirmColor.value = options?.confirmColor || 'primary';
   cancelColor.value = options?.cancelColor || 'secondary';
   isOpen.value = true;
