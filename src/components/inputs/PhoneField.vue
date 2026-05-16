@@ -6,7 +6,7 @@
     :rules="rules"
     :disabled="disabled"
     :hint="hint"
-    :persistent-hint="persistentHint"
+    :persistent-hint="hasHint"
     :variant="variant"
     inputmode="tel"
     autocomplete="tel"
@@ -29,21 +29,23 @@ import { vMaska } from 'maska/vue';
 import { Mask } from 'maska';
 import type { TextFieldVariant } from '@/utils/types';
 
+type ValidationRule = (value: string) => boolean | string;
+
 type MaskaDetail = { masked: string; unmasked: string; completed: boolean };
 
 interface Props {
-  modelValue?: string;
-  label?: string;
-  rules?: any[];
-  disabled?: boolean;
-  hint?: string;
-  icon?: string;
-  variant?: TextFieldVariant;
+  modelValue?: string
+  label?: string
+  rules?: ValidationRule[]
+  disabled?: boolean
+  hint?: string
+  icon?: string
+  variant?: TextFieldVariant
 }
 
 const props = withDefaults(defineProps<Props>(), {
   modelValue: '',
-  label: 'Phone',
+  label: 'Telefone',
   rules: () => [],
   hint: '',
   icon: 'mdi-phone-outline',
@@ -51,14 +53,14 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const emit = defineEmits<{
-  'update:modelValue': [value: string];
+  'update:modelValue': [value: string]
 }>();
 
 const mask = new Mask({ mask: ['(##) ####-####', '(##) #####-####'], eager: true });
 
 const displayValue = computed(() => mask.masked(props.modelValue ?? ''));
 
-const persistentHint = computed(() => !!props.hint);
+const hasHint = computed(() => !!props.hint);
 
 const maskOptions = {
   mask: ['(##) ####-####', '(##) #####-####'],
