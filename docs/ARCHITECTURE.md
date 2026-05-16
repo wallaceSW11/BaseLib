@@ -114,6 +114,20 @@ Common Vuetify utilities reference:
 | `font-weight: 500 / 700` | `font-weight-medium` / `font-weight-bold` |
 | `text-align: center` | `text-center` |
 
+## Imports — `@` alias
+
+Always use the `@` alias instead of deep relative paths. The `@` maps to `src/` (configured in both `tsconfig.json` and `vite.config.ts`).
+
+```ts
+// CORRECT
+import type { TextFieldVariant } from '@/utils/types';
+
+// WRONG — deep relative
+import type { TextFieldVariant } from '../../utils/types';
+```
+
+Exception: same-directory imports can stay relative (`./ZipCodeField.vue`).
+
 ## Labels
 
 - All UI labels are hardcoded in pt-BR

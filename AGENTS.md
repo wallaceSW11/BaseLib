@@ -75,6 +75,7 @@ src/
 - **Props**: sensible defaults with `withDefaults`
 - **CSS**: Vuetify utilities first, scoped CSS only when necessary (see `docs/ARCHITECTURE.md` for reference table)
 - **Peer deps**: Never in bundle — external in `vite.config.ts`
+- **Imports**: `@` alias for `src/` — no deep relative paths (`../../utils/types` → `@/utils/types`)
 - **Labels**: pt-BR hardcoded, no i18n. Every component accepts props to override.
 
 ## Code style (required)

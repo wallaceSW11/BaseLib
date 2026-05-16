@@ -24,7 +24,7 @@
 
 <script setup lang="ts">
 import { ref, watch, nextTick } from 'vue';
-import type { TextFieldVariant } from '../../utils/types';
+import type { TextFieldVariant } from '@/utils/types';
 
 interface Props {
   modelValue?: number | null;

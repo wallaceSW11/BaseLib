@@ -30,23 +30,23 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import type { TextFieldVariant } from '../../utils/types';
+import type { TextFieldVariant } from '@/utils/types';
 
 type ValidationRule = (value: string) => boolean | string;
 
 interface Props {
-  modelValue?: string;
-  label?: string;
-  rules?: ValidationRule[];
-  disabled?: boolean;
-  hint?: string;
-  persistentHint?: boolean;
-  required?: boolean;
-  validateOnBlur?: boolean;
-  requiredMessage?: string;
-  invalidMessage?: string;
-  variant?: TextFieldVariant;
-  maxlength?: number;
+  modelValue?: string
+  label?: string
+  rules?: ValidationRule[]
+  disabled?: boolean
+  hint?: string
+  persistentHint?: boolean
+  required?: boolean
+  validateOnBlur?: boolean
+  requiredMessage?: string
+  invalidMessage?: string
+  variant?: TextFieldVariant
+  maxlength?: number
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -65,11 +65,19 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const emit = defineEmits<{
-  'update:modelValue': [value: string];
-  isValid: [value: boolean];
+  'update:modelValue': [value: string]
+  isValid: [value: boolean]
 }>();
 
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+const isValid = ref(false);
+
+const hasHint = computed(() => !!props.hint);
+
+const emailIcon = computed(() => isValid.value ? 'mdi-email-check' : 'mdi-email-outline');
+
+const iconColor = computed(() => isValid.value ? 'success' : undefined);
 
 const innerValue = computed({
   get: () => props.modelValue,
@@ -80,18 +88,12 @@ const innerValue = computed({
   },
 });
 
-const isValid = ref(false);
-
-const hasHint = computed(() => !!props.hint);
-
-const emailIcon = computed(() => (isValid.value ? 'mdi-email-check' : 'mdi-email-outline'));
-
-const iconColor = computed(() => (isValid.value ? 'success' : undefined));
+const mergedRules = computed(() => [validateEmail, ...props.rules]);
 
 function validateEmail(value: string): boolean | string {
   if (!value) return props.required ? (props.requiredMessage || 'Email é obrigatório') : true;
 
-  if (!emailRegex.test(value)) return (props.invalidMessage || 'Formato de e-mail inválido');
+  if (!emailRegex.test(value)) return props.invalidMessage || 'Formato de e-mail inválido';
 
   return true;
 }
@@ -101,8 +103,6 @@ function resolveValidation(value: string) {
   isValid.value = result === true;
   emit('isValid', isValid.value);
 }
-
-const mergedRules = computed(() => [validateEmail, ...props.rules]);
 
 function handleBlur() {
   if (!props.validateOnBlur) return;

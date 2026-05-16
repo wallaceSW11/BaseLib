@@ -27,7 +27,7 @@
 import { ref, computed, onBeforeUnmount } from 'vue';
 import { vMaska } from 'maska/vue';
 import { Mask } from 'maska';
-import type { TextFieldVariant } from '../../utils/types';
+import type { TextFieldVariant } from '@/utils/types';
 
 type ValidationRule = (value: string) => boolean | string;
 

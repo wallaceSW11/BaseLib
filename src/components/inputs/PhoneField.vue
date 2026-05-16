@@ -27,7 +27,7 @@
 import { computed } from 'vue';
 import { vMaska } from 'maska/vue';
 import { Mask } from 'maska';
-import type { TextFieldVariant } from '../../utils/types';
+import type { TextFieldVariant } from '@/utils/types';
 
 type MaskaDetail = { masked: string; unmasked: string; completed: boolean };
 
