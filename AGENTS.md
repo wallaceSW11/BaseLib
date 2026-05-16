@@ -83,7 +83,7 @@ src/
 - async/await always — never .then().catch()
 - Zero logic in template — computed/methods
 - Early return — no `if/else`, always early return instead
-- Self-documenting names — zero comments
+- Self-documenting names — zero comments. No abreviações obscuras (`l` → `labels`, `t` → `translate`, `fn` → `format`)
 - `const`/`let` — never `var`
 - Type everything — never `any`
 - Booleans with is/has/can prefix (`isValid`, `hasError`, `canSave`)

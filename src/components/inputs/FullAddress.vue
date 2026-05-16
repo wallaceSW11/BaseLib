@@ -12,25 +12,25 @@
     <v-col cols="12" md="8">
       <v-text-field
         v-model="internal.street"
-        :label="l.street"
-        :disabled="disabled || isFieldDisabled"
+        :label="labels.street"
+        :disabled="isAutoDisabled"
         :variant="variant"
       />
     </v-col>
 
     <v-col cols="12" md="3">
-      <v-text-field v-model="internal.number" :label="l.number" :disabled="disabled" :variant="variant" />
+      <v-text-field v-model="internal.number" :label="labels.number" :disabled="disabled" :variant="variant" />
     </v-col>
 
     <v-col cols="12" md="5">
-      <v-text-field v-model="internal.complement" :label="l.complement" :disabled="disabled" :variant="variant" />
+      <v-text-field v-model="internal.complement" :label="labels.complement" :disabled="disabled" :variant="variant" />
     </v-col>
 
     <v-col cols="12" md="4">
       <v-text-field
         v-model="internal.neighborhood"
-        :label="l.neighborhood"
-        :disabled="disabled || isFieldDisabled"
+        :label="labels.neighborhood"
+        :disabled="isAutoDisabled"
         :variant="variant"
       />
     </v-col>
@@ -38,8 +38,8 @@
     <v-col cols="12" md="6">
       <v-text-field
         v-model="internal.city"
-        :label="l.city"
-        :disabled="disabled || isFieldDisabled"
+        :label="labels.city"
+        :disabled="isAutoDisabled"
         :variant="variant"
       />
     </v-col>
@@ -47,11 +47,11 @@
     <v-col cols="12" md="6">
       <v-select
         v-model="internal.state"
-        :label="l.state"
+        :label="labels.state"
         :items="brazilianStates"
         item-title="name"
         item-value="uf"
-        :disabled="disabled || isFieldDisabled"
+        :disabled="isAutoDisabled"
         :variant="variant"
       />
     </v-col>
@@ -65,31 +65,31 @@ import type { TextFieldVariant } from '@/utils/types';
 import ZipCodeField, { type ZipCodeResponse } from './ZipCodeField.vue';
 
 export interface Address {
-  zipCode: string;
-  street: string;
-  number: string;
-  complement: string;
-  neighborhood: string;
-  city: string;
-  state: string;
+  zipCode: string
+  street: string
+  number: string
+  complement: string
+  neighborhood: string
+  city: string
+  state: string
 }
 
 export interface AddressLabels {
-  zipCode?: string;
-  street?: string;
-  number?: string;
-  complement?: string;
-  neighborhood?: string;
-  city?: string;
-  state?: string;
+  zipCode?: string
+  street?: string
+  number?: string
+  complement?: string
+  neighborhood?: string
+  city?: string
+  state?: string
 }
 
 interface Props {
-  modelValue?: Partial<Address>;
-  disabled?: boolean;
-  disabledFields?: boolean;
-  labels?: AddressLabels;
-  variant?: TextFieldVariant;
+  modelValue?: Partial<Address>
+  disabled?: boolean
+  disabledFields?: boolean
+  labels?: AddressLabels
+  variant?: TextFieldVariant
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -101,52 +101,8 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const emit = defineEmits<{
-  'update:modelValue': [value: Address];
+  'update:modelValue': [value: Address]
 }>();
-
-const l = computed(() => ({
-  zipCode: props.labels.zipCode ?? 'CEP',
-  street: props.labels.street ?? 'Logradouro',
-  number: props.labels.number ?? 'Número',
-  complement: props.labels.complement ?? 'Complemento',
-  neighborhood: props.labels.neighborhood ?? 'Bairro',
-  city: props.labels.city ?? 'Cidade',
-  state: props.labels.state ?? 'Estado',
-}));
-
-const internal = reactive<Address>({
-  zipCode: '',
-  street: '',
-  number: '',
-  complement: '',
-  neighborhood: '',
-  city: '',
-  state: '',
-  ...props.modelValue,
-});
-
-const zipCodeFound = ref(false);
-const isFieldDisabled = computed(() => props.disabledFields && zipCodeFound.value);
-
-function onZipCodeFound(data: ZipCodeResponse) {
-  internal.street = data.street;
-  internal.neighborhood = data.neighborhood;
-  internal.city = data.city;
-  internal.state = data.state;
-  zipCodeFound.value = true;
-}
-
-function onZipCodeNotFound() {
-  zipCodeFound.value = false;
-}
-
-watch(
-  () => props.modelValue,
-  (val) => Object.assign(internal, val),
-  { deep: true },
-);
-
-watch(internal, (val) => emit('update:modelValue', { ...val }), { deep: true });
 
 const brazilianStates = [
   { uf: 'AC', name: 'AC - Acre' },
@@ -177,4 +133,49 @@ const brazilianStates = [
   { uf: 'SE', name: 'SE - Sergipe' },
   { uf: 'TO', name: 'TO - Tocantins' },
 ];
+
+const internal = reactive<Address>({
+  zipCode: '',
+  street: '',
+  number: '',
+  complement: '',
+  neighborhood: '',
+  city: '',
+  state: '',
+  ...props.modelValue,
+});
+
+const zipCodeFound = ref(false);
+
+const labels = computed(() => ({
+  zipCode: props.labels.zipCode ?? 'CEP',
+  street: props.labels.street ?? 'Logradouro',
+  number: props.labels.number ?? 'Número',
+  complement: props.labels.complement ?? 'Complemento',
+  neighborhood: props.labels.neighborhood ?? 'Bairro',
+  city: props.labels.city ?? 'Cidade',
+  state: props.labels.state ?? 'Estado',
+}));
+
+const isAutoDisabled = computed(() => props.disabled || (props.disabledFields && zipCodeFound.value));
+
+function onZipCodeFound(data: ZipCodeResponse) {
+  internal.street = data.street;
+  internal.neighborhood = data.neighborhood;
+  internal.city = data.city;
+  internal.state = data.state;
+  zipCodeFound.value = true;
+}
+
+function onZipCodeNotFound() {
+  zipCodeFound.value = false;
+}
+
+watch(
+  () => props.modelValue,
+  (val) => Object.assign(internal, val),
+  { deep: true },
+);
+
+watch(internal, (val) => emit('update:modelValue', { ...val }), { deep: true });
 </script>
