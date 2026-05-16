@@ -158,6 +158,18 @@ src/
 3. **Estados** — loading mostra spinner, empty mostra placeholder
 4. **Edge cases** — null, vazio, erro de API
 
+### Cobertura
+
+**Todo arquivo em `src/` deve ter 100% de cobertura** (statements, branch, functions, lines) na `<script setup>` ou no código do composable/utility. Exceção aceita apenas para branches defensivos inalcançáveis (ex: `if (!event.target) return` em keydown, que é type guard — o target sempre existe em eventos DOM reais).
+
+A meta é 100% em:
+- **Lines**: toda linha executa em pelo menos um teste
+- **Functions**: toda função é chamada
+- **Statements**: toda declaração/expressão executa
+- **Branch**: todo branch de if/ternary é exercitado (salvo exceções documentadas acima)
+
+Verifique com `pnpm test -- --coverage` antes de commitar.
+
 ### O que NÃO testar
 
 - ❌ Vue internals (reatividade, Virtual DOM)

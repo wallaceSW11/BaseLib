@@ -114,16 +114,12 @@ function updateValue(newValue: number) {
 }
 
 function updateFromDigits(digits: string) {
-  const newValue = digits ? parseInt(digits) / 100 : 0;
+  const newValue = parseInt(digits) / 100;
 
   updateValue(newValue);
 }
 
 function handleKeydown(event: KeyboardEvent) {
-  const input = event.target as HTMLInputElement | null;
-
-  if (!input) return;
-
   const isNavigationKey = NAVIGATION_KEYS.includes(event.key) || event.ctrlKey || event.metaKey;
 
   if (isNavigationKey) {
@@ -132,7 +128,7 @@ function handleKeydown(event: KeyboardEvent) {
 
       const digits = formattedValue.value.replace(/\D/g, '');
 
-      if (digits.length > 0) updateFromDigits(digits.slice(0, -1));
+      updateFromDigits(digits.slice(0, -1));
     }
 
     return;

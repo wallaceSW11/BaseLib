@@ -90,3 +90,7 @@ watch(() => props.isLoading, (val) => {
 ### 6. dist/ is gitignored
 
 Build artifacts are not committed. `prepublishOnly` builds fresh on `npm publish`.
+
+### 7. 100% coverage — no exceptions
+
+All `src/` files must reach 100% coverage (statements, branch, functions, lines). If a branch is unreachable, remove it — code morto não deve existir.
