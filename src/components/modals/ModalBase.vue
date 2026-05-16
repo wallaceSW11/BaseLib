@@ -124,6 +124,7 @@ const handleDialogKeydown = (e: KeyboardEvent) => {
   // ESC - aciona o botão secundário (cancelar)
   if (e.key === 'Escape') {
     const cancelAction = props.actions.find((a) => a.color === 'secondary' || a.color === 'error');
+
     if (cancelAction) {
       e.preventDefault();
       e.stopPropagation();
@@ -135,11 +136,13 @@ const handleDialogKeydown = (e: KeyboardEvent) => {
   if (e.key === 'Enter' && !e.shiftKey && !e.ctrlKey && !e.altKey) {
     // Ignora se o foco está em um textarea
     const target = e.target as HTMLElement;
+
     if (target.tagName === 'TEXTAREA') return;
 
     const primaryAction = props.actions.find(
       (a) => a.color === 'primary' || (!a.color && props.actions.indexOf(a) === props.actions.length - 1),
     );
+
     if (primaryAction) {
       e.preventDefault();
       e.stopPropagation();
@@ -157,6 +160,7 @@ onMounted(() => {
     // ESC - aciona o botão secundário (cancelar)
     if (e.key === 'Escape' && !props.persistent) {
       const cancelAction = props.actions.find((a) => a.color === 'secondary' || a.color === 'error');
+
       if (cancelAction) {
         e.preventDefault();
         handleAction(cancelAction);
@@ -167,11 +171,13 @@ onMounted(() => {
     if (e.key === 'Enter' && !e.shiftKey && !e.ctrlKey && !e.altKey) {
       // Ignora se o foco está em um textarea ou input de múltiplas linhas
       const target = e.target as HTMLElement;
+
       if (target.tagName === 'TEXTAREA') return;
 
       const primaryAction = props.actions.find(
         (a) => a.color === 'primary' || (!a.color && props.actions.indexOf(a) === props.actions.length - 1),
       );
+
       if (primaryAction) {
         e.preventDefault();
         handleAction(primaryAction);

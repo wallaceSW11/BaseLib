@@ -28,6 +28,7 @@ export const confirm = {
 
     if (!confirmInstance || !confirmInstance.ConfirmDialog) {
       console.error('ConfirmDialog component is not registered');
+
       return Promise.resolve(false);
     }
 

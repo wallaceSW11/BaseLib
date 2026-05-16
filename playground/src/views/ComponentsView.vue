@@ -946,7 +946,9 @@ const resetMoney = () => {
 
 const handleEmailValidation = (fieldName: string, isValid: boolean) => {
   if (fieldName === 'email1') isEmail1Valid.value = isValid;
+
   if (fieldName === 'email2') isEmail2Valid.value = isValid;
+
   if (fieldName === 'email3') isEmail3Valid.value = isValid;
 };
 

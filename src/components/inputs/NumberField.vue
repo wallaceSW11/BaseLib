@@ -107,6 +107,7 @@ function handleFocus(event: FocusEvent) {
   const input = event.target as HTMLInputElement | null;
   nextTick(() => {
     if (!input || input.value == null) return;
+
     input.setSelectionRange(input.value.length, input.value.length);
   });
 }
@@ -115,13 +116,16 @@ function handleClick(event: MouseEvent) {
   const input = event.target as HTMLInputElement | null;
   nextTick(() => {
     if (!input || input.value == null) return;
+
     input.setSelectionRange(input.value.length, input.value.length);
   });
 }
 
 function handleKeydown(event: KeyboardEvent) {
   const input = event.target as HTMLInputElement | null;
+
   if (!input) return;
+
   const currentValue = formattedValue.value;
 
   // Permite teclas de navegação e controle
@@ -150,6 +154,7 @@ function handleKeydown(event: KeyboardEvent) {
 
         // Mantém o sinal negativo se estava presente
         const isNegative = currentValue.startsWith('-');
+
         if (isNegative && props.allowNegative && newValue !== 0) {
           newValue = -newValue;
         }
@@ -160,16 +165,19 @@ function handleKeydown(event: KeyboardEvent) {
         // Mantém o cursor no final
         nextTick(() => {
           if (!input || input.value == null) return;
+
           input.setSelectionRange(input.value.length, input.value.length);
         });
       }
     }
+
     return;
   }
 
   // Permite apenas números e sinal de menos
   if (!/[\d-]/.test(event.key)) {
     event.preventDefault();
+
     return;
   }
 
@@ -180,8 +188,11 @@ function handleKeydown(event: KeyboardEvent) {
     // Inverte o sinal
     const currentNumeric = parseNumberInput(currentValue);
     const newValue = -currentNumeric;
+
     if (props.min !== undefined && newValue < props.min) return;
+
     if (props.max !== undefined && newValue > props.max) return;
+
     emit('update:modelValue', newValue);
     formattedValue.value = formatNumber(newValue);
   } else if (event.key !== '-') {
@@ -200,12 +211,15 @@ function handleKeydown(event: KeyboardEvent) {
 
     // Mantém o sinal negativo se estava presente
     const isNegative = currentValue.startsWith('-');
+
     if (isNegative && props.allowNegative) {
       newValue = -newValue;
     }
 
     if (props.max !== undefined && newValue > props.max) return;
+
     if (props.min !== undefined && newValue < props.min) return;
+
     emit('update:modelValue', newValue);
     formattedValue.value = formatNumber(newValue);
   }
@@ -213,6 +227,7 @@ function handleKeydown(event: KeyboardEvent) {
   // Mantém o cursor no final
   nextTick(() => {
     if (!input || input.value == null) return;
+
     input.setSelectionRange(input.value.length, input.value.length);
   });
 }

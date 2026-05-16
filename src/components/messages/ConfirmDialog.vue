@@ -19,8 +19,10 @@ const customDialogRef = ref<InstanceType<typeof CustomConfirmDialog> | null>(nul
 const ConfirmDialog = (title: string, message: string, options?: ConfirmOptions): Promise<boolean> => {
   if (!customDialogRef.value) {
     console.error('ConfirmDialog: customDialogRef is not available');
+
     return Promise.resolve(false);
   }
+
   return customDialogRef.value.ConfirmDialog(title, message, options);
 };
 

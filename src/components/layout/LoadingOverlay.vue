@@ -44,6 +44,7 @@ watch(() => props.isLoading, (val) => {
     clearTimeout(contentTimeoutId);
     contentTimeoutId = null;
   }
+
   showContent.value = false;
 });
 

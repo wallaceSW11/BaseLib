@@ -4,11 +4,17 @@ import globalsPlugin from './plugins';
 import { ensureVuetify } from './utils/vuetify-check';
 
 export const components = componentExports;
+
 export * from './components';
+
 export * from './utils';
+
 export * from './composables';
+
 export * from './stores';
+
 export { default as globalsPlugin } from './plugins';
+
 export { requiredVuetifyComponents } from './vuetifyComponents';
 
 export default function registerLibComponents(app: App) {

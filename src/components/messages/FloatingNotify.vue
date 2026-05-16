@@ -42,6 +42,7 @@ const show = (type: NotifyType, title: string, message = '') => {
 
 const hide = () => {
   isVisible.value = false;
+
   if (timeoutId) {
     clearTimeout(timeoutId);
     timeoutId = null;

@@ -93,6 +93,7 @@ src/
 - Semicolons (`;`) required at the end of every statement
 - Blank line before and after `if`/`for`/`while` blocks
 - One-line if without braces when single statement
+- Consecutive early returns (`if (!x) return; if (!y) return;`) can stay together (no blank line between)
 - Never `!important` in CSS
 
 ## Library rules

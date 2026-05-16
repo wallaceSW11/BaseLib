@@ -21,6 +21,7 @@ export function ensureVuetify(app: App): void {
     provides &&
     Object.getOwnPropertySymbols(provides).some((sym) => {
       const symbolStr = sym.toString();
+
       return symbolStr.includes('vuetify') || symbolStr.includes('Vuetify');
     });
 

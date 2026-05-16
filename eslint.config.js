@@ -48,6 +48,12 @@ export default [
       '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
       'curly': ['error', 'multi-line'],
+      'padding-line-between-statements': [
+        'error',
+        { blankLine: 'any', prev: ['if', 'for', 'while', 'switch', 'return', 'export'], next: ['if', 'for', 'while', 'switch', 'return', 'export'] },
+        { blankLine: 'always', prev: '*', next: ['if', 'for', 'while', 'switch', 'return', 'export'] },
+        { blankLine: 'always', prev: ['if', 'for', 'while', 'switch', 'return', 'export'], next: '*' },
+      ],
       'quotes': ['error', 'single', { avoidEscape: true }],
       'semi': ['error', 'always'],
     },

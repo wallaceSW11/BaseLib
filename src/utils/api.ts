@@ -40,6 +40,7 @@ export function configureApi(config: Partial<ApiConfig>) {
   if (config.baseURL) {
     api.defaults.baseURL = config.baseURL;
   }
+
   if (config.timeout) {
     api.defaults.timeout = config.timeout;
   }
@@ -47,9 +48,11 @@ export function configureApi(config: Partial<ApiConfig>) {
 
 function addAuthTokenToRequest(config: InternalAxiosRequestConfig) {
   const token = localStorage.getItem(currentConfig.authTokenKey!);
+
   if (token && config.headers) {
     config.headers.Authorization = `Bearer ${token}`;
   }
+
   return config;
 }
 
@@ -63,10 +66,12 @@ api.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
     addAuthTokenToRequest(config);
     showLoadingForMutations(config);
+
     return config;
   },
   (error: AxiosError) => {
     loading.hide();
+
     return Promise.reject(error);
   },
 );
@@ -75,6 +80,7 @@ function handleUnauthorized() {
   if (currentConfig.showErrorNotifications) {
     notify.error('Unauthorized', 'Please log in again');
   }
+
   if (currentConfig.onUnauthorized) {
     currentConfig.onUnauthorized();
   }
@@ -91,6 +97,7 @@ function handleErrorResponse(error: AxiosError) {
     } else {
       notify.error('Error', error.message);
     }
+
     return;
   }
 
@@ -118,11 +125,13 @@ function handleErrorResponse(error: AxiosError) {
 api.interceptors.response.use(
   (response: AxiosResponse) => {
     loading.hide();
+
     return response;
   },
   (error: AxiosError) => {
     loading.hide();
     handleErrorResponse(error);
+
     return Promise.reject(error);
   },
 );

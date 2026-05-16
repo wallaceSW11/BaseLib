@@ -46,11 +46,13 @@ let resolvePromise: ((value: boolean) => void) | null = null;
 
 const handleYes = () => {
   if (resolvePromise) resolvePromise(true);
+
   isOpen.value = false;
 };
 
 const handleNo = () => {
   if (resolvePromise) resolvePromise(false);
+
   isOpen.value = false;
 };
 
