@@ -134,56 +134,16 @@ Test utilities live in `src/testutils.ts` (not exported from barrel — test-onl
 
 ## Tests
 
-### Padrão de arquivos
-
-Testes ficam colados ao arquivo que testam, em `__tests__/`:
+- **Location**: `__tests__/` next to the file under test
+- **Coverage**: 100% required (statements, branch, functions, lines). Run `pnpm test -- --coverage` before commit.
+- **Scope**: Pure logic, events, UI states, edge cases
+- **Avoid**: Vue/Vuetify internals, html(), snapshots, private methods
+- **exists()** for `v-if`, **isVisible()** for `v-show`
 
 ```
-src/
-  composables/
-    useLoading.ts
-    __tests__/
-      useLoading.spec.ts
-  components/
-    inputs/
-      ZipCodeField.vue
-      __tests__/
-        ZipCodeField.spec.ts
+src/composables/useLoading.ts           → __tests__/useLoading.spec.ts
+src/components/inputs/ZipCodeField.vue  → __tests__/ZipCodeField.spec.ts
 ```
-
-### O que testar
-
-1. **Lógica pura** — composables, funções utilitárias, regras de validação
-2. **Eventos** — clique emite `click`, CEP encontrado emite `zip-code-found`
-3. **Estados** — loading mostra spinner, empty mostra placeholder
-4. **Edge cases** — null, vazio, erro de API
-
-### Cobertura
-
-**Todo arquivo em `src/` deve ter 100% de cobertura** (statements, branch, functions, lines) na `<script setup>` ou no código do composable/utility. Exceção aceita apenas para branches defensivos inalcançáveis (ex: `if (!event.target) return` em keydown, que é type guard — o target sempre existe em eventos DOM reais).
-
-A meta é 100% em:
-- **Lines**: toda linha executa em pelo menos um teste
-- **Functions**: toda função é chamada
-- **Statements**: toda declaração/expressão executa
-- **Branch**: todo branch de if/ternary é exercitado (salvo exceções documentadas acima)
-
-Verifique com `pnpm test -- --coverage` antes de commitar.
-
-### O que NÃO testar
-
-- ❌ Vue internals (reatividade, Virtual DOM)
-- ❌ Vuetify internals (se `v-btn` renderiza)
-- ❌ Implementação interna (métodos privados)
-- ❌ `wrapper.html()` — frágil demais
-- ❌ Snapshot tests
-
-### exists vs isVisible
-
-| Método | O que verifica | Uso |
-|--------|---------------|-----|
-| `exists()` | Elemento está no DOM | `v-if` |
-| `isVisible()` | Elemento está visível | `v-show`, `display: none` |
 
 ## Language conventions
 
