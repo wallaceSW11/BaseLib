@@ -5,7 +5,7 @@
 ```
 src/
   components/       ─ Reusable Vue components
-    buttons/        ─ Button variants (BaseButton, PrimaryButton, etc.)
+    buttons/        ─ Icon-only button with tooltip (IconToolTip)
     inputs/         ─ Form inputs (CepField, EmailField, MoneyField, etc.)
     layout/         ─ App shell components (LoadingOverlay)
     modals/         ─ Modal dialogs (ModalBase)

@@ -13,6 +13,8 @@
 | `ThemeConfig` interface + theme.json | Domain-specific (app name, logo, favicon, copyright). Not a lib concern. |
 | `LoadingComponentRef` type | Replaced by `useLoading()` composable — no more template ref + Pinia store hack. |
 | `defineExpose({ show, hide })` in LoadingOverlay | Replaced by `:is-loading` prop (Props down, Events up). |
+| `PrimaryButton`, `SecondaryButton`, `TertiaryButton`, `QuartenaryButton` | 68 lines of prop-forwarding boilerplate. Consumers use `<v-btn>` directly. |
+| `BaseButton` | Thin wrapper around `<v-btn>` adding only `class="text-none"`. Not enough value to justify being in the library. Consumers configure text-transform globally or per-btn. |
 
 ## Key decisions
 
@@ -33,7 +35,20 @@ Same pattern applies to notify and confirm.
 
 Custom theme management (loading /theme.json, syncing colors, swapping favicons, dispatching custom events) was fighting Vuetify's built-in theme system. Now the store only tracks `isDark` — Vuetify does the rest.
 
-### 4. One-liner if without braces
+### 4. No button wrappers — use `v-btn` directly
+
+Every major Vue library ships a single button with props. Wrapping `v-btn` just to preset `color` + `variant` adds zero value. Even `BaseButton` added only `class="text-none"` — not enough to justify a component in the library.
+
+Consumers use `v-btn` directly, configuring text-transform globally if needed:
+
+```vue
+<v-btn color="primary" variant="elevated">Save</v-btn>
+<v-btn color="secondary" variant="outlined">Cancel</v-btn>
+```
+
+`IconToolTip` is kept because it solves a real ergonomic problem — wrapping Vuetify's `v-tooltip > v-btn` nesting pattern. That's actual value.
+
+### 5. One-liner if without braces
 
 ```ts
 // CORRECT

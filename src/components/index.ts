@@ -1,9 +1,3 @@
-export { default as BaseButton } from './buttons/BaseButton.vue';
-export { default as PrimaryButton } from './buttons/PrimaryButton.vue';
-export { default as SecondaryButton } from './buttons/SecondaryButton.vue';
-export { default as TertiaryButton } from './buttons/TertiaryButton.vue';
-export { default as QuartenaryButton } from './buttons/QuartenaryButton.vue';
-
 export { default as IconToolTip } from './buttons/IconToolTip.vue';
 export { default as ModalBase, type ModalAction } from './modals/ModalBase.vue';
 export { default as ConfirmDialog } from './messages/ConfirmDialog.vue';
