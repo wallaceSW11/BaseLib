@@ -30,10 +30,9 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
+import type { TextFieldVariant } from '../../utils/types';
 
 type ValidationRule = (value: string) => boolean | string;
-
-type Variant = 'outlined' | 'filled' | 'plain' | 'solo' | 'solo-filled' | 'solo-inverted' | 'underlined';
 
 interface Props {
   modelValue?: string;
@@ -46,7 +45,7 @@ interface Props {
   validateOnBlur?: boolean;
   requiredMessage?: string;
   invalidMessage?: string;
-  variant?: Variant;
+  variant?: TextFieldVariant;
   maxlength?: number;
 }
 

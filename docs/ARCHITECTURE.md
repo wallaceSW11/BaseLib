@@ -6,7 +6,7 @@
 src/
   components/       ─ Reusable Vue components
     buttons/        ─ Icon-only button with tooltip (IconToolTip)
-    inputs/         ─ Form inputs (CepField, EmailField, MoneyField, etc.)
+    inputs/         ─ Form inputs (ZipCodeField, EmailField, MoneyField, etc.)
     layout/         ─ App shell components (LoadingOverlay)
     modals/         ─ Modal dialogs (ModalBase)
     messages/       ─ Notification/confirm (FloatingNotify, ConfirmDialog, CustomConfirmDialog)

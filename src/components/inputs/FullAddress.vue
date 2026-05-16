@@ -1,11 +1,11 @@
 <template>
   <v-row>
     <v-col cols="12" md="4">
-      <CepField
+      <ZipCodeField
         v-model="internal.zipCode"
         :disabled="disabled"
-        @address-found="onAddressFound"
-        @address-not-found="onAddressNotFound"
+        @zip-code-found="onZipCodeFound"
+        @zip-code-not-found="onZipCodeNotFound"
       />
     </v-col>
 
@@ -61,7 +61,8 @@
 <script setup lang="ts">
 import { reactive, ref, watch, computed } from 'vue';
 import { VRow, VCol, VTextField, VSelect } from 'vuetify/components';
-import CepField, { type ViaCepResponse } from './CepField.vue';
+import type { TextFieldVariant } from '../../utils/types';
+import ZipCodeField, { type ZipCodeResponse } from './ZipCodeField.vue';
 
 export interface Address {
   zipCode: string;
@@ -88,7 +89,7 @@ interface Props {
   disabled?: boolean;
   disabledFields?: boolean;
   labels?: AddressLabels;
-  variant?: 'outlined' | 'filled' | 'plain' | 'solo' | 'solo-filled' | 'solo-inverted' | 'underlined';
+  variant?: TextFieldVariant;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -124,19 +125,19 @@ const internal = reactive<Address>({
   ...props.modelValue,
 });
 
-const cepFound = ref(false);
-const isFieldDisabled = computed(() => props.disabledFields && cepFound.value);
+const zipCodeFound = ref(false);
+const isFieldDisabled = computed(() => props.disabledFields && zipCodeFound.value);
 
-function onAddressFound(data: ViaCepResponse) {
-  internal.street = data.logradouro ?? '';
-  internal.neighborhood = data.bairro ?? '';
-  internal.city = data.localidade ?? '';
-  internal.state = data.uf ?? '';
-  cepFound.value = true;
+function onZipCodeFound(data: ZipCodeResponse) {
+  internal.street = data.street;
+  internal.neighborhood = data.neighborhood;
+  internal.city = data.city;
+  internal.state = data.state;
+  zipCodeFound.value = true;
 }
 
-function onAddressNotFound() {
-  cepFound.value = false;
+function onZipCodeNotFound() {
+  zipCodeFound.value = false;
 }
 
 watch(

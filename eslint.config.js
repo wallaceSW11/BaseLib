@@ -23,6 +23,7 @@ export default [
         HTMLInputElement: 'readonly',
         localStorage: 'readonly',
         fetch: 'readonly',
+        AbortController: 'readonly',
       },
     },
   },

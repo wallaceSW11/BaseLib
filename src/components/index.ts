@@ -7,5 +7,5 @@ export { default as MoneyField } from './inputs/MoneyField.vue';
 export { default as EmailField } from './inputs/EmailField.vue';
 export { default as NumberField } from './inputs/NumberField.vue';
 export { default as PhoneField } from './inputs/PhoneField.vue';
-export { default as CepField } from './inputs/CepField.vue';
+export { default as ZipCodeField, type ZipCodeResponse } from './inputs/ZipCodeField.vue';
 export { default as FullAddress, type Address, type AddressLabels } from './inputs/FullAddress.vue';

@@ -24,6 +24,7 @@
 
 <script setup lang="ts">
 import { ref, watch, nextTick } from 'vue';
+import type { TextFieldVariant } from '../../utils/types';
 
 interface Props {
   modelValue?: number | null;
@@ -34,7 +35,7 @@ interface Props {
   persistentHint?: boolean;
   currency?: string;
   locale?: string;
-  variant?: 'outlined' | 'filled' | 'plain' | 'solo' | 'solo-filled' | 'solo-inverted' | 'underlined';
+  variant?: TextFieldVariant;
   max?: number;
   min?: number;
 }
