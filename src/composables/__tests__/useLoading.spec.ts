@@ -8,14 +8,14 @@ const SHOW_CASES = [
 ] as const;
 
 describe('useLoading', () => {
-  it('starts with isActive false and default message', () => {
+  it('should start with isActive false and default message when initialized', () => {
     const { isActive, message } = useLoading();
 
     expect(isActive.value).toBe(false);
     expect(message.value).toBe('Carregando...');
   });
 
-  it.each(SHOW_CASES)('show sets message to "$expected"', ({ msg, expected }) => {
+  it.each(SHOW_CASES)('should set isActive true and message to "$expected" when show is called', ({ msg, expected }) => {
     const { isActive, message, show } = useLoading();
 
     show(msg);
@@ -24,7 +24,7 @@ describe('useLoading', () => {
     expect(message.value).toBe(expected);
   });
 
-  it('toggle switches isActive between true and false', () => {
+  it('should toggle isActive between true and false when show then hide are called', () => {
     const { isActive, show, hide } = useLoading();
 
     expect(isActive.value).toBe(false);
@@ -36,7 +36,7 @@ describe('useLoading', () => {
     expect(isActive.value).toBe(false);
   });
 
-  it('hide preserves the last message', () => {
+  it('should not clear the message when hide is called', () => {
     const { isActive, message, show, hide } = useLoading();
 
     show('Processing...');
@@ -46,7 +46,7 @@ describe('useLoading', () => {
     expect(message.value).toBe('Processing...');
   });
 
-  it('consecutive show calls override the message', () => {
+  it('should override the previous message when show is called consecutively', () => {
     const { message, show } = useLoading();
 
     show('First');

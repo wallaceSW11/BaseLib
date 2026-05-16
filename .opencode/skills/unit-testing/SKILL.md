@@ -25,7 +25,73 @@ Treat the component/composable as a **black box**: provide input (props, events,
 - ❌ Vuetify internals (whether `v-btn` renders correctly)
 - ❌ Internal implementation (don't test private methods, test public behavior)
 - ❌ `wrapper.html()` — brittle, breaks on any markup change
+- ❌ `wrapper.exists()` — pointless, if component fails to mount all other tests would fail
 - ❌ Snapshot tests — false positives, nobody reviews the diff
+
+## Test utilities
+
+Use `tests/testutils.ts` which provides `createComponent` with Vuetify pre-configured:
+
+```ts
+import { createComponent } from '../../../tests/testutils';
+
+// Default wrapper — extensible via options override
+let wrapper = createComponent(MyComponent, {
+  props: { /* overrides */ },
+  slots: { /* overrides */ },
+});
+```
+
+## beforeEach / afterEach pattern
+
+Always create the wrapper in `beforeEach` and destroy in `afterEach`:
+
+```ts
+let wrapper: ReturnType<typeof createComponent>;
+
+beforeEach(() => {
+  wrapper = createComponent(MyComponent);
+});
+
+afterEach(() => {
+  wrapper.unmount();
+});
+```
+
+Use `wrapper.setProps()` inside individual tests when a different initial state is needed.
+
+## Naming
+
+```
+File:       ComponentName.spec.ts    (never .test.ts)
+Describe:   Component or composable name
+It:         should [action] when [condition]
+```
+
+```ts
+describe('MoneyField', () => {
+  it('should format 0 as "R$ 0,00" when modelValue is 0', () => { ... });
+  it('should parse "123456" to 1234.56 on user input', () => { ... });
+  it('should not clear the message when hide is called', () => { ... });
+});
+```
+
+## it.each for repeated logic
+
+When 2+ test cases validate the same behavior with different inputs, use `it.each`:
+
+```ts
+const FORMAT_CASES = [
+  { value: 0, expected: 'R$ 0,00' },
+  { value: 1234.56, expected: 'R$ 1.234,56' },
+] as const;
+
+it.each(FORMAT_CASES)('should format $value as "$expected" when modelValue is set', async ({ value, expected }) => {
+  await wrapper.setProps({ modelValue: value });
+
+  expect(getInputValue()).toBe(expected);
+});
+```
 
 ## File structure
 
@@ -60,36 +126,3 @@ expect(wrapper.find('[data-test="content"]').isVisible()).toBe(true)
 ```
 
 **Rule of thumb:** `v-if` → `exists()`. `v-show` → `isVisible()`.
-
-## Test structure
-
-```ts
-import { describe, it, expect } from 'vitest';
-
-describe('useLoading', () => {
-  it('starts with isActive false', () => {
-    const { isActive } = useLoading();
-    expect(isActive.value).toBe(false);
-  });
-
-  it('show sets message and activates loading', () => {
-    const { isActive, message, show } = useLoading();
-    show('Saving...');
-    expect(isActive.value).toBe(true);
-    expect(message.value).toBe('Saving...');
-  });
-
-  it('hide deactivates loading', () => {
-    const { isActive, show, hide } = useLoading();
-    show();
-    hide();
-    expect(isActive.value).toBe(false);
-  });
-});
-```
-
-## Naming
-
-- File: `ComponentName.spec.ts` (never `.test.ts`)
-- Describe: component/composable name
-- It: english sentence describing expected behavior

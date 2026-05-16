@@ -47,6 +47,7 @@ export default [
       'vue/multi-word-component-names': 'off',
       '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+      'curly': ['error', 'multi-line'],
       'quotes': ['error', 'single', { avoidEscape: true }],
       'semi': ['error', 'always'],
     },

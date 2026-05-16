@@ -31,3 +31,6 @@ coverage
 # Playground
 playground/dist
 playground/node_modules
+
+# OpenCode
+.opencode/node_modules

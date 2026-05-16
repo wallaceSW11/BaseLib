@@ -116,17 +116,21 @@ Common Vuetify utilities reference:
 
 ## Imports — `@` alias
 
-Always use the `@` alias instead of deep relative paths. The `@` maps to `src/` (configured in both `tsconfig.json` and `vite.config.ts`).
+Always use the `@` alias instead of deep relative paths. The `@` maps to `src/` (configured in `tsconfig.json`, `vite.config.ts`, and `vitest.config.ts`).
 
 ```ts
 // CORRECT
 import type { TextFieldVariant } from '@/utils/types';
+import { createComponent } from '@/testutils';
 
 // WRONG — deep relative
 import type { TextFieldVariant } from '../../utils/types';
+import { createComponent } from '../../../tests/testutils';
 ```
 
 Exception: same-directory imports can stay relative (`./ZipCodeField.vue`).
+
+Test utilities live in `src/testutils.ts` (not exported from barrel — test-only).
 
 ## Tests
 
