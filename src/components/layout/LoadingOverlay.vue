@@ -48,9 +48,7 @@ watch(() => props.isLoading, (val) => {
 });
 
 onBeforeUnmount(() => {
-  if (contentTimeoutId) {
-    clearTimeout(contentTimeoutId);
-  }
+  if (contentTimeoutId) clearTimeout(contentTimeoutId);
 });
 </script>
 

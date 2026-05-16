@@ -18,14 +18,40 @@ Always run in this order:
 1. `pnpm lint` — zero warnings
 2. `pnpm build` — clean build, no type errors
 
+## Documentation
+
+Before reading source files, check `docs/` for architecture and decisions:
+- `docs/ARCHITECTURE.md` — Folder structure, component patterns, data flow
+- `docs/COGNITIVE.md` — Design decisions, what was removed and why
+
+### Auto-learning rule
+
+After every significant change (refactor, new component, removed dep), update the docs to reflect the new reality. Keep ARCHITECTURE.md and COGNITIVE.md in sync with the codebase.
+
 ## Structure
 
 ```
 src/
-  components/       ← Reusable Vue components (buttons, inputs, modals, messages)
-  composables/      ← Vue composables (useBreakpoint, useGlobals, etc.)
+  components/       ← Reusable Vue components
+    buttons/        ← Button variants (BaseButton, PrimaryButton, etc.)
+    inputs/         ← Form inputs (CepField, EmailField, MoneyField, etc.)
+    layout/         ← App shell components (LoadingOverlay)
+    modals/         ← Modal dialogs (ModalBase)
+    messages/       ← Notification/confirm (FloatingNotify, ConfirmDialog, CustomConfirmDialog)
+    index.ts        ← Barrel — exports every component
+
+  composables/      ← Vue composables (useBreakpoint, useGlobals, useLoading)
+
   stores/           ← Pinia stores (setup function style)
-  utils/            ← Pure utility functions (notify, confirm, api, types)
+    theme           ← Dark/light mode + localStorage only
+
+  utils/            ← Pure utility functions, no Vue dependency
+    notify.ts       ← Global notify singleton
+    loading.ts      ← Global loading singleton
+    confirm.ts      ← Global confirm singleton
+    api.ts          ← Axios wrapper
+    types.ts        ← Shared types and constants
+
   plugins/          ← Vue plugins (globalsPlugin)
   index.ts          ← Main entry point
 ```
@@ -49,6 +75,7 @@ src/
 - **Props**: sensible defaults with `withDefaults`
 - **CSS**: Vuetify utilities first, scoped CSS only when necessary
 - **Peer deps**: Never in bundle — external in `vite.config.ts`
+- **Labels**: pt-BR hardcoded, no i18n. Every component accepts props to override.
 
 ## Code style (required)
 
@@ -62,6 +89,7 @@ src/
 - Single quotes (`'`) always, never double quotes (`"`)
 - Semicolons (`;`) required at the end of every statement
 - Blank line before and after `if`/`for`/`while` blocks
+- One-line if without braces when single statement
 - Never `!important` in CSS
 
 ## Library rules
@@ -70,4 +98,6 @@ src/
 - Every new component: export via barrel file + unit test
 - Peer dependencies external in build
 - Types exported alongside components
-- `pnpm lint && pnpm build && pnpm test` before considering done
+- Labels in pt-BR, overrideable via props
+- No `defineExpose` for imperative control — use composables + props
+- Consumers control colors via Vuetify theme config, not custom stores
