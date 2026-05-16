@@ -7,7 +7,7 @@ Reusable Vue 3 + TypeScript + Vuetify 3 component library.
 - **Build**: `pnpm build` — generates `dist/` with types and ES modules
 - **Dev**: `pnpm dev` — build in watch mode
 - **Lint**: `pnpm lint` — eslint with auto fix
-- **Test**: `pnpm test` — vitest run
+- **Test**: `pnpm test` — vitest run (busca `src/**/*.spec.ts`)
 - **Test watch**: `pnpm test:watch` — iterative mode
 - **Playground**: `pnpm dev:playground` — visual test environment
 
@@ -17,6 +17,7 @@ Always run in this order:
 0. Load `code-review` skill and run through the checklist
 1. `pnpm lint` — zero warnings
 2. `pnpm build` — clean build, no type errors
+3. `pnpm test` — all tests passing
 
 ## Documentation
 
@@ -87,6 +88,7 @@ src/
 - `const`/`let` — never `var`
 - Type everything — never `any`
 - Booleans with is/has/can prefix (`isValid`, `hasError`, `canSave`)
+- **Code in english** (variables, functions, types, tests, docs) — **only UI labels pt-BR**
 - Single quotes (`'`) always, never double quotes (`"`)
 - Semicolons (`;`) required at the end of every statement
 - Blank line before and after `if`/`for`/`while` blocks

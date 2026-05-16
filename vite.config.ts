@@ -1,9 +1,14 @@
+/// <reference types="vitest" />
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import { fileURLToPath, URL } from "node:url";
 import { resolve } from "path";
 
 export default defineConfig({
+  test: {
+    include: ['src/**/*.spec.ts'],
+    environment: 'node',
+  },
   plugins: [
     vue(),
     // vite-plugin-vuetify removido do build da lib

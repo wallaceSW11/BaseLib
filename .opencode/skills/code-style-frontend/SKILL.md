@@ -169,8 +169,8 @@ export interface ModalAction {
 ## File naming
 
 ```
-Component:      ModalBase.vue, MoneyField.vue, PrimaryButton.vue
-Composable:     useBreakpoint.ts, useThemeSync.ts
+Component:      ModalBase.vue, MoneyField.vue, IconToolTip.vue
+Composable:     useBreakpoint.ts, useLoading.ts
 Store (Pinia):  theme.ts, notify.ts
 Utility:        api.ts, vuetify-check.ts
 Type:           types.ts
@@ -284,7 +284,7 @@ Every component/composable/utility must be exported via a barrel file (`index.ts
 
 ```ts
 // src/components/index.ts
-export { default as PrimaryButton } from './buttons/PrimaryButton.vue'
+export { default as IconToolTip } from './buttons/IconToolTip.vue'
 export { default as ModalBase } from './modals/ModalBase.vue'
 export { default as MoneyField } from './inputs/MoneyField.vue'
 export type { ModalAction } from './modals/ModalBase.vue'
@@ -298,23 +298,19 @@ export { useGlobals } from './useGlobals'
 
 Every new component/composable must have a unit test.
 
+Prefer `it.each` when testing the same behavior with different inputs:
+
 ```ts
-import { describe, it, expect } from 'vitest'
-import { mount } from '@vue/test-utils'
-import PrimaryButton from './PrimaryButton.vue'
+const VALIDATION_CASES = [
+  { value: '', expected: 'Required' },
+  { value: 'invalid', expected: 'Invalid format' },
+  { value: 'test@example.com', expected: true },
+] as const;
 
-describe('PrimaryButton', () => {
-  it('renders with default props', () => {
-    const wrapper = mount(PrimaryButton)
-    expect(wrapper.exists()).toBe(true)
-  })
-
-  it('emits click event', async () => {
-    const wrapper = mount(PrimaryButton)
-    await wrapper.trigger('click')
-    expect(wrapper.emitted('click')).toBeTruthy()
-  })
-})
+it.each(VALIDATION_CASES)('returns "$expected" for "$value"', ({ value, expected }) => {
+  const result = validate(value);
+  expect(result).toBe(expected);
+});
 ```
 
 ## Build and distribution

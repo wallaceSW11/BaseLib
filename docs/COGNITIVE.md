@@ -14,14 +14,15 @@
 | `LoadingComponentRef` type | Replaced by `useLoading()` composable — no more template ref + Pinia store hack. |
 | `defineExpose({ show, hide })` in LoadingOverlay | Replaced by `:is-loading` prop (Props down, Events up). |
 | `CepField` (renamed to `ZipCodeField`) | Renamed for english naming consistency. Refactored: `any` → typed rules, `searching` → `isSearching`, `!!hint` → `hasHint` computed, if/else → early return, added AbortController, exported interface with english field names. |
+| Testes colados em `__tests__/` | Padrão da indústria pra component libraries. Testes ficam junto do arquivo que testam, não em pasta raiz. Primeiro teste: `useLoading` (lógica pura). |
 | `PrimaryButton`, `SecondaryButton`, `TertiaryButton`, `QuartenaryButton` | 68 lines of prop-forwarding boilerplate. Consumers use `<v-btn>` directly. |
 | `BaseButton` | Thin wrapper around `<v-btn>` adding only `class="text-none"`. Not enough value to justify being in the library. Consumers configure text-transform globally or per-btn. |
 
 ## Key decisions
 
-### 1. Labels in pt-BR, no i18n
+### 1. Code in english, UI labels in pt-BR
 
-Every component accepts props to override text. i18n was only used as a fallback default — the fallback itself was dead code. Hardcoding pt-BR removes a peer dep and a crash vector (components that didn't guard `useI18n()` with try/catch would crash).
+Code, types, tests, docs, and commits are all in english. Only UI labels/messages (shown to end users) are hardcoded in pt-BR as fallback defaults — every component accepts props to override them. i18n was removed entirely since consumers control labels via props.
 
 ### 2. Composables over defineExpose
 

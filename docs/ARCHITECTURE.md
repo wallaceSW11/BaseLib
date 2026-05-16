@@ -128,8 +128,50 @@ import type { TextFieldVariant } from '../../utils/types';
 
 Exception: same-directory imports can stay relative (`./ZipCodeField.vue`).
 
-## Labels
+## Tests
 
-- All UI labels are hardcoded in pt-BR
-- No i18n system, no vue-i18n dependency
-- Every component accepts props to override labels
+### Padrão de arquivos
+
+Testes ficam colados ao arquivo que testam, em `__tests__/`:
+
+```
+src/
+  composables/
+    useLoading.ts
+    __tests__/
+      useLoading.spec.ts
+  components/
+    inputs/
+      ZipCodeField.vue
+      __tests__/
+        ZipCodeField.spec.ts
+```
+
+### O que testar
+
+1. **Lógica pura** — composables, funções utilitárias, regras de validação
+2. **Eventos** — clique emite `click`, CEP encontrado emite `zip-code-found`
+3. **Estados** — loading mostra spinner, empty mostra placeholder
+4. **Edge cases** — null, vazio, erro de API
+
+### O que NÃO testar
+
+- ❌ Vue internals (reatividade, Virtual DOM)
+- ❌ Vuetify internals (se `v-btn` renderiza)
+- ❌ Implementação interna (métodos privados)
+- ❌ `wrapper.html()` — frágil demais
+- ❌ Snapshot tests
+
+### exists vs isVisible
+
+| Método | O que verifica | Uso |
+|--------|---------------|-----|
+| `exists()` | Elemento está no DOM | `v-if` |
+| `isVisible()` | Elemento está visível | `v-show`, `display: none` |
+
+## Language conventions
+
+- **Code**: english (variables, functions, types, tests, comments, docs, commits)
+- **UI labels**: pt-BR fallback defaults. Consumer overrides via props.
+- **Chat/AI interaction**: pt-BR (this is a team preference)
+- **No i18n**, no vue-i18n dependency
