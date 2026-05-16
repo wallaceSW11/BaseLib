@@ -3,7 +3,6 @@
     <div v-if="isVisible" class="loading-overlay">
       <Transition name="fade-delayed">
         <div v-if="showContent" class="loading-content">
-          <img v-if="themeStore.currentLogo" :src="themeStore.currentLogo" alt="Logo" class="loading-logo mb-4" />
           <v-progress-circular indeterminate color="primary" :size="30" :width="5" />
           <div class="loading-text mt-3">
             {{ currentMessage }}
@@ -17,9 +16,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { LOADING_CONTENT_DELAY } from '../utils/types';
-import { useThemeStore } from '../stores/theme';
-
-const themeStore = useThemeStore();
 
 const isVisible = ref(false);
 const showContent = ref(false);
@@ -69,12 +65,6 @@ defineExpose({
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.loading-logo {
-  max-width: 200px;
-  max-height: 150px;
-  object-fit: contain;
 }
 
 .loading-text {
