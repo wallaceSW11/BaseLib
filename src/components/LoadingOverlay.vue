@@ -36,13 +36,15 @@ watch(() => props.isLoading, (val) => {
     contentTimeoutId = setTimeout(() => {
       showContent.value = true;
     }, props.delay);
-  } else {
-    if (contentTimeoutId) {
-      clearTimeout(contentTimeoutId);
-      contentTimeoutId = null;
-    }
-    showContent.value = false;
+
+    return;
   }
+
+  if (contentTimeoutId) {
+    clearTimeout(contentTimeoutId);
+    contentTimeoutId = null;
+  }
+  showContent.value = false;
 });
 
 onBeforeUnmount(() => {

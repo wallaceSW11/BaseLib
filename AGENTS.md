@@ -54,7 +54,7 @@ src/
 
 - async/await always — never .then().catch()
 - Zero logic in template — computed/methods
-- Early return — no nested if/else
+- Early return — no `if/else`, always early return instead
 - Self-documenting names — zero comments
 - `const`/`let` — never `var`
 - Type everything — never `any`
