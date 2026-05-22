@@ -22,7 +22,7 @@
       <router-view />
     </v-main>
 
-    <FloatingNotify ref="floatingNotifyRef" />
+    <FloatingNotify />
     <LoadingOverlay ref="loadingOverlayRef" />
     <ConfirmDialog ref="confirmDialogRef" />
   </v-app>
@@ -31,7 +31,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import {
-  useNotifyStore,
   useLoadingStore,
   useConfirmStore
 } from '@/utils';
@@ -44,7 +43,6 @@ import {
   ThemeToggle
 } from '@/components';
 
-const floatingNotifyRef = ref();
 const loadingOverlayRef = ref();
 const confirmDialogRef = ref();
 
@@ -56,11 +54,9 @@ const availableLocales = [
 useThemeSync();
 
 function registerGlobalComponentRefs() {
-  const notifyStore = useNotifyStore();
   const loadingStore = useLoadingStore();
   const confirmStore = useConfirmStore();
 
-  notifyStore.setNotifyRef(floatingNotifyRef.value);
   loadingStore.setLoadingRef(loadingOverlayRef.value);
   confirmStore.setConfirmRef(confirmDialogRef.value);
 }

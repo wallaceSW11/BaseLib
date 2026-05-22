@@ -1,41 +1,70 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-import type { NotifyComponentRef, NotifyType } from './types';
+import type { NotifyType } from './types';
+import { NOTIFY_DURATION } from './types';
 
 export const useNotifyStore = defineStore('notify', () => {
-  const notifyRef = ref<NotifyComponentRef | null>(null);
+  const isVisible = ref(false);
+  const type = ref<NotifyType>('info');
+  const title = ref('');
+  const message = ref('');
+  let timeoutId: ReturnType<typeof setTimeout> | null = null;
 
-  const setNotifyRef = (ref: NotifyComponentRef) => {
-    notifyRef.value = ref;
-  };
+  function show(notifyType: NotifyType, notifyTitle: string, notifyMessage = '') {
+    if (timeoutId) clearTimeout(timeoutId);
 
-  const notify = (type: NotifyType, title: string, message?: string) => {
-    if (notifyRef.value) {
-      notifyRef.value.show(type, title, message);
+    type.value = notifyType;
+    title.value = notifyTitle;
+    message.value = notifyMessage;
+    isVisible.value = true;
+
+    timeoutId = setTimeout(() => {
+      hide();
+    }, NOTIFY_DURATION);
+  }
+
+  function hide() {
+    isVisible.value = false;
+
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+      timeoutId = null;
     }
-  };
+  }
+
+  function cleanup() {
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+      timeoutId = null;
+    }
+  }
 
   return {
-    setNotifyRef,
-    notify,
+    isVisible,
+    type,
+    title,
+    message,
+    show,
+    hide,
+    cleanup,
   };
 });
 
 export const notify = {
   success: (title: string, message?: string) => {
     const store = useNotifyStore();
-    store.notify('success', title, message);
+    store.show('success', title, message);
   },
   error: (title: string, message?: string) => {
     const store = useNotifyStore();
-    store.notify('error', title, message);
+    store.show('error', title, message);
   },
   warning: (title: string, message?: string) => {
     const store = useNotifyStore();
-    store.notify('warning', title, message);
+    store.show('warning', title, message);
   },
   info: (title: string, message?: string) => {
     const store = useNotifyStore();
-    store.notify('info', title, message);
+    store.show('info', title, message);
   },
 };

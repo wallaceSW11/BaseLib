@@ -1,57 +1,26 @@
 <template>
   <Transition name="slide-fade">
     <v-alert
-      v-if="isVisible"
-      :type="currentType"
-      :title="currentTitle"
-      :text="currentMessage"
+      v-if="store.isVisible"
+      :type="store.type"
+      :title="store.title"
+      :text="store.message"
       class="floating-notify"
       closable
       elevation="6"
-      @click:close="hide"
+      @click:close="store.hide()"
     />
   </Transition>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import { NOTIFY_DURATION, type NotifyType } from '../../utils/types';
+import { onUnmounted } from 'vue';
+import { useNotifyStore } from '@/utils/notify';
 
-const isVisible = ref(false);
-const currentType = ref<NotifyType>('info');
-const currentTitle = ref('');
-const currentMessage = ref('');
-let timeoutId: ReturnType<typeof setTimeout> | null = null;
+const store = useNotifyStore();
 
-const show = (type: NotifyType, title: string, message = '') => {
-  // Clear existing timeout if any
-  if (timeoutId) {
-    clearTimeout(timeoutId);
-  }
-
-  currentType.value = type;
-  currentTitle.value = title;
-  currentMessage.value = message;
-  isVisible.value = true;
-
-  // Auto-hide after configured duration
-  timeoutId = setTimeout(() => {
-    hide();
-  }, NOTIFY_DURATION);
-};
-
-const hide = () => {
-  isVisible.value = false;
-
-  if (timeoutId) {
-    clearTimeout(timeoutId);
-    timeoutId = null;
-  }
-};
-
-defineExpose({
-  show,
-  hide,
+onUnmounted(() => {
+  store.cleanup();
 });
 </script>
 

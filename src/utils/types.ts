@@ -1,8 +1,3 @@
-export interface NotifyComponentRef {
-  show: (type: NotifyType, title: string, message?: string) => void;
-  hide: () => void;
-}
-
 export interface ConfirmOptions {
   persistent?: boolean;
   confirmText?: string;
