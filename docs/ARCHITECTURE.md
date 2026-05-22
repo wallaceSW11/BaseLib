@@ -52,6 +52,16 @@ parent script:
 - **Events** communicate back to parent (update:modelValue, click, etc.)
 - **No defineExpose** for imperative control — use composables or props
 
+### Exception: imperative dialogs (ConfirmDialog)
+
+`ConfirmDialog` / `CustomConfirmDialog` still use `defineExpose` because they are Promise-based — the consumer calls `confirmDialog(title, message, options)` which returns a `Promise<boolean>`. This pattern is necessary for the async confirm UX:
+
+```
+template ref → confirmDialog() → Promise<boolean> → resolve on button click
+```
+
+The exposed method follows camelCase: `confirmDialog`. Exported type: `ConfirmComponentRef`.
+
 ### LoadingOverlay flow
 
 1. Consumer calls `loading.show('msg')` or uses `useLoading()` composable

@@ -12,7 +12,7 @@ export interface ConfirmOptions {
 }
 
 export interface ConfirmComponentRef {
-  ConfirmDialog: (title: string, message: string, options?: ConfirmOptions) => Promise<boolean>;
+  confirmDialog: (title: string, message: string, options?: ConfirmOptions) => Promise<boolean>;
 }
 
 // Utility Types

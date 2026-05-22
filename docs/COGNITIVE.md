@@ -18,6 +18,29 @@
 | `PrimaryButton`, `SecondaryButton`, `TertiaryButton`, `QuartenaryButton` | 68 lines of prop-forwarding boilerplate. Consumers use `<v-btn>` directly. |
 | `BaseButton` | Thin wrapper around `<v-btn>` adding only `class="text-none"`. Not enough value to justify being in the library. Consumers configure text-transform globally or per-btn. |
 
+### 8. defineExpose still valid for Promise-based dialogs
+
+`ConfirmDialog` / `CustomConfirmDialog` use `defineExpose` because the confirm flow is inherently imperative:
+1. Consumer calls `confirmDialog(title, message, options)`
+2. Returns `Promise<boolean>`
+3. Promise resolves when user clicks a button
+
+This is the standard for confirm/prompt dialogs in Vue ecosystem. The method is named in camelCase (`confirmDialog`) and the component ref type is `ConfirmComponentRef`.
+
+### 9. CustomConfirmDialog uses Vuetify `v-card` internally
+
+Refactored from a fully custom HTML/CSS dialog to use Vuetify's `v-card`, `v-card-title`, `v-card-text`, `v-card-actions`. This eliminates ~120 lines of custom CSS (padding, typography, shadows, flexbox) in favor of Vuetify utility classes.
+
+CSS that remains: overlay positioning (`position: fixed` + inset) and Vue transition classes. These have no Vuetify equivalent.
+
+### 10. confirm.ts refactored to Composition API (Pinia)
+
+`useConfirmStore` was migrated from Options API (`defineStore` with `state`/`actions` object) to Composition API style (`defineStore` with setup function), matching the project convention.
+
+### 11. Exposed method renamed: `ConfirmDialog` → `confirmDialog`
+
+The `defineExpose` method on both `CustomConfirmDialog` and `ConfirmDialog` was renamed from PascalCase `ConfirmDialog` to camelCase `confirmDialog` to follow JavaScript naming conventions for functions. The `ConfirmComponentRef` interface in `types.ts` was updated accordingly.
+
 ## Key decisions
 
 ### 1. Code in english, UI labels in pt-BR
