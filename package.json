@@ -48,6 +48,7 @@
     "build:playground": "vite build --config playground/vite.config.ts --outDir playground/dist",
     "prepublishOnly": "pnpm build",
     "lint": "eslint . --fix",
+    "check": "pnpm lint && pnpm test",
     "test": "vitest run",
     "test:watch": "vitest"
   },

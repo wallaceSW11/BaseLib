@@ -7,6 +7,7 @@ Reusable Vue 3 + TypeScript + Vuetify 3 component library.
 - **Build**: `pnpm build` — generates `dist/` with types and ES modules
 - **Dev**: `pnpm dev` — build in watch mode
 - **Lint**: `pnpm lint` — eslint with auto fix
+- **Check**: `pnpm check` — lint + test (run after every change)
 - **Test**: `pnpm test` — vitest run (busca `src/**/*.spec.ts`)
 - **Test watch**: `pnpm test:watch` — iterative mode
 - **Playground**: `pnpm dev:playground` — visual test environment
@@ -14,7 +15,7 @@ Reusable Vue 3 + TypeScript + Vuetify 3 component library.
 ## Slash commands (opencode)
 
 - **`/unit-test <nome>`** — Cria um teste unitário para um componente, composable ou utility. Segue automaticamente as skills `unit-testing` e `code-style-frontend`, lê o código fonte, busca testes similares como referência de padrão, cria o arquivo `.spec.ts`, e executa `pnpm test` + `pnpm lint`.
-- **`/refactory <nome>`** — Refatora um componente, composable ou utility para seguir o code-style da BaseLib rigidamente. Converte para Composition API (`<script setup>`), async/await, early return, tipos corretos, aspas simples, ponto-e-vírgula, Vuetify utilities no CSS, zero `any`, zero `!important`, nomes auto-documentados (sem comentários), e mais. Executa `pnpm lint --fix`, `pnpm build` e `pnpm test` para verificar.
+- **`/refactory <nome>`** — Refatora um componente, composable ou utility para seguir o code-style da BaseLib rigidamente. Converte para Composition API (`<script setup>`), async/await, early return, tipos corretos, aspas simples, ponto-e-vírgula, Vuetify utilities no CSS, zero `any`, zero `!important`, nomes auto-documentados (sem comentários), e mais. Executa `pnpm check`, `pnpm build` e `pnpm test` para verificar.
 
 ## Before making changes
 
@@ -24,9 +25,8 @@ Load the `code-style-frontend` skill — it contains the exact code rules and ex
 
 Always run in this order:
 0. Load `code-review` skill and run through the checklist
-1. `pnpm lint` — zero warnings
+1. `pnpm check` — lint + test, zero warnings, all tests passing
 2. `pnpm build` — clean build, no type errors
-3. `pnpm test` — all tests passing
 
 ## Documentation
 

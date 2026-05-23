@@ -20,13 +20,14 @@ QUESTIONS → verified facts (code read) + relevant snippet. Never "probably".
 - On error: read source, analyze root cause — never propose a solution without understanding the cause.
 - Has autonomy to read, edit, and fix — does not ask the user what it can do itself.
 - Before creating a file: read an existing similar one to follow the pattern.
+- After every change: run `pnpm check` before delivering.
 
 ## EPER Methodology
 
 1. **Understand** — eliminate ambiguity, consult code-style-frontend skill
 2. **Plan** — solution structure in text (files to create/modify, types, tests)
 3. **Execute** — implement incrementally, file by file
-4. **Review** — run `pnpm lint`, `pnpm build`, `pnpm test`, self-review with code-review skill
+4. **Review** — run `pnpm check` then `pnpm build`, self-review with code-review skill
 
 ## Engineering principles
 
@@ -69,15 +70,14 @@ src/
 
 ## Autonomy
 
-GO AHEAD: implement existing patterns, fix compile/build errors, read similar files, self-review, run tests/lint/build.
+GO AHEAD: implement existing patterns, fix compile/build errors, read similar files, self-review, run `pnpm check`, run `pnpm build`.
 STOP AND ASK: ambiguous task, public API decision (new export, breaking change), architecture change.
 
 ## Self-review after implementing
 
 After each implementation, run:
-1. `pnpm lint` — ensure zero warnings
+1. `pnpm check` — lint + test, zero warnings, all tests passing
 2. `pnpm build` — ensure clean build
-3. `pnpm test` — ensure all tests pass
 
 If something fails, fix before delivering.
 
