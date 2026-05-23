@@ -11,6 +11,11 @@ Reusable Vue 3 + TypeScript + Vuetify 3 component library.
 - **Test watch**: `pnpm test:watch` — iterative mode
 - **Playground**: `pnpm dev:playground` — visual test environment
 
+## Slash commands (opencode)
+
+- **`/unit-test <nome>`** — Cria um teste unitário para um componente, composable ou utility. Segue automaticamente as skills `unit-testing` e `code-style-frontend`, lê o código fonte, busca testes similares como referência de padrão, cria o arquivo `.spec.ts`, e executa `pnpm test` + `pnpm lint`.
+- **`/refactory <nome>`** — Refatora um componente, composable ou utility para seguir o code-style da BaseLib rigidamente. Converte para Composition API (`<script setup>`), async/await, early return, tipos corretos, aspas simples, ponto-e-vírgula, Vuetify utilities no CSS, zero `any`, zero `!important`, nomes auto-documentados (sem comentários), e mais. Executa `pnpm lint --fix`, `pnpm build` e `pnpm test` para verificar.
+
 ## Before making changes
 
 Load the `code-style-frontend` skill — it contains the exact code rules and examples for this project. Follow it strictly.
