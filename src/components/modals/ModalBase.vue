@@ -3,17 +3,16 @@
     v-model="isOpen"
     :max-width="maxWidth"
     :persistent="persistent"
-    :content-class="contentClass ? `${dialogThemeClass} ${contentClass}` : dialogThemeClass"
+    :content-class="dialogContentClass"
     :fullscreen="fullscreen"
     scrollable
     :z-index="2400"
-    @keydown="handleDialogKeydown"
+    @keydown="onDialogKeydown"
   >
     <v-card>
       <v-card-title
         v-if="title"
-        class="text-h5 d-flex align-center px-6 pt-6"
-        style="word-break: break-word; white-space: normal"
+        class="text-h5 d-flex align-center px-6 pt-6 modal-title"
       >
         <v-icon v-if="titleIcon" class="mr-2">{{ titleIcon }}</v-icon>
         <span>{{ title }}</span>
@@ -33,7 +32,7 @@
           :color="action.color || 'primary'"
           :prepend-icon="action.icon"
           :variant="action.variant || 'text'"
-          :type="'button'"
+          type="button"
           class="text-none"
           @click="handleAction(action)"
         >
@@ -47,9 +46,6 @@
 <script setup lang="ts">
 import { ref, watch, computed, onMounted, onUnmounted } from 'vue';
 import { useTheme } from 'vuetify';
-
-const theme = useTheme();
-const dialogThemeClass = computed(() => `v-theme--${theme.global.name.value}`);
 
 export interface ModalAction {
   text: string;
@@ -66,19 +62,8 @@ interface Props {
   maxWidth?: string | number;
   persistent?: boolean;
   actions?: ModalAction[];
-  /**
-   * Classes CSS customizadas para o conteúdo do dialog
-   */
   contentClass?: string;
-  /**
-   * Se true, o dialog ocupará toda a tela
-   * @default false
-   */
   fullscreen?: boolean;
-  /**
-   * Ícone a ser exibido ao lado do título
-   * @default undefined
-   */
   titleIcon?: string;
 }
 
@@ -98,7 +83,17 @@ const emit = defineEmits<{
   close: [];
 }>();
 
+const theme = useTheme();
+
 const isOpen = ref(props.modelValue);
+
+const dialogThemeClass = computed(() => `v-theme--${theme.global.name.value}`);
+
+const dialogContentClass = computed(() => {
+  if (!props.contentClass) return dialogThemeClass.value;
+
+  return `${dialogThemeClass.value} ${props.contentClass}`;
+});
 
 watch(
   () => props.modelValue,
@@ -111,93 +106,104 @@ watch(isOpen, (newVal) => {
   emit('update:modelValue', newVal);
 });
 
-const handleAction = async (action: ModalAction) => {
-  if (action.handler) {
-    await action.handler();
-  }
-};
+function findCancelAction(): ModalAction | undefined {
+  return props.actions.find((a) => a.color === 'secondary' || a.color === 'error');
+}
 
-// Keyboard shortcuts - captura direto do dialog
-const handleDialogKeydown = (e: KeyboardEvent) => {
+function findPrimaryAction(): ModalAction | undefined {
+  return props.actions.find(
+    (a) => a.color === 'primary' || (!a.color && props.actions.indexOf(a) === props.actions.length - 1),
+  );
+}
+
+function isInteractiveElement(target: HTMLElement): boolean {
+  return target.tagName === 'TEXTAREA';
+}
+
+async function handleAction(action: ModalAction): Promise<void> {
+  if (!action.handler) return;
+
+  await action.handler();
+}
+
+function onDialogKeydown(e: KeyboardEvent): void {
   if (props.actions.length === 0) return;
 
-  // ESC - aciona o botão secundário (cancelar)
   if (e.key === 'Escape') {
-    const cancelAction = props.actions.find((a) => a.color === 'secondary' || a.color === 'error');
+    const cancelAction = findCancelAction();
 
-    if (cancelAction) {
-      e.preventDefault();
-      e.stopPropagation();
-      handleAction(cancelAction);
-    }
+    if (!cancelAction) return;
+
+    e.preventDefault();
+    e.stopPropagation();
+    handleAction(cancelAction);
+
+    return;
   }
 
-  // ENTER - aciona o botão primário (confirmar)
   if (e.key === 'Enter' && !e.shiftKey && !e.ctrlKey && !e.altKey) {
-    // Ignora se o foco está em um textarea
     const target = e.target as HTMLElement;
 
-    if (target.tagName === 'TEXTAREA') return;
+    if (isInteractiveElement(target)) return;
 
-    const primaryAction = props.actions.find(
-      (a) => a.color === 'primary' || (!a.color && props.actions.indexOf(a) === props.actions.length - 1),
-    );
+    const primaryAction = findPrimaryAction();
 
-    if (primaryAction) {
-      e.preventDefault();
-      e.stopPropagation();
-      handleAction(primaryAction);
-    }
+    if (!primaryAction) return;
+
+    e.preventDefault();
+    e.stopPropagation();
+    handleAction(primaryAction);
   }
-};
+}
 
-// Keyboard shortcuts globais (fallback)
+function onGlobalKeydown(e: KeyboardEvent): void {
+  if (!isOpen.value || props.actions.length === 0) return;
+
+  if (e.key === 'Escape' && !props.persistent) {
+    const cancelAction = findCancelAction();
+
+    if (!cancelAction) return;
+
+    e.preventDefault();
+    handleAction(cancelAction);
+
+    return;
+  }
+
+  if (e.key === 'Enter' && !e.shiftKey && !e.ctrlKey && !e.altKey) {
+    const target = e.target as HTMLElement;
+
+    if (isInteractiveElement(target)) return;
+
+    const primaryAction = findPrimaryAction();
+
+    if (!primaryAction) return;
+
+    e.preventDefault();
+    handleAction(primaryAction);
+  }
+}
+
 onMounted(() => {
-  const handleKeydown = (e: KeyboardEvent) => {
-    // Só processa se o modal estiver aberto
-    if (!isOpen.value || props.actions.length === 0) return;
+  window.addEventListener('keydown', onGlobalKeydown);
+});
 
-    // ESC - aciona o botão secundário (cancelar)
-    if (e.key === 'Escape' && !props.persistent) {
-      const cancelAction = props.actions.find((a) => a.color === 'secondary' || a.color === 'error');
-
-      if (cancelAction) {
-        e.preventDefault();
-        handleAction(cancelAction);
-      }
-    }
-
-    // ENTER - aciona o botão primário (confirmar)
-    if (e.key === 'Enter' && !e.shiftKey && !e.ctrlKey && !e.altKey) {
-      // Ignora se o foco está em um textarea ou input de múltiplas linhas
-      const target = e.target as HTMLElement;
-
-      if (target.tagName === 'TEXTAREA') return;
-
-      const primaryAction = props.actions.find(
-        (a) => a.color === 'primary' || (!a.color && props.actions.indexOf(a) === props.actions.length - 1),
-      );
-
-      if (primaryAction) {
-        e.preventDefault();
-        handleAction(primaryAction);
-      }
-    }
-  };
-
-  window.addEventListener('keydown', handleKeydown);
-
-  onUnmounted(() => {
-    window.removeEventListener('keydown', handleKeydown);
-  });
+onUnmounted(() => {
+  window.removeEventListener('keydown', onGlobalKeydown);
 });
 </script>
 
+<style scoped>
+.modal-title {
+  word-break: break-word;
+  white-space: normal;
+}
+</style>
+
 <style>
-/* Garante que menus do Vuetify (v-select, v-menu, etc.) fiquem acima dos modais */
 .v-overlay-container .v-menu > .v-overlay__content,
 .v-overlay-container .v-select__content,
 .v-overlay-container .v-autocomplete__content {
-  z-index: 2500 !important;
+  z-index: 2500;
 }
 </style>
