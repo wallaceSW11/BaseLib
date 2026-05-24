@@ -1,6 +1,6 @@
 import type { App } from 'vue';
 import * as componentExports from './components';
-import globalsPlugin from './plugins';
+import { globalsPlugin } from './plugins';
 import { ensureVuetify } from './utils/vuetify-check';
 
 export const components = componentExports;
@@ -11,7 +11,7 @@ export * from './utils';
 
 export * from './composables';
 
-export { default as globalsPlugin } from './plugins';
+export { globalsPlugin } from './plugins';
 
 export { requiredVuetifyComponents } from './vuetifyComponents';
 

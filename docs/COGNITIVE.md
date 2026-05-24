@@ -21,6 +21,12 @@
 | `maska` as `dependency` | Moved to `peerDependencies`. It is external in the build (not bundled), so it must be provided by the consumer. |
 | `EmailField.persistentHint` | Declared but never used in template or logic. Dead code removed. |
 | Duplicated `handleKeydown` in MoneyField/NumberField | Extracted to `createNumericKeydownHandler()` in `useNumericInput.ts`. Each component now provides only a `computeFromDigits` callback. |
+| `vue-router`, `vite-plugin-dts` in devDependencies | Unused dependencies removed. |
+| `vitest.config.ts` separate file | Merged into `vite.config.ts` with conditional Vuetify auto-import (VITEST env check). |
+| `testutils.ts` shipped in dist | Excluded from build via rollup external. |
+| Root `README.md` outdated | Rewritten with correct components, setup, labels in pt-BR, and sub-entry imports. |
+| `plugins/index.ts` double export | Simplified to single named `globalsPlugin` export. |
+| Missing `sideEffects` in package.json | Added `"sideEffects": ["**/*.css"]` for tree-shaking. |
 
 ### 8. defineExpose still valid for Promise-based dialogs
 
@@ -72,6 +78,24 @@ Previously only `ConfirmDialog` was exported. `CustomConfirmDialog` is now expor
 ### 16. `createNumericKeydownHandler` extracted to `useNumericInput`
 
 `MoneyField` and `NumberField` duplicated ~40 lines of `handleKeydown` each with nearly identical logic (navigation keys, Backspace, digit append, sign toggle). The common pattern was extracted into `createNumericKeydownHandler()` in `src/composables/useNumericInput.ts`. Both components now share the handler and provide only the domain-specific `computeFromDigits` callback.
+
+### 17. `package.json` tuned for npm publication
+
+Added `"sideEffects": ["**/*.css"]` for optimal tree-shaking — bundlers can safely eliminate unused JS chunks while preserving CSS imports. Removed unused `devDependencies` (`vue-router`, `vite-plugin-dts`). Consolidated vitest config into `vite.config.ts` with conditional `vuetify({ autoImport: true })` — active only in test mode (`process.env.VITEST`), excluded from library build. The `plugins/index.ts` was simplified to a single named export, removing the ambiguous default export.
+
+### 18. `testutils.ts` excluded from build
+
+`src/testutils.ts` was generating `dist/testutils.d.ts` in the output. Added `/testutils/` to `rollupOptions.external` so it is excluded from library builds. This utility is for internal tests only and should not ship to consumers.
+
+### 19. Root `README.md` rewritten for npm
+
+The root `README.md` was completely rewritten to reflect the current state of the library:
+- Removed references to deleted components (`PrimaryButton`, `ThemeToggle`, `LanguageSelector`, `CepField`)
+- Removed `vue-i18n` from setup instructions
+- Added correct setup with `ConfirmDialog`, `FloatingNotify`, `LoadingOverlay` in `App.vue`
+- Documented all sub-entry imports (`@wallacesw11/base-lib/components`, `./composables`, `./utils`, `./plugins`)
+- Added API section
+- Labels in pt-BR in examples (consistent with code style)
 
 ## Key decisions
 

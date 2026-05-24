@@ -2,19 +2,23 @@
 
 Reusable Vue 3 + TypeScript + Vuetify 3 component library.
 
+Componentes e utilitários reutilizáveis para projetos Vue 3 com Vuetify.
+
 ## Installation
 
 ```bash
 pnpm add @wallacesw11/base-lib
 ```
 
-Peer dependencies (install in your project):
+### Peer dependencies
+
+Ensure your project has these installed:
 
 ```bash
-pnpm add vue vuetify pinia vue-i18n axios
+pnpm add vue vuetify pinia axios maska
 ```
 
-## Setup
+## Quick Setup
 
 ```ts
 import { createApp } from 'vue';
@@ -29,36 +33,49 @@ const vuetify = createVuetify({
   components: requiredVuetifyComponents,
 });
 
-app.use(pinia);
+app.use(pinia); // Must come before setupLib
 app.use(vuetify);
-setupLib(app);
+setupLib(app); // Registers all components + global utilities
 app.mount('#app');
 ```
 
-## Components
+### App.vue — Required global components
 
-### Buttons
+For notifications, confirm dialogs, and loading overlay to work, include these in your `App.vue`:
 
 ```vue
 <template>
-  <PrimaryButton text="Save" prepend-icon="mdi-content-save" @click="save" />
-  <SecondaryButton text="Cancel" @click="cancel" />
-  <TertiaryButton text="Delete" color="error" />
-  <QuartenaryButton text="More" />
-  <IconToolTip icon="mdi-pencil" tooltip="Edit" @click="edit" />
+  <v-app>
+    <router-view />
+
+    <!-- Global utilities -->
+    <FloatingNotify />
+    <LoadingOverlay />
+    <ConfirmDialog />
+  </v-app>
 </template>
 ```
+
+## Components
 
 ### Inputs
 
 ```vue
 <template>
-  <MoneyField v-model="price" label="Price" />
-  <EmailField v-model="email" label="Email" required />
-  <PhoneField v-model="phone" label="Phone" />
-  <CepField v-model="zipCode" label="CEP" @address-found="onAddress" />
+  <MoneyField v-model="price" label="Preço" />
+  <NumberField v-model="quantity" label="Quantidade" :decimal-places="0" />
+  <EmailField v-model="email" label="E-mail" required />
+  <PhoneField v-model="phone" label="Telefone" />
+  <ZipCodeField v-model="cep" label="CEP" @zip-code-found="onAddress" />
   <FullAddress v-model="address" />
-  <NumberField v-model="quantity" label="Quantity" :decimal-places="0" />
+</template>
+```
+
+### Buttons
+
+```vue
+<template>
+  <IconToolTip icon="mdi-pencil" tooltip="Editar" @click="edit" />
 </template>
 ```
 
@@ -68,19 +85,19 @@ app.mount('#app');
 <script setup lang="ts">
 import { ref } from 'vue';
 import { ModalBase } from '@wallacesw11/base-lib';
-import type { ModalAction } from '@wallacesw11/base-lib/components';
+import type { ModalAction } from '@wallacesw11/base-lib';
 
 const open = ref(false);
 
 const actions: ModalAction[] = [
-  { text: 'Save', color: 'primary', handler: () => { save(); open.value = false; } },
-  { text: 'Cancel', handler: () => open.value = false },
+  { text: 'Salvar', color: 'primary', handler: () => { save(); open.value = false; } },
+  { text: 'Cancelar', color: 'secondary', handler: () => open.value = false },
 ];
 </script>
 
 <template>
-  <ModalBase v-model="open" title="Edit Product" :actions="actions">
-    <!-- content -->
+  <ModalBase v-model="open" title="Editar Produto" :actions="actions">
+    <p>Conteúdo do modal</p>
   </ModalBase>
 </template>
 ```
@@ -91,10 +108,10 @@ const actions: ModalAction[] = [
 <script setup lang="ts">
 import { notify } from '@wallacesw11/base-lib';
 
-notify.success('Saved', 'Product saved successfully');
-notify.error('Error', 'Failed to save product');
-notify.warning('Warning', 'Stock is low');
-notify.info('Info', 'Product updated');
+notify.success('Salvo', 'Produto salvo com sucesso');
+notify.error('Erro', 'Falha ao salvar produto');
+notify.warning('Atenção', 'Estoque baixo');
+notify.info('Info', 'Produto atualizado');
 </script>
 ```
 
@@ -105,7 +122,7 @@ notify.info('Info', 'Product updated');
 import { confirm } from '@wallacesw11/base-lib';
 
 async function handleDelete() {
-  const ok = await confirm.show('Delete', 'This cannot be undone.');
+  const ok = await confirm.show('Excluir', 'Esta ação não pode ser desfeita.');
   if (ok) deleteItem();
 }
 </script>
@@ -117,44 +134,64 @@ async function handleDelete() {
 <script setup lang="ts">
 import { loading } from '@wallacesw11/base-lib';
 
-loading.show('Saving...');
+loading.show('Salvando...');
 await doSomething();
 loading.hide();
-</script>
-```
-
-### Theming
-
-```vue
-<script setup lang="ts">
-import { ThemeToggle, LanguageSelector } from '@wallacesw11/base-lib';
-
-// ThemeToggle — switches between light/dark mode
-// LanguageSelector — toggles locale (requires vue-i18n)
 </script>
 ```
 
 ## Composables
 
 ```ts
-import { useBreakpoint } from '@wallacesw11/base-lib';
+import { useBreakpoint, useGlobals, useLoading } from '@wallacesw11/base-lib';
 
+// Responsive breakpoints
 const { isMobile, isMobileOrTablet } = useBreakpoint();
+
+// Access global utilities inside setup
+const { notify, loading, confirm } = useGlobals();
+
+// Local loading state
+const { isActive, message, show, hide } = useLoading();
 ```
 
-```ts
-import { useGlobals } from '@wallacesw11/base-lib';
+## API (HTTP Client)
 
-const { notify, loading, confirm } = useGlobals();
+```ts
+import api, { configureApi } from '@wallacesw11/base-lib/utils';
+
+configureApi({ baseURL: 'https://api.example.com', timeout: 15000 });
+
+const response = await api.get('/items');
+```
+
+## Package Entry Points
+
+```ts
+// Main — all components + composables + utilities
+import { MoneyField, useBreakpoint, notify } from '@wallacesw11/base-lib';
+
+// Components only (tree-shakeable)
+import { MoneyField } from '@wallacesw11/base-lib/components';
+
+// Composables only
+import { useBreakpoint } from '@wallacesw11/base-lib/composables';
+
+// Utilities only
+import { notify, confirm, loading } from '@wallacesw11/base-lib/utils';
+
+// Plugin (for manual registration)
+import { globalsPlugin } from '@wallacesw11/base-lib/plugins';
 ```
 
 ## Development
 
 ```bash
-pnpm dev           # watch mode
-pnpm build         # build + type declarations
-pnpm lint          # eslint
-pnpm test          # vitest
+pnpm dev             # watch mode build
+pnpm build           # build + type declarations
+pnpm lint            # eslint --fix
+pnpm test            # vitest run
+pnpm check           # lint + test
 pnpm dev:playground  # visual test environment
 ```
 

@@ -1,19 +1,32 @@
 /// <reference types="vitest" />
-import { defineConfig } from "vite";
+import { defineConfig, type PluginOption } from "vite";
 import vue from "@vitejs/plugin-vue";
+import vuetify from "vite-plugin-vuetify";
 import { fileURLToPath, URL } from "node:url";
 import { resolve } from "path";
+
+const plugins: PluginOption[] = [vue()];
+
+// Aplica o auto-import do Vuetify apenas em modo de teste (vitest)
+// No build da lib, Vuetify é peerDependency — não deve ser bundled
+if (process.env.VITEST) {
+  plugins.push(vuetify({ autoImport: true }));
+}
 
 export default defineConfig({
   test: {
     include: ['src/**/*.spec.ts'],
     environment: 'jsdom',
+    globals: true,
+    css: true,
+    server: {
+      deps: {
+        inline: ['vuetify'],
+      },
+    },
+    setupFiles: ['./tests/setup.ts'],
   },
-  plugins: [
-    vue(),
-    // vite-plugin-vuetify removido do build da lib
-    // O Vuetify deve ser fornecido pelo projeto host
-  ],
+  plugins,
   resolve: {
     alias: {
       "@": fileURLToPath(new URL("./src", import.meta.url)),
@@ -40,6 +53,7 @@ export default defineConfig({
         "axios",
         "maska",
         "@mdi/font",
+        /testutils/,
       ],
       output: {
         globals: {
