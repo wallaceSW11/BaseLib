@@ -26,7 +26,6 @@ export default defineConfig({
         "components/index": resolve(__dirname, "src/components/index.ts"),
         "composables/index": resolve(__dirname, "src/composables/index.ts"),
         "utils/index": resolve(__dirname, "src/utils/index.ts"),
-        "stores/index": resolve(__dirname, "src/stores/index.ts"),
         "plugins/index": resolve(__dirname, "src/plugins/index.ts"),
       },
       formats: ["es"],
@@ -69,10 +68,6 @@ export default defineConfig({
             if (match && !match[1].includes('index')) {
               return `utils/${match[1]}`;
             }
-          }
-          // Agrupa stores
-          if (id.includes('src/stores/') && !id.includes('index')) {
-            return 'stores/theme';
           }
           // Agrupa composables
           if (id.includes('src/composables/') && !id.includes('index')) {

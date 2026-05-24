@@ -11,8 +11,6 @@ export * from './utils';
 
 export * from './composables';
 
-export * from './stores';
-
 export { default as globalsPlugin } from './plugins';
 
 export { requiredVuetifyComponents } from './vuetifyComponents';

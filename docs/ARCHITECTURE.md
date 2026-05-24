@@ -17,9 +17,6 @@ src/
     useGlobals      ─ Access $notify/$loading/$confirm from setup
     useLoading      ─ Reactive loading state (isActive, message, show, hide)
 
-  stores/           ─ Pinia stores (setup function style)
-    theme           ─ Dark/light mode + localStorage
-
   utils/            ─ Pure utility functions, no Vue dependency
     notify.ts       ─ Global notification singleton
     loading.ts      ─ Global loading singleton (wraps useLoading)
@@ -72,13 +69,26 @@ The exposed method follows camelCase: `confirmDialog`. Exported type: `ConfirmCo
 
 ### Theme system
 
-- `useThemeStore` only tracks `isDark` + localStorage persistence
-- No custom theme config, no logo, no favicon, no /theme.json
-- Vuetify's built-in `useTheme()` handles all color application
-- Consumers configure colors via Vuetify options:
-  ```ts
-  vuetify({ theme: { themes: { light: { colors: { primary: '#00008B' } } } } })
-  ```
+The library does not manage theme state. Consumers control themes directly via Vuetify:
+
+```ts
+// Set theme mode
+vuetify.theme.global.name.value = 'dark';
+
+// Configure custom colors
+vuetify({ theme: { themes: { light: { colors: { primary: '#00008B' } } } } })
+```
+
+For localStorage persistence, consumers implement their own toggle:
+
+```ts
+const isDark = ref(false);
+function toggleTheme() {
+  isDark.value = !isDark.value;
+  localStorage.setItem('app-theme', isDark.value ? 'dark' : 'light');
+  vuetify.theme.global.name.value = isDark.value ? 'dark' : 'light';
+}
+```
 
 ### Global utilities
 

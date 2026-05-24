@@ -56,9 +56,9 @@ LoadingOverlay used to expose `show()`/`hide()` via `defineExpose`, and a Pinia 
 
 Same pattern applies to notify and confirm.
 
-### 3. Vuetify handles themes
+### 3. Vuetify handles themes — no theme store
 
-Custom theme management (loading /theme.json, syncing colors, swapping favicons, dispatching custom events) was fighting Vuetify's built-in theme system. Now the store only tracks `isDark` — Vuetify does the rest.
+Custom theme management (loading /theme.json, syncing colors, swapping favicons, dispatching custom events, Pinia store with localStorage persistence) was fighting Vuetify's built-in theme system. Theme state was removed entirely — consumers toggle directly via `vuetify.theme.global.name.value = 'dark'` and persist to localStorage themselves if needed.
 
 ### 4. No button wrappers — use `v-btn` directly
 
