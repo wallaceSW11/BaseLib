@@ -6,9 +6,7 @@ import type { confirm as confirmFn } from '../utils/confirm';
 export function useGlobals() {
   const instance = getCurrentInstance();
 
-  if (!instance) {
-    throw new Error('useGlobals must be called within setup()');
-  }
+  if (!instance) throw new Error('useGlobals must be called within setup()');
 
   const $notify = instance.appContext.config.globalProperties.$notify;
   const $loading = instance.appContext.config.globalProperties.$loading;
