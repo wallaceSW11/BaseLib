@@ -26,17 +26,17 @@ export const useNotifyStore = defineStore('notify', () => {
   function hide() {
     isVisible.value = false;
 
-    if (timeoutId) {
-      clearTimeout(timeoutId);
-      timeoutId = null;
-    }
+    if (!timeoutId) return;
+
+    clearTimeout(timeoutId);
+    timeoutId = null;
   }
 
   function cleanup() {
-    if (timeoutId) {
-      clearTimeout(timeoutId);
-      timeoutId = null;
-    }
+    if (!timeoutId) return;
+
+    clearTimeout(timeoutId);
+    timeoutId = null;
   }
 
   return {

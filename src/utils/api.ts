@@ -37,29 +37,21 @@ const api = axios.create({
 export function configureApi(config: Partial<ApiConfig>) {
   currentConfig = { ...currentConfig, ...config };
 
-  if (config.baseURL) {
-    api.defaults.baseURL = config.baseURL;
-  }
+  if (config.baseURL) api.defaults.baseURL = config.baseURL;
 
-  if (config.timeout) {
-    api.defaults.timeout = config.timeout;
-  }
+  if (config.timeout) api.defaults.timeout = config.timeout;
 }
 
 function addAuthTokenToRequest(config: InternalAxiosRequestConfig) {
-  const token = localStorage.getItem(currentConfig.authTokenKey!);
+  const token = localStorage.getItem(currentConfig.authTokenKey ?? 'auth_token');
 
-  if (token && config.headers) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
+  if (token && config.headers) config.headers.Authorization = `Bearer ${token}`;
 
   return config;
 }
 
 function showLoadingForMutations(config: InternalAxiosRequestConfig) {
-  if (currentConfig.showLoadingOnMutations && config.method !== 'get') {
-    loading.show('Processing...');
-  }
+  if (currentConfig.showLoadingOnMutations && config.method !== 'get') loading.show('Processing...');
 }
 
 api.interceptors.request.use(
@@ -77,49 +69,55 @@ api.interceptors.request.use(
 );
 
 function handleUnauthorized() {
-  if (currentConfig.showErrorNotifications) {
-    notify.error('Unauthorized', 'Please log in again');
-  }
+  if (currentConfig.showErrorNotifications) notify.error('Unauthorized', 'Please log in again');
 
-  if (currentConfig.onUnauthorized) {
-    currentConfig.onUnauthorized();
-  }
+  if (currentConfig.onUnauthorized) currentConfig.onUnauthorized();
 }
 
 function handleErrorResponse(error: AxiosError) {
-  if (!currentConfig.showErrorNotifications) {
-    return;
-  }
+  if (!currentConfig.showErrorNotifications) return;
 
   if (!error.response) {
     if (error.request) {
       notify.error('Network Error', 'Unable to connect to the server');
-    } else {
-      notify.error('Error', error.message);
+
+      return;
     }
+
+    notify.error('Error', error.message);
 
     return;
   }
 
   const status = error.response.status;
-  const message = (error.response.data as any)?.message || 'An error occurred';
+  const responseData = error.response.data as Record<string, unknown> | null;
+  const message = typeof responseData?.message === 'string' ? responseData.message : 'An error occurred';
 
-  switch (status) {
-    case 401:
-      handleUnauthorized();
-      break;
-    case 403:
-      notify.error('Forbidden', 'You do not have permission to perform this action');
-      break;
-    case 404:
-      notify.error('Not Found', 'The requested resource was not found');
-      break;
-    case 500:
-      notify.error('Server Error', 'Internal server error. Please try again later.');
-      break;
-    default:
-      notify.error('Error', message);
+  if (status === 401) {
+    handleUnauthorized();
+
+    return;
   }
+
+  if (status === 403) {
+    notify.error('Forbidden', 'You do not have permission to perform this action');
+
+    return;
+  }
+
+  if (status === 404) {
+    notify.error('Not Found', 'The requested resource was not found');
+
+    return;
+  }
+
+  if (status === 500) {
+    notify.error('Server Error', 'Internal server error. Please try again later.');
+
+    return;
+  }
+
+  notify.error('Error', message);
 }
 
 api.interceptors.response.use(
