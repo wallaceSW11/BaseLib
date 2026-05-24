@@ -24,7 +24,7 @@
 
 <script setup lang="ts">
 import { toRef } from 'vue';
-import { useNumericInput, NAVIGATION_KEYS } from '@/composables/useNumericInput';
+import { useNumericInput, createNumericKeydownHandler } from '@/composables/useNumericInput';
 import type { TextFieldVariant } from '@/utils/types';
 
 type ValidationRule = (value: string) => boolean | string;
@@ -113,48 +113,17 @@ function updateValue(newValue: number) {
   moveCursorToEnd();
 }
 
-function updateFromDigits(digits: string) {
-  const newValue = parseInt(digits) / 100;
+function computeFromDigits(digits: string, isNegative: boolean): number {
+  const value = parseInt(digits || '0') / 100;
 
-  updateValue(newValue);
+  return isNegative ? -value : value;
 }
 
-function handleKeydown(event: KeyboardEvent) {
-  const isNavigationKey = NAVIGATION_KEYS.includes(event.key) || event.ctrlKey || event.metaKey;
-
-  if (isNavigationKey) {
-    if (event.key === 'Backspace' || event.key === 'Delete') {
-      event.preventDefault();
-
-      const digits = formattedValue.value.replace(/\D/g, '');
-
-      updateFromDigits(digits.slice(0, -1));
-    }
-
-    return;
-  }
-
-  if (!/[\d-]/.test(event.key)) {
-    event.preventDefault();
-
-    return;
-  }
-
-  event.preventDefault();
-
-  if (event.key === '-') {
-    const currentNumeric = parseMoneyInput(formattedValue.value);
-    const newValue = -currentNumeric;
-
-    updateValue(newValue);
-
-    return;
-  }
-
-  const digits = formattedValue.value.replace(/\D/g, '');
-
-  updateFromDigits(digits + event.key);
-}
+const handleKeydown = createNumericKeydownHandler(
+  formattedValue,
+  updateValue,
+  computeFromDigits,
+);
 </script>
 
 <style scoped>

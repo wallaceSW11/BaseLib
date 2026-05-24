@@ -24,7 +24,7 @@
 
 <script setup lang="ts">
 import { toRef } from 'vue';
-import { useNumericInput, NAVIGATION_KEYS } from '@/composables/useNumericInput';
+import { useNumericInput, createNumericKeydownHandler } from '@/composables/useNumericInput';
 import type { TextFieldVariant } from '@/utils/types';
 
 type ValidationRule = (value: string) => boolean | string;
@@ -111,14 +111,7 @@ function updateValue(newValue: number) {
   moveCursorToEnd();
 }
 
-function parseFromDisplay() {
-  return {
-    digits: formattedValue.value.replace(/\D/g, ''),
-    isNegative: formattedValue.value.startsWith('-'),
-  };
-}
-
-function computeValue(digits: string): number {
+function computeFromDigits(digits: string, isNegative: boolean): number {
   if (!digits) return 0;
 
   let value: number;
@@ -130,62 +123,17 @@ function computeValue(digits: string): number {
     value = parseInt(digits) / divisor;
   }
 
-  return Number(value.toFixed(props.decimalPlaces));
+  const result = Number(value.toFixed(props.decimalPlaces));
+
+  return isNegative ? -result : result;
 }
 
-function handleKeydown(event: KeyboardEvent) {
-  const input = event.target as HTMLInputElement | null;
-
-  if (!input) return;
-
-  const isNavigationKey = NAVIGATION_KEYS.includes(event.key) || event.ctrlKey || event.metaKey;
-
-  if (isNavigationKey) {
-    if (event.key === 'Backspace' || event.key === 'Delete') {
-      event.preventDefault();
-
-      const { digits, isNegative } = parseFromDisplay();
-
-      if (digits.length > 0) {
-        const newDigits = digits.slice(0, -1);
-        let newValue = computeValue(newDigits);
-
-        if (isNegative && props.allowNegative && newValue !== 0) newValue = -newValue;
-
-        updateValue(newValue);
-      }
-    }
-
-    return;
-  }
-
-  if (!/[\d-]/.test(event.key)) {
-    event.preventDefault();
-
-    return;
-  }
-
-  event.preventDefault();
-
-  if (event.key === '-' && props.allowNegative) {
-    const currentNumeric = parseNumberInput(formattedValue.value);
-    const newValue = -currentNumeric;
-
-    updateValue(newValue);
-
-    return;
-  }
-
-  if (event.key === '-') return;
-
-  const { digits, isNegative } = parseFromDisplay();
-  const newDigits = digits + event.key;
-  let newValue = computeValue(newDigits);
-
-  if (isNegative && props.allowNegative) newValue = -newValue;
-
-  updateValue(newValue);
-}
+const handleKeydown = createNumericKeydownHandler(
+  formattedValue,
+  updateValue,
+  computeFromDigits,
+  () => ({ allowNegative: props.allowNegative }),
+);
 </script>
 
 <style scoped>

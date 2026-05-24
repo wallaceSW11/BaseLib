@@ -3,7 +3,7 @@
     v-maska="maskOptions"
     :model-value="displayValue"
     :label="label"
-    :rules="mergedRules"
+    :rules="rules"
     :disabled="disabled"
     :hint="hint"
     :persistent-hint="hasHint"
@@ -84,7 +84,7 @@ const displayValue = computed(() => mask.masked(props.modelValue ?? ''));
 
 const hasHint = computed(() => !!props.hint);
 
-const mergedRules = computed(() => props.rules);
+
 
 function mapResponse(data: ViaCepApiResponse): ZipCodeResponse {
   return {

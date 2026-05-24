@@ -60,7 +60,6 @@
 
 <script setup lang="ts">
 import { reactive, ref, watch, computed } from 'vue';
-import { VRow, VCol, VTextField, VSelect } from 'vuetify/components';
 import type { TextFieldVariant } from '@/utils/types';
 import ZipCodeField, { type ZipCodeResponse } from './ZipCodeField.vue';
 

@@ -4,6 +4,8 @@ export { default as ModalBase, type ModalAction } from './modals/ModalBase.vue';
 
 export { default as ConfirmDialog } from './messages/ConfirmDialog.vue';
 
+export { default as CustomConfirmDialog } from './messages/CustomConfirmDialog.vue';
+
 export { default as FloatingNotify } from './messages/FloatingNotify.vue';
 
 export { default as LoadingOverlay } from './layout/LoadingOverlay.vue';

@@ -27,10 +27,7 @@
       "types": "./dist/utils/index.d.ts",
       "import": "./dist/utils/index.js"
     },
-    "./stores": {
-      "types": "./dist/stores/index.d.ts",
-      "import": "./dist/stores/index.js"
-    },
+
     "./plugins": {
       "types": "./dist/plugins/index.d.ts",
       "import": "./dist/plugins/index.js"
@@ -73,6 +70,7 @@
   "license": "MIT",
   "peerDependencies": {
     "axios": "^1.0.0",
+    "maska": "^3.0.0",
     "pinia": "^3.0.0",
     "vue": "^3.5.0",
     "vuetify": "^3.0.0"
@@ -104,7 +102,5 @@
     "vue-tsc": "^3.2.4",
     "vuetify": "^3.11.8"
   },
-  "dependencies": {
-    "maska": "^3.2.0"
-  }
+  "dependencies": {}
 }

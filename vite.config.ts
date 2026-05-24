@@ -7,7 +7,7 @@ import { resolve } from "path";
 export default defineConfig({
   test: {
     include: ['src/**/*.spec.ts'],
-    environment: 'node',
+    environment: 'jsdom',
   },
   plugins: [
     vue(),
@@ -38,6 +38,7 @@ export default defineConfig({
         "vuetify/directives",
         "pinia",
         "axios",
+        "maska",
         "@mdi/font",
       ],
       output: {

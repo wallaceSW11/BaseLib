@@ -17,6 +17,7 @@
  *   },
  * })
  */
+import type { Component } from 'vue';
 import {
   VAlert,
   VBtn,
@@ -39,7 +40,7 @@ import {
   VListItemTitle,
 } from 'vuetify/components';
 
-export const requiredVuetifyComponents: Record<string, any> = {
+export const requiredVuetifyComponents: Record<string, Component> = {
   VAlert,
   VBtn,
   VCard,

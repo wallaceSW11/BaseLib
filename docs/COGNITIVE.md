@@ -17,6 +17,10 @@
 | Testes colados em `__tests__/` | Padrão da indústria pra component libraries. Testes ficam junto do arquivo que testam, não em pasta raiz. Primeiro teste: `useLoading` (lógica pura). |
 | `PrimaryButton`, `SecondaryButton`, `TertiaryButton`, `QuartenaryButton` | 68 lines of prop-forwarding boilerplate. Consumers use `<v-btn>` directly. |
 | `BaseButton` | Thin wrapper around `<v-btn>` adding only `class="text-none"`. Not enough value to justify being in the library. Consumers configure text-transform globally or per-btn. |
+| `api.ts` auth/loading/notify | Application-layer concerns (auth token, redirect, loading spinner, error toasts) removed. `api.ts` is now a bare axios factory. |
+| `maska` as `dependency` | Moved to `peerDependencies`. It is external in the build (not bundled), so it must be provided by the consumer. |
+| `EmailField.persistentHint` | Declared but never used in template or logic. Dead code removed. |
+| Duplicated `handleKeydown` in MoneyField/NumberField | Extracted to `createNumericKeydownHandler()` in `useNumericInput.ts`. Each component now provides only a `computeFromDigits` callback. |
 
 ### 8. defineExpose still valid for Promise-based dialogs
 
@@ -40,6 +44,34 @@ CSS that remains: overlay positioning (`position: fixed` + inset) and Vue transi
 ### 11. Exposed method renamed: `ConfirmDialog` → `confirmDialog`
 
 The `defineExpose` method on both `CustomConfirmDialog` and `ConfirmDialog` was renamed from PascalCase `ConfirmDialog` to camelCase `confirmDialog` to follow JavaScript naming conventions for functions. The `ConfirmComponentRef` interface in `types.ts` was updated accordingly.
+
+### 12. `api.ts` stripped to bare axios instance
+
+`api.ts` was refactored from an opinionated HTTP client (auth token from localStorage, loading overlay on mutations, error notifications, `/login` redirect) to a minimal axios factory. The removed features are application-layer concerns — a component library should not dictate auth strategy, notification UX, or loading behavior. Consumers now configure their own interceptors per-project.
+
+Removed from `ApiConfig`:
+- `showLoadingOnMutations` — loading state is a UI concern
+- `showErrorNotifications` — error handling belongs to the app
+- `authTokenKey` — auth strategy is project-specific
+- `onUnauthorized` — redirect/routing is app-level
+
+The `env.d.ts` `VITE_API_BASE_URL` reference was removed alongside the coupling.
+
+### 13. `maska` moved to `peerDependencies`
+
+`maska` was listed as a direct `dependency` but marked `external` in rollup (not bundled). It is now a `peerDependency`, consistent with Vue, Vuetify, Pinia, and axios. Consumers must install `maska` themselves.
+
+### 14. `EmailField.persistentHint` removed (dead prop)
+
+The prop was declared in the interface and `withDefaults` but never referenced in the template or logic. Removed to eliminate dead code that pollutes the public API.
+
+### 15. `CustomConfirmDialog` exported from barrel
+
+Previously only `ConfirmDialog` was exported. `CustomConfirmDialog` is now exported as well, allowing consumers to use it directly without the wrapper.
+
+### 16. `createNumericKeydownHandler` extracted to `useNumericInput`
+
+`MoneyField` and `NumberField` duplicated ~40 lines of `handleKeydown` each with nearly identical logic (navigation keys, Backspace, digit append, sign toggle). The common pattern was extracted into `createNumericKeydownHandler()` in `src/composables/useNumericInput.ts`. Both components now share the handler and provide only the domain-specific `computeFromDigits` callback.
 
 ## Key decisions
 

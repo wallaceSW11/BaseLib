@@ -40,7 +40,6 @@ interface Props {
   rules?: ValidationRule[]
   disabled?: boolean
   hint?: string
-  persistentHint?: boolean
   required?: boolean
   validateOnBlur?: boolean
   requiredMessage?: string
@@ -55,7 +54,6 @@ const props = withDefaults(defineProps<Props>(), {
   rules: () => [],
   disabled: false,
   hint: '',
-  persistentHint: false,
   required: false,
   validateOnBlur: true,
   requiredMessage: '',

@@ -4,4 +4,4 @@ export { useBreakpoint } from './useBreakpoint';
 
 export { useLoading } from './useLoading';
 
-export { useNumericInput, NAVIGATION_KEYS } from './useNumericInput';
+export { useNumericInput, NAVIGATION_KEYS, createNumericKeydownHandler } from './useNumericInput';
