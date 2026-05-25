@@ -27,6 +27,8 @@ import { toRef } from 'vue';
 import { useNumericInput, createNumericKeydownHandler } from '@/composables/useNumericInput';
 import type { TextFieldVariant } from '@/utils/types';
 
+const NON_BREAKING_SPACE = '\u00a0';
+
 type ValidationRule = (value: string) => boolean | string;
 
 interface Props {
@@ -61,27 +63,30 @@ const emit = defineEmits<{
   'update:modelValue': [value: number]
 }>();
 
-function getCurrencySymbol(): string {
-  const symbols: Record<string, string> = {
-    BRL: 'R$',
-    USD: '$',
-    EUR: '€',
-    GBP: '£',
-  };
-
-  return symbols[props.currency] || props.currency;
-}
-
 function formatMoney(value: number): string {
   const absValue = Math.abs(value);
-  const currencySymbol = getCurrencySymbol();
 
-  const formatted = absValue.toLocaleString(props.locale, {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  });
+  try {
+    const formatted = absValue.toLocaleString(props.locale, {
+      style: 'currency',
+      currency: props.currency,
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
 
-  return value < 0 ? `-${currencySymbol} ${formatted}` : `${currencySymbol} ${formatted}`;
+    const normalized = formatted.split(NON_BREAKING_SPACE).join(' ');
+
+    return value < 0 ? `-${normalized}` : normalized;
+  } catch {
+    const currencySymbol = props.currency;
+
+    const formatted = absValue.toLocaleString(props.locale, {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+
+    return value < 0 ? `-${currencySymbol} ${formatted}` : `${currencySymbol} ${formatted}`;
+  }
 }
 
 function parseMoneyInput(input: string): number {

@@ -30,14 +30,16 @@ export function ensureVuetify(app: App): void {
 
   if (hasVuetify) return;
 
-  console.warn(
-    '[BaseLib] Vuetify not detected. Ensure app.use(vuetify) is called before setupLib(app).\n' +
-      'Example:\n' +
-      "  import { createVuetify } from 'vuetify'\n" +
-      '  const vuetify = createVuetify()\n' +
-      '  app.use(vuetify)\n' +
-      '  setupLib(app)',
-  );
+  if (import.meta.env.DEV) {
+    console.warn(
+      '[BaseLib] Vuetify not detected. Ensure app.use(vuetify) is called before setupLib(app).\n' +
+        'Example:\n' +
+        "  import { createVuetify } from 'vuetify'\n" +
+        '  const vuetify = createVuetify()\n' +
+        '  app.use(vuetify)\n' +
+        '  setupLib(app)',
+    );
+  }
 }
 
 export function debugVuetifyInstances(): void {

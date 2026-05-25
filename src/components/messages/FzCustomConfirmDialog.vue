@@ -31,8 +31,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 import type { ConfirmOptions } from '@/utils/types';
+import { useConfirmStore } from '@/utils/confirm';
 
 const isOpen = ref(false);
 const currentTitle = ref('');
@@ -43,6 +44,29 @@ const cancelText = ref('');
 const confirmColor = ref('primary');
 const cancelColor = ref('secondary');
 let resolvePromise: ((value: boolean) => void) | null = null;
+
+const confirmDialog = (title: string, message: string, options?: ConfirmOptions): Promise<boolean> => {
+  currentTitle.value = title;
+  currentMessage.value = message;
+  isPersistent.value = options?.persistent ?? true;
+  confirmText.value = options?.confirmText ?? 'Sim';
+  cancelText.value = options?.cancelText ?? 'Não';
+  confirmColor.value = options?.confirmColor ?? 'primary';
+  cancelColor.value = options?.cancelColor ?? 'secondary';
+  isOpen.value = true;
+
+  return new Promise((resolve) => {
+    resolvePromise = resolve;
+  });
+};
+
+onMounted(() => {
+  useConfirmStore().setConfirmRef({ confirmDialog });
+});
+
+onUnmounted(() => {
+  useConfirmStore().setConfirmRef({ confirmDialog: () => Promise.resolve(false) });
+});
 
 const handleYes = () => {
   if (resolvePromise) resolvePromise(true);
@@ -60,21 +84,6 @@ const handleOverlayClick = () => {
   if (isPersistent.value) return;
 
   handleNo();
-};
-
-const confirmDialog = (title: string, message: string, options?: ConfirmOptions): Promise<boolean> => {
-  currentTitle.value = title;
-  currentMessage.value = message;
-  isPersistent.value = options?.persistent ?? true;
-  confirmText.value = options?.confirmText ?? 'Sim';
-  cancelText.value = options?.cancelText ?? 'Não';
-  confirmColor.value = options?.confirmColor ?? 'primary';
-  cancelColor.value = options?.cancelColor ?? 'secondary';
-  isOpen.value = true;
-
-  return new Promise((resolve) => {
-    resolvePromise = resolve;
-  });
 };
 
 defineExpose({

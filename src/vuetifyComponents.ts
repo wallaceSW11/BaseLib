@@ -1,19 +1,19 @@
 /**
- * Lista dos componentes Vuetify utilizados por esta lib.
+ * Vuetify components required by this library.
  *
- * Use isso no projeto consumidor ao configurar o Vuetify,
- * para garantir que os componentes da lib sejam registrados
- * sem precisar importar tudo com `import * as components from "vuetify/components"`.
+ * Use this when configuring Vuetify in the consumer project to
+ * register only the components this library needs, avoiding a
+ * full import of `vuetify/components`.
  *
  * @example
- * // vuetify.ts do projeto consumidor
- * import { requiredVuetifyComponents } from 'sua-lib'
- * import { ... } from 'vuetify/components' // seus próprios componentes
+ * // consumer's vuetify.ts
+ * import { requiredVuetifyComponents } from '@forizi/ui'
+ * import { ... } from 'vuetify/components' // your own components
  *
  * export default createVuetify({
  *   components: {
  *     ...requiredVuetifyComponents,
- *     // ...seus outros componentes
+ *     // ...your other components
  *   },
  * })
  */
@@ -35,9 +35,6 @@ import {
   VSpacer,
   VTextField,
   VTooltip,
-  VList,
-  VListItem,
-  VListItemTitle,
 } from 'vuetify/components';
 
 export const requiredVuetifyComponents: Record<string, Component> = {
@@ -57,7 +54,4 @@ export const requiredVuetifyComponents: Record<string, Component> = {
   VSpacer,
   VTextField,
   VTooltip,
-  VList,
-  VListItem,
-  VListItemTitle,
 };

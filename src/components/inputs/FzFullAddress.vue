@@ -59,7 +59,7 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref, watch, computed } from 'vue';
+import { reactive, ref, watch, computed, nextTick } from 'vue';
 import type { TextFieldVariant } from '@/utils/types';
 import FzZipCodeField, { type ZipCodeResponse } from './FzZipCodeField.vue';
 
@@ -102,6 +102,8 @@ const props = withDefaults(defineProps<Props>(), {
 const emit = defineEmits<{
   'update:modelValue': [value: Address]
 }>();
+
+let skipInternalEmit = false;
 
 const brazilianStates = [
   { uf: 'AC', name: 'AC - Acre' },
@@ -170,11 +172,21 @@ function onZipCodeNotFound() {
   zipCodeFound.value = false;
 }
 
-watch(
-  () => props.modelValue,
-  (val) => Object.assign(internal, val),
-  { deep: true },
-);
+watch(() => props.modelValue, (val) => {
+  if (!val) return;
 
-watch(internal, (val) => emit('update:modelValue', { ...val }), { deep: true });
+  skipInternalEmit = true;
+
+  Object.assign(internal, val);
+
+  nextTick(() => {
+    skipInternalEmit = false;
+  });
+}, { deep: true, immediate: true });
+
+watch(internal, (val) => {
+  if (skipInternalEmit) return;
+
+  emit('update:modelValue', { ...val });
+}, { deep: true });
 </script>

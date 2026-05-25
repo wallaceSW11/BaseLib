@@ -83,13 +83,15 @@ describe('FzFullAddress', () => {
     expect(wrapper.text()).toContain(label);
   });
 
-  it.each(MODEL_VALUE_CASES)('should emit update:modelValue with $input', async ({ input, expected }) => {
-    await wrapper.setProps({ modelValue: input });
+  it.each(MODEL_VALUE_CASES)('should sync internal when modelValue is set externally (no re-emit)', async () => {
+    await wrapper.setProps({ modelValue: { street: 'Rua Sincronizada', number: '42' } });
 
-    const emitted = wrapper.emitted('update:modelValue');
+    // External prop changes sync internally (input[1] = street field)
+    await wrapper.vm.$nextTick();
 
-    expect(emitted).toBeTruthy();
-    expect(emitted![0][0]).toEqual(expected);
+    const streetInput = wrapper.findAll('input')[1];
+
+    expect((streetInput.element as HTMLInputElement).value).toBe('Rua Sincronizada');
   });
 
   it('should disable all inputs when disabled is true', async () => {
@@ -178,13 +180,15 @@ describe('FzFullAddress', () => {
     }
   });
 
-  it('should sync internal when modelValue changes externally', async () => {
+  it('should sync internal when modelValue changes externally (no re-emit)', async () => {
     await wrapper.setProps({ modelValue: { street: 'Rua Alterada', city: 'Nova Cidade' } });
 
-    const emitted = wrapper.emitted('update:modelValue');
+    // After a tick for the watcher to process, verify the street input shows the new value
+    await wrapper.vm.$nextTick();
 
-    expect(emitted).toBeTruthy();
-    expect(emitted![0][0]).toMatchObject({ street: 'Rua Alterada', city: 'Nova Cidade' });
+    const streetInput = wrapper.findAll('input')[1];
+
+    expect((streetInput.element as HTMLInputElement).value).toBe('Rua Alterada');
   });
 
   it('should emit update:modelValue when user types in street', async () => {

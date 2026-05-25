@@ -48,14 +48,13 @@
 
     <FzFloatingNotify />
     <FzLoadingOverlay :is-loading="isActive" :message="message" />
-    <FzConfirmDialog ref="confirmRef" />
+    <FzConfirmDialog />
   </v-app>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import { useConfirmStore, useLoadingRefs } from '@/utils';
-import type { ConfirmComponentRef } from '@/utils/types';
+import { ref } from 'vue';
+import { useLoadingRefs } from '@/utils';
 import ButtonsPlayground from './views/ButtonsPlayground.vue';
 import InputsPlayground from './views/InputsPlayground.vue';
 import ModalPlayground from './views/ModalPlayground.vue';
@@ -65,14 +64,6 @@ import LayoutPlayground from './views/LayoutPlayground.vue';
 const activeTab = ref('botoes');
 
 const { isActive, message } = useLoadingRefs();
-
-const confirmRef = ref<ConfirmComponentRef | null>(null);
-
-onMounted(() => {
-  if (!confirmRef.value) return;
-
-  useConfirmStore().setConfirmRef(confirmRef.value);
-});
 </script>
 
 <style>

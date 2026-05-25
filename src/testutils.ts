@@ -1,8 +1,12 @@
 import { mount, type MountingOptions, type VueWrapper } from '@vue/test-utils';
 import { createVuetify } from 'vuetify';
+import { createPinia, setActivePinia } from 'pinia';
 import type { Component } from 'vue';
 
 const vuetify = createVuetify();
+const pinia = createPinia();
+
+setActivePinia(pinia);
 
 export function createComponent(
   component: Component,
@@ -10,7 +14,7 @@ export function createComponent(
 ): VueWrapper {
   return mount(component, {
     global: {
-      plugins: [vuetify],
+      plugins: [vuetify, pinia],
     },
     ...options,
   });

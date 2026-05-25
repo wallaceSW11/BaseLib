@@ -9,35 +9,35 @@
     <div class="d-flex flex-wrap ga-4">
       <FzIconToolTip
         icon="mdi-pencil"
-        text="Editar"
+        tooltip="Editar"
         color="primary"
         @click="onClick('Editar')"
       />
 
       <FzIconToolTip
         icon="mdi-delete"
-        text="Excluir"
+        tooltip="Excluir"
         color="error"
         @click="onClick('Excluir')"
       />
 
       <FzIconToolTip
         icon="mdi-content-save"
-        text="Salvar"
+        tooltip="Salvar"
         color="success"
         @click="onClick('Salvar')"
       />
 
       <FzIconToolTip
         icon="mdi-download"
-        text="Download"
+        tooltip="Download"
         color="info"
         @click="onClick('Download')"
       />
 
       <FzIconToolTip
         icon="mdi-cog"
-        text="Configurações"
+        tooltip="Configurações"
         color="warning"
         @click="onClick('Configurações')"
       />
@@ -80,14 +80,14 @@
     <div class="d-flex flex-wrap ga-4 mb-4">
       <FzIconToolTip
         icon="mdi-pencil"
-        text="Editar"
+        tooltip="Editar"
         disabled
         color="primary"
       />
 
       <FzIconToolTip
         icon="mdi-delete"
-        text="Excluir"
+        tooltip="Excluir"
         disabled
         color="error"
       />
@@ -106,7 +106,7 @@
     <div class="d-flex flex-wrap ga-4">
       <FzIconToolTip
         icon="mdi-pencil"
-        text="Editar"
+        tooltip="Editar"
         disabled
         disabled-tooltip="Sem permissão para editar"
         color="primary"
@@ -114,7 +114,7 @@
 
       <FzIconToolTip
         icon="mdi-delete"
-        text="Excluir"
+        tooltip="Excluir"
         disabled
         disabled-tooltip="Exclusão bloqueada"
         color="error"

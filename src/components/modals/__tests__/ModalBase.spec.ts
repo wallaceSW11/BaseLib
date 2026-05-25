@@ -62,14 +62,19 @@ describe('FzModalBase', () => {
       expect(findDialog().props('modelValue')).toBe(true);
     });
 
-    it('should emit update:modelValue when modelValue changes', async () => {
+    it('should sync dialog visibility from modelValue prop (no re-emit)', async () => {
       await wrapper.setProps({ modelValue: true });
+
+      expect(findDialog().props('modelValue')).toBe(true);
+
       await wrapper.setProps({ modelValue: false });
 
+      expect(findDialog().props('modelValue')).toBe(false);
+
+      // Parent-initiated changes should NOT re-emit (controlled component pattern)
       const emitted = wrapper.emitted('update:modelValue');
 
-      expect(emitted).toBeTruthy();
-      expect(emitted![emitted!.length - 1][0]).toBe(false);
+      expect(emitted).toBeFalsy();
     });
   });
 
@@ -357,16 +362,17 @@ describe('FzModalBase', () => {
     });
   });
 
-  describe('keyboard — window global', () => {
-    it('should trigger primary action on window Enter', async () => {
+  describe('keyboard — dialog @keydown (no global handler)', () => {
+    it('should trigger cancel action on window Escape via Vuetify internal handler', async () => {
       await wrapper.setProps({ modelValue: true });
 
-      window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
+      // Vuetify's v-dialog internally captures Escape at the window level
+      window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
 
-      expect(primaryHandler).toHaveBeenCalledTimes(1);
+      expect(cancelHandler).toHaveBeenCalledTimes(1);
     });
 
-    it('should not trigger actions on window keydown when dialog is closed', () => {
+    it('should not trigger actions from window keydown when dialog is closed', () => {
       window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
       window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
 
@@ -374,11 +380,13 @@ describe('FzModalBase', () => {
       expect(primaryHandler).not.toHaveBeenCalled();
     });
 
-    it('should do nothing on window keydown when actions is empty', async () => {
+    it('should do nothing when actions is empty', async () => {
       await wrapper.setProps({ modelValue: true, actions: [] });
 
-      window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
-      window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
+      const card = wrapper.findComponent({ name: 'v-card' });
+
+      await expect(card.trigger('keydown', { key: 'Escape' })).resolves.toBeUndefined();
+      await expect(card.trigger('keydown', { key: 'Enter' })).resolves.toBeUndefined();
 
       expect(cancelHandler).not.toHaveBeenCalled();
       expect(primaryHandler).not.toHaveBeenCalled();

@@ -44,7 +44,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, computed, onMounted, onUnmounted } from 'vue';
+import { computed } from 'vue';
 import { useTheme } from 'vuetify';
 
 export interface ModalAction {
@@ -80,12 +80,14 @@ const props = withDefaults(defineProps<Props>(), {
 
 const emit = defineEmits<{
   'update:modelValue': [value: boolean];
-  close: [];
 }>();
 
 const theme = useTheme();
 
-const isOpen = ref(props.modelValue);
+const isOpen = computed({
+  get: () => props.modelValue,
+  set: (val) => emit('update:modelValue', val),
+});
 
 const dialogThemeClass = computed(() => `v-theme--${theme.global.name.value}`);
 
@@ -93,17 +95,6 @@ const dialogContentClass = computed(() => {
   if (!props.contentClass) return dialogThemeClass.value;
 
   return `${dialogThemeClass.value} ${props.contentClass}`;
-});
-
-watch(
-  () => props.modelValue,
-  (newVal) => {
-    isOpen.value = newVal;
-  },
-);
-
-watch(isOpen, (newVal) => {
-  emit('update:modelValue', newVal);
 });
 
 function findCancelAction(): ModalAction | undefined {
@@ -164,41 +155,6 @@ function onDialogKeydown(e: KeyboardEvent): void {
   }
 }
 
-function onGlobalKeydown(e: KeyboardEvent): void {
-  if (!isOpen.value || props.actions.length === 0) return;
-
-  if (e.key === 'Escape' && !props.persistent) {
-    const cancelAction = findCancelAction();
-
-    if (!cancelAction) return;
-
-    e.preventDefault();
-    handleAction(cancelAction);
-
-    return;
-  }
-
-  if (e.key === 'Enter' && !e.shiftKey && !e.ctrlKey && !e.altKey) {
-    const target = e.target as HTMLElement;
-
-    if (isInteractiveElement(target)) return;
-
-    const primaryAction = findPrimaryAction();
-
-    if (!primaryAction) return;
-
-    e.preventDefault();
-    handleAction(primaryAction);
-  }
-}
-
-onMounted(() => {
-  window.addEventListener('keydown', onGlobalKeydown);
-});
-
-onUnmounted(() => {
-  window.removeEventListener('keydown', onGlobalKeydown);
-});
 </script>
 
 <style scoped>
@@ -208,6 +164,7 @@ onUnmounted(() => {
 }
 </style>
 
+<!-- Vuetify renders overlays as siblings at root; adjust z-index so v-select/v-menu popups inside this dialog appear above the dialog overlay -->
 <style>
 .v-overlay-container .v-menu > .v-overlay__content,
 .v-overlay-container .v-select__content,

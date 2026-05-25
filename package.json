@@ -44,7 +44,7 @@
     "dev": "vite build --watch",
     "dev:playground": "vite --config playground/vite.config.ts",
     "build": "vite build && vue-tsc --project tsconfig.build.json --declaration --emitDeclarationOnly --outDir dist",
-    "build:playground": "vite build --config playground/vite.config.ts --outDir dist",
+    "build:playground": "vite build --config playground/vite.config.ts --outDir playground-dist",
     "prepublishOnly": "pnpm build",
     "lint": "eslint . --fix",
     "check": "pnpm lint && pnpm test",

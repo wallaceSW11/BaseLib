@@ -29,9 +29,9 @@ describe('FzIconToolTip', () => {
     expect(btn.exists()).toBe(false);
   });
 
-  it('should render tooltip with text when tooltip is not provided', () => {
+  it('should render tooltip with tooltip prop', () => {
     wrapper = createComponent(FzIconToolTip, {
-      props: { icon: 'mdi-pencil', text: 'Editar' },
+      props: { icon: 'mdi-pencil', tooltip: 'Editar' },
     });
 
     const tooltip = wrapper.findComponent({ name: 'v-tooltip' });
@@ -39,30 +39,10 @@ describe('FzIconToolTip', () => {
     expect(tooltip.props('text')).toBe('Editar');
   });
 
-  it('should render tooltip with tooltip prop when both text and tooltip are provided', () => {
-    wrapper = createComponent(FzIconToolTip, {
-      props: { icon: 'mdi-pencil', text: 'Editar', tooltip: 'Clique para editar' },
-    });
-
-    const tooltip = wrapper.findComponent({ name: 'v-tooltip' });
-
-    expect(tooltip.props('text')).toBe('Clique para editar');
-  });
-
-  it('should disable tooltip when neither text nor tooltip is provided', () => {
+  it('should disable tooltip when no tooltip is provided', () => {
     const tooltip = wrapper.findComponent({ name: 'v-tooltip' });
 
     expect(tooltip.props('disabled')).toBe(true);
-  });
-
-  it('should enable tooltip when text is provided', () => {
-    wrapper = createComponent(FzIconToolTip, {
-      props: { icon: 'mdi-pencil', text: 'Editar' },
-    });
-
-    const tooltip = wrapper.findComponent({ name: 'v-tooltip' });
-
-    expect(tooltip.props('disabled')).toBe(false);
   });
 
   it('should enable tooltip when tooltip is provided', () => {
@@ -188,7 +168,7 @@ describe('FzIconToolTip', () => {
 
   it('should disable tooltip when disabled is true but disabledTooltip is not provided', () => {
     wrapper = createComponent(FzIconToolTip, {
-      props: { icon: 'mdi-pencil', disabled: true, text: 'Editar' },
+      props: { icon: 'mdi-pencil', disabled: true, tooltip: 'Editar' },
     });
 
     const tooltip = wrapper.findComponent({ name: 'v-tooltip' });

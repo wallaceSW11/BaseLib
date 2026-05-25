@@ -1,6 +1,7 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { mount } from '@vue/test-utils';
 import { createVuetify } from 'vuetify';
+import { createPinia, setActivePinia } from 'pinia';
 import FzCustomConfirmDialog from '../FzCustomConfirmDialog.vue';
 
 function createWrapper() {
@@ -8,11 +9,15 @@ function createWrapper() {
 
   return mount(FzCustomConfirmDialog, {
     global: {
-      plugins: [vuetify],
+      plugins: [vuetify, createPinia()],
     },
     attachTo: document.body,
   });
 }
+
+beforeEach(() => {
+  setActivePinia(createPinia());
+});
 
 describe('FzCustomConfirmDialog', () => {
   let wrapper: ReturnType<typeof createWrapper>;

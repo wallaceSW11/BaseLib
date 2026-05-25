@@ -27,7 +27,6 @@ import { computed } from 'vue';
 
 interface Props {
   icon: string;
-  text?: string;
   tooltip?: string;
   color?: string;
   asButton?: boolean;
@@ -36,7 +35,6 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  text: undefined,
   tooltip: undefined,
   color: 'primary',
   asButton: false,
@@ -51,13 +49,13 @@ const emit = defineEmits<{
 const hasTooltip = computed(() => {
   if (props.disabled) return !!props.disabledTooltip;
 
-  return !!(props.tooltip ?? props.text);
+  return !!props.tooltip;
 });
 
 const tooltipText = computed(() => {
   if (props.disabled) return props.disabledTooltip ?? '';
 
-  return props.tooltip ?? props.text ?? '';
+  return props.tooltip ?? '';
 });
 
 function handleIconClick(e: MouseEvent) {

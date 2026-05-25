@@ -4,7 +4,7 @@ export { loading, useLoadingRefs } from './loading';
 
 export { confirm, useConfirmStore } from './confirm';
 
-export { default as api } from './api';
+export { default as api, configureApi } from './api';
 
 export * from './types';
 
