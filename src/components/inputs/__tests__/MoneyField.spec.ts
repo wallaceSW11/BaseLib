@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { createComponent } from '@/testutils';
-import MoneyField from '../MoneyField.vue';
+import FzMoneyField from '../FzMoneyField.vue';
 
 const FORMAT_CASES = [
   { value: 0, expected: 'R$ 0,00' },
@@ -19,11 +19,11 @@ const INPUT_PARSE_CASES = [
   { input: '-1234', expected: -12.34 },
 ] as const;
 
-describe('MoneyField', () => {
+describe('FzMoneyField', () => {
   let wrapper: ReturnType<typeof createComponent>;
 
   beforeEach(() => {
-    wrapper = createComponent(MoneyField);
+    wrapper = createComponent(FzMoneyField);
   });
 
   afterEach(() => {
@@ -68,7 +68,7 @@ describe('MoneyField', () => {
   });
 
   it('should render prepend slot content', () => {
-    wrapper = createComponent(MoneyField, {
+    wrapper = createComponent(FzMoneyField, {
       slots: { prepend: '<span class="custom-prepend">Custom</span>' },
     });
 
@@ -76,7 +76,7 @@ describe('MoneyField', () => {
   });
 
   it('should render append slot content', () => {
-    wrapper = createComponent(MoneyField, {
+    wrapper = createComponent(FzMoneyField, {
       slots: { append: '<span class="custom-append">Appended</span>' },
     });
 
@@ -227,7 +227,7 @@ describe('MoneyField', () => {
   });
 
   it('should render with custom label', async () => {
-    wrapper = createComponent(MoneyField, {
+    wrapper = createComponent(FzMoneyField, {
       props: { label: 'Valor do produto' },
     });
 
@@ -235,7 +235,7 @@ describe('MoneyField', () => {
   });
 
   it('should render with custom variant', async () => {
-    wrapper = createComponent(MoneyField, {
+    wrapper = createComponent(FzMoneyField, {
       props: { variant: 'outlined' },
     });
 

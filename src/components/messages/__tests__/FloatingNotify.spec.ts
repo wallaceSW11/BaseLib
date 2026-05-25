@@ -2,14 +2,14 @@ import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { setActivePinia, createPinia } from 'pinia';
 import { createComponent } from '@/testutils';
 import { useNotifyStore } from '@/utils/notify';
-import FloatingNotify from '../FloatingNotify.vue';
+import FzFloatingNotify from '../FzFloatingNotify.vue';
 
-describe('FloatingNotify', () => {
+describe('FzFloatingNotify', () => {
   let wrapper: ReturnType<typeof createComponent>;
 
   beforeEach(() => {
     setActivePinia(createPinia());
-    wrapper = createComponent(FloatingNotify);
+    wrapper = createComponent(FzFloatingNotify);
   });
 
   afterEach(() => {

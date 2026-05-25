@@ -1,12 +1,12 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { createComponent } from '@/testutils';
-import IconToolTip from '../IconToolTip.vue';
+import FzIconToolTip from '../FzIconToolTip.vue';
 
-describe('IconToolTip', () => {
+describe('FzIconToolTip', () => {
   let wrapper: ReturnType<typeof createComponent>;
 
   beforeEach(() => {
-    wrapper = createComponent(IconToolTip, {
+    wrapper = createComponent(FzIconToolTip, {
       props: { icon: 'mdi-pencil' },
     });
   });
@@ -22,7 +22,7 @@ describe('IconToolTip', () => {
   });
 
   it('should render tooltip with text when tooltip is not provided', () => {
-    wrapper = createComponent(IconToolTip, {
+    wrapper = createComponent(FzIconToolTip, {
       props: { icon: 'mdi-pencil', text: 'Editar' },
     });
 
@@ -32,7 +32,7 @@ describe('IconToolTip', () => {
   });
 
   it('should render tooltip with tooltip prop when both text and tooltip are provided', () => {
-    wrapper = createComponent(IconToolTip, {
+    wrapper = createComponent(FzIconToolTip, {
       props: { icon: 'mdi-pencil', text: 'Editar', tooltip: 'Clique para editar' },
     });
 
@@ -48,7 +48,7 @@ describe('IconToolTip', () => {
   });
 
   it('should enable tooltip when text is provided', () => {
-    wrapper = createComponent(IconToolTip, {
+    wrapper = createComponent(FzIconToolTip, {
       props: { icon: 'mdi-pencil', text: 'Editar' },
     });
 
@@ -58,7 +58,7 @@ describe('IconToolTip', () => {
   });
 
   it('should enable tooltip when tooltip is provided', () => {
-    wrapper = createComponent(IconToolTip, {
+    wrapper = createComponent(FzIconToolTip, {
       props: { icon: 'mdi-pencil', tooltip: 'Clique para editar' },
     });
 
@@ -68,7 +68,7 @@ describe('IconToolTip', () => {
   });
 
   it('should use variant "text" when asButton is true', () => {
-    wrapper = createComponent(IconToolTip, {
+    wrapper = createComponent(FzIconToolTip, {
       props: { icon: 'mdi-pencil', asButton: true },
     });
 
@@ -84,7 +84,7 @@ describe('IconToolTip', () => {
   });
 
   it('should use density "default" when asButton is true', () => {
-    wrapper = createComponent(IconToolTip, {
+    wrapper = createComponent(FzIconToolTip, {
       props: { icon: 'mdi-pencil', asButton: true },
     });
 
@@ -100,7 +100,7 @@ describe('IconToolTip', () => {
   });
 
   it('should use the provided color', () => {
-    wrapper = createComponent(IconToolTip, {
+    wrapper = createComponent(FzIconToolTip, {
       props: { icon: 'mdi-pencil', color: 'error' },
     });
 

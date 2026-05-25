@@ -1,7 +1,7 @@
 <template>
   <v-row>
     <v-col cols="12" md="4">
-      <ZipCodeField
+      <FzZipCodeField
         v-model="internal.zipCode"
         :disabled="disabled"
         @zip-code-found="onZipCodeFound"
@@ -61,7 +61,7 @@
 <script setup lang="ts">
 import { reactive, ref, watch, computed } from 'vue';
 import type { TextFieldVariant } from '@/utils/types';
-import ZipCodeField, { type ZipCodeResponse } from './ZipCodeField.vue';
+import FzZipCodeField, { type ZipCodeResponse } from './FzZipCodeField.vue';
 
 export interface Address {
   zipCode: string

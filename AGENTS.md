@@ -1,6 +1,6 @@
-# @wallacesw11/base-lib
+# @forizi/ui
 
-Reusable Vue 3 + TypeScript + Vuetify 3 component library.
+Forizi UI — Vue 3 + TypeScript + Vuetify 3 component library.
 
 ## Commands
 
@@ -43,11 +43,11 @@ After every significant change (refactor, new component, removed dep), update th
 ```
 src/
   components/       ← Reusable Vue components
-    buttons/        ← Icon-only button with tooltip (IconToolTip)
-    inputs/         ← Form inputs (ZipCodeField, EmailField, MoneyField, etc.)
-    layout/         ← App shell components (LoadingOverlay)
-    modals/         ← Modal dialogs (ModalBase)
-    messages/       ← Notification/confirm (FloatingNotify, ConfirmDialog, CustomConfirmDialog)
+    buttons/        ← Icon-only button with tooltip (FzIconToolTip)
+    inputs/         ← Form inputs (FzZipCodeField, FzEmailField, FzMoneyField, etc.)
+    layout/         ← App shell components (FzLoadingOverlay)
+    modals/         ← Modal dialogs (FzModalBase)
+    messages/       ← Notification/confirm (FzFloatingNotify, FzConfirmDialog, FzCustomConfirmDialog)
     index.ts        ← Barrel — exports every component
 
   composables/      ← Vue composables (useBreakpoint, useGlobals, useLoading)
@@ -78,7 +78,7 @@ src/
 
 ## Conventions
 
-- **Components**: PascalCase (`ModalBase.vue`, `MoneyField.vue`)
+- **Components**: PascalCase with `Fz` prefix (`FzModalBase.vue`, `FzMoneyField.vue`)
 - **Composables**: `use` prefix (`useBreakpoint.ts`)
 - **Stores**: `use` prefix, composition API style
 - **Interfaces**: exported for consumers (`ModalAction`, `Address`)

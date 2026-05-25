@@ -1,13 +1,13 @@
 <template>
-  <CustomConfirmDialog ref="customDialogRef" />
+  <FzCustomConfirmDialog ref="customDialogRef" />
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import CustomConfirmDialog from './CustomConfirmDialog.vue';
+import FzCustomConfirmDialog from './FzCustomConfirmDialog.vue';
 import type { ConfirmOptions } from '@/utils/types';
 
-const customDialogRef = ref<InstanceType<typeof CustomConfirmDialog> | null>(null);
+const customDialogRef = ref<InstanceType<typeof FzCustomConfirmDialog> | null>(null);
 
 const confirmDialog = (title: string, message: string, options?: ConfirmOptions): Promise<boolean> => {
   if (!customDialogRef.value) return Promise.resolve(false);

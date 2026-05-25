@@ -1,12 +1,12 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { mount } from '@vue/test-utils';
 import { createVuetify } from 'vuetify';
-import CustomConfirmDialog from '../CustomConfirmDialog.vue';
+import FzCustomConfirmDialog from '../FzCustomConfirmDialog.vue';
 
 function createWrapper() {
   const vuetify = createVuetify();
 
-  return mount(CustomConfirmDialog, {
+  return mount(FzCustomConfirmDialog, {
     global: {
       plugins: [vuetify],
     },
@@ -14,7 +14,7 @@ function createWrapper() {
   });
 }
 
-describe('CustomConfirmDialog', () => {
+describe('FzCustomConfirmDialog', () => {
   let wrapper: ReturnType<typeof createWrapper>;
 
   beforeEach(() => {

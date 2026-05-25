@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { createComponent } from '@/testutils';
-import LoadingOverlay from '../LoadingOverlay.vue';
+import FzLoadingOverlay from '../FzLoadingOverlay.vue';
 
 class ResizeObserverMock {
   observe = vi.fn();
@@ -15,12 +15,12 @@ const MESSAGE_CASES = [
   { message: 'Salvando...', expected: 'Salvando...' },
 ] as const;
 
-describe('LoadingOverlay', () => {
+describe('FzLoadingOverlay', () => {
   let wrapper: ReturnType<typeof createComponent>;
 
   beforeEach(() => {
     vi.useFakeTimers();
-    wrapper = createComponent(LoadingOverlay);
+    wrapper = createComponent(FzLoadingOverlay);
   });
 
   afterEach(() => {
@@ -101,7 +101,7 @@ describe('LoadingOverlay', () => {
   });
 
   it('should not throw when unmounted with a pending timeout', () => {
-    const w = createComponent(LoadingOverlay, {
+    const w = createComponent(FzLoadingOverlay, {
       props: { isLoading: true },
     });
 

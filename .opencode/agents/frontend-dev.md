@@ -1,5 +1,5 @@
 ---
-description: Vue 3 + TypeScript + Vuetify 3 Senior Dev — Implements and maintains the @wallacesw11/base-lib library following code-style-frontend strictly.
+description: Vue 3 + TypeScript + Vuetify 3 Senior Dev — Implements and maintains the @forizi/ui library following code-style-frontend strictly.
 mode: primary
 permission:
   edit: allow

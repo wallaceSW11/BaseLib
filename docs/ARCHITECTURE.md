@@ -5,11 +5,11 @@
 ```
 src/
   components/       ─ Reusable Vue components
-    buttons/        ─ Icon-only button with tooltip (IconToolTip)
-    inputs/         ─ Form inputs (ZipCodeField, EmailField, MoneyField, etc.)
-    layout/         ─ App shell components (LoadingOverlay)
-    modals/         ─ Modal dialogs (ModalBase)
-    messages/       ─ Notification/confirm (FloatingNotify, ConfirmDialog, CustomConfirmDialog)
+    buttons/        ─ Icon-only button with tooltip (FzIconToolTip)
+    inputs/         ─ Form inputs (FzZipCodeField, FzEmailField, FzMoneyField, etc.)
+    layout/         ─ App shell components (FzLoadingOverlay)
+    modals/         ─ Modal dialogs (FzModalBase)
+    messages/       ─ Notification/confirm (FzFloatingNotify, FzConfirmDialog, FzCustomConfirmDialog)
     index.ts        ─ Barrel — exports every component
 
   composables/      ─ Vue composables
@@ -148,7 +148,7 @@ import type { TextFieldVariant } from '../../utils/types';
 import { createComponent } from '../../../tests/testutils';
 ```
 
-Exception: same-directory imports can stay relative (`./ZipCodeField.vue`).
+Exception: same-directory imports can stay relative (`./FzZipCodeField.vue`).
 
 Test utilities live in `src/testutils.ts` (not exported from barrel — test-only).
 
@@ -162,7 +162,7 @@ Test utilities live in `src/testutils.ts` (not exported from barrel — test-onl
 
 ```
 src/composables/useLoading.ts           → __tests__/useLoading.spec.ts
-src/components/inputs/ZipCodeField.vue  → __tests__/ZipCodeField.spec.ts
+src/components/inputs/FzZipCodeField.vue  → __tests__/FzZipCodeField.spec.ts
 ```
 
 ## Language conventions

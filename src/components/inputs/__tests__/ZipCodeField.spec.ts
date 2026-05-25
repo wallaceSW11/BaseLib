@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { createComponent } from '@/testutils';
-import ZipCodeField from '../ZipCodeField.vue';
+import FzZipCodeField from '../FzZipCodeField.vue';
 
 type FetchResponse = { json: () => Promise<Record<string, unknown>>; ok: boolean };
 
@@ -8,14 +8,14 @@ function mockFetch(data: Record<string, unknown>): Promise<FetchResponse> {
   return Promise.resolve({ json: () => Promise.resolve(data), ok: true });
 }
 
-describe('ZipCodeField', () => {
+describe('FzZipCodeField', () => {
   let wrapper: ReturnType<typeof createComponent>;
   let unmounted: boolean;
 
   beforeEach(() => {
     unmounted = false;
     global.fetch = () => mockFetch({ erro: true });
-    wrapper = createComponent(ZipCodeField);
+    wrapper = createComponent(FzZipCodeField);
   });
 
   afterEach(() => {
@@ -62,13 +62,13 @@ describe('ZipCodeField', () => {
   });
 
   it('should render with custom label', () => {
-    wrapper = createComponent(ZipCodeField, { props: { label: 'Código Postal' } });
+    wrapper = createComponent(FzZipCodeField, { props: { label: 'Código Postal' } });
 
     expect(wrapper.text()).toContain('Código Postal');
   });
 
   it('should render with custom variant', () => {
-    wrapper = createComponent(ZipCodeField, { props: { variant: 'outlined' } });
+    wrapper = createComponent(FzZipCodeField, { props: { variant: 'outlined' } });
 
     expect(wrapper.find('input').exists()).toBe(true);
   });
@@ -190,7 +190,7 @@ describe('ZipCodeField', () => {
   });
 
   it('should render prepend slot content', () => {
-    wrapper = createComponent(ZipCodeField, {
+    wrapper = createComponent(FzZipCodeField, {
       slots: { prepend: '<span class="custom-prepend">Custom</span>' },
     });
 
@@ -198,7 +198,7 @@ describe('ZipCodeField', () => {
   });
 
   it('should render append slot content', () => {
-    wrapper = createComponent(ZipCodeField, {
+    wrapper = createComponent(FzZipCodeField, {
       slots: { append: '<span class="custom-append">Appended</span>' },
     });
 

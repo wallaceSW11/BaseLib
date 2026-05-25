@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { createComponent } from '@/testutils';
-import FullAddress from '../FullAddress.vue';
-import ZipCodeField from '../ZipCodeField.vue';
+import FzFullAddress from '../FzFullAddress.vue';
+import FzZipCodeField from '../FzZipCodeField.vue';
 
 const FULL_ADDRESS = {
   zipCode: '01001000',
@@ -51,11 +51,11 @@ const INPUT_CASES = [
   { index: 5, value: 'Cidade Teste', field: 'city', expected: 'Cidade Teste' },
 ] as const;
 
-describe('FullAddress', () => {
+describe('FzFullAddress', () => {
   let wrapper: ReturnType<typeof createComponent>;
 
   beforeEach(() => {
-    wrapper = createComponent(FullAddress);
+    wrapper = createComponent(FzFullAddress);
   });
 
   afterEach(() => {
@@ -67,7 +67,7 @@ describe('FullAddress', () => {
   });
 
   it.each(CUSTOM_LABELS)('should render custom label for $field', ({ label }) => {
-    wrapper = createComponent(FullAddress, {
+    wrapper = createComponent(FzFullAddress, {
       props: {
         labels: {
           street: 'Rua Custom',
@@ -111,7 +111,7 @@ describe('FullAddress', () => {
   });
 
   it('should fill fields when zip code is found', async () => {
-    const zipField = wrapper.findComponent(ZipCodeField);
+    const zipField = wrapper.findComponent(FzZipCodeField);
 
     zipField.vm.$emit('zip-code-found', ZIP_RESPONSE);
     await wrapper.vm.$nextTick();
@@ -124,7 +124,7 @@ describe('FullAddress', () => {
   });
 
   it('should toggle zipCodeFound on zip-code-not-found', async () => {
-    const zipField = wrapper.findComponent(ZipCodeField);
+    const zipField = wrapper.findComponent(FzZipCodeField);
 
     zipField.vm.$emit('zip-code-found', ZIP_RESPONSE);
     await wrapper.vm.$nextTick();
@@ -144,7 +144,7 @@ describe('FullAddress', () => {
   it('should disable auto fields when disabledFields is true and zip code is found', async () => {
     await wrapper.setProps({ disabledFields: true });
 
-    const zipField = wrapper.findComponent(ZipCodeField);
+    const zipField = wrapper.findComponent(FzZipCodeField);
 
     zipField.vm.$emit('zip-code-found', ZIP_RESPONSE);
     await wrapper.vm.$nextTick();
@@ -166,7 +166,7 @@ describe('FullAddress', () => {
   });
 
   it('should not disable inputs when disabledFields is false and zip code is found', async () => {
-    const zipField = wrapper.findComponent(ZipCodeField);
+    const zipField = wrapper.findComponent(FzZipCodeField);
 
     zipField.vm.$emit('zip-code-found', ZIP_RESPONSE);
     await wrapper.vm.$nextTick();
@@ -209,8 +209,8 @@ describe('FullAddress', () => {
     expect(emitted![emitted!.length - 1][0]).toMatchObject({ [field]: expected });
   });
 
-  it('should update zipCode via ZipCodeField v-model', async () => {
-    const zipField = wrapper.findComponent(ZipCodeField);
+  it('should update zipCode via FzZipCodeField v-model', async () => {
+    const zipField = wrapper.findComponent(FzZipCodeField);
 
     zipField.vm.$emit('update:modelValue', '12345678');
     await wrapper.vm.$nextTick();
@@ -234,7 +234,7 @@ describe('FullAddress', () => {
   });
 
   it('should render with outlined variant', () => {
-    wrapper = createComponent(FullAddress, {
+    wrapper = createComponent(FzFullAddress, {
       props: { variant: 'outlined' },
     });
 

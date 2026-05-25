@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { createComponent } from '@/testutils';
-import NumberField from '../NumberField.vue';
+import FzNumberField from '../FzNumberField.vue';
 
 const FORMAT_CASES = [
   { value: 0, decimalPlaces: 0, expected: '0' },
@@ -18,11 +18,11 @@ const PARSE_CASES = [
   { input: '-123', decimalPlaces: 0, expected: -123 },
 ] as const;
 
-describe('NumberField', () => {
+describe('FzNumberField', () => {
   let wrapper: ReturnType<typeof createComponent>;
 
   beforeEach(() => {
-    wrapper = createComponent(NumberField);
+    wrapper = createComponent(FzNumberField);
   });
 
   afterEach(() => {
@@ -82,7 +82,7 @@ describe('NumberField', () => {
   });
 
   it('should render with custom label', () => {
-    wrapper = createComponent(NumberField, { props: { label: 'Quantidade' } });
+    wrapper = createComponent(FzNumberField, { props: { label: 'Quantidade' } });
 
     expect(wrapper.text()).toContain('Quantidade');
   });
@@ -100,7 +100,7 @@ describe('NumberField', () => {
   });
 
   it('should render with custom variant', () => {
-    wrapper = createComponent(NumberField, { props: { variant: 'outlined' } });
+    wrapper = createComponent(FzNumberField, { props: { variant: 'outlined' } });
 
     expect(wrapper.find('input').exists()).toBe(true);
   });
@@ -108,13 +108,13 @@ describe('NumberField', () => {
   it('should accept rules prop', () => {
     const rule = (v: string) => v !== '0' || 'Valor não pode ser zero';
 
-    wrapper = createComponent(NumberField, { props: { rules: [rule] } });
+    wrapper = createComponent(FzNumberField, { props: { rules: [rule] } });
 
     expect(wrapper.find('input').exists()).toBe(true);
   });
 
   it('should render prepend slot content', () => {
-    wrapper = createComponent(NumberField, {
+    wrapper = createComponent(FzNumberField, {
       slots: { prepend: '<span class="custom-prepend">Custom</span>' },
     });
 
@@ -122,7 +122,7 @@ describe('NumberField', () => {
   });
 
   it('should render append slot content', () => {
-    wrapper = createComponent(NumberField, {
+    wrapper = createComponent(FzNumberField, {
       slots: { append: '<span class="custom-append">Appended</span>' },
     });
 

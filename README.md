@@ -1,13 +1,13 @@
-# @wallacesw11/base-lib
+# @forizi/ui
 
-Reusable Vue 3 + TypeScript + Vuetify 3 component library.
+Forizi UI — Vue 3 + TypeScript + Vuetify 3 component library.
 
 Componentes e utilitários reutilizáveis para projetos Vue 3 com Vuetify.
 
 ## Installation
 
 ```bash
-pnpm add @wallacesw11/base-lib
+pnpm add @forizi/ui
 ```
 
 ### Peer dependencies
@@ -24,8 +24,8 @@ pnpm add vue vuetify pinia axios maska
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
 import { createVuetify } from 'vuetify';
-import { setupLib, requiredVuetifyComponents } from '@wallacesw11/base-lib';
-import '@wallacesw11/base-lib/style.css';
+import { setupLib, requiredVuetifyComponents } from '@forizi/ui';
+import '@forizi/ui/style.css';
 
 const app = createApp(App);
 const pinia = createPinia();
@@ -49,9 +49,9 @@ For notifications, confirm dialogs, and loading overlay to work, include these i
     <router-view />
 
     <!-- Global utilities -->
-    <FloatingNotify />
-    <LoadingOverlay />
-    <ConfirmDialog />
+    <FzFloatingNotify />
+    <FzLoadingOverlay />
+    <FzConfirmDialog />
   </v-app>
 </template>
 ```
@@ -62,12 +62,12 @@ For notifications, confirm dialogs, and loading overlay to work, include these i
 
 ```vue
 <template>
-  <MoneyField v-model="price" label="Preço" />
-  <NumberField v-model="quantity" label="Quantidade" :decimal-places="0" />
-  <EmailField v-model="email" label="E-mail" required />
-  <PhoneField v-model="phone" label="Telefone" />
-  <ZipCodeField v-model="cep" label="CEP" @zip-code-found="onAddress" />
-  <FullAddress v-model="address" />
+  <FzMoneyField v-model="price" label="Preço" />
+  <FzNumberField v-model="quantity" label="Quantidade" :decimal-places="0" />
+  <FzEmailField v-model="email" label="E-mail" required />
+  <FzPhoneField v-model="phone" label="Telefone" />
+  <FzZipCodeField v-model="cep" label="CEP" @zip-code-found="onAddress" />
+  <FzFullAddress v-model="address" />
 </template>
 ```
 
@@ -75,7 +75,7 @@ For notifications, confirm dialogs, and loading overlay to work, include these i
 
 ```vue
 <template>
-  <IconToolTip icon="mdi-pencil" tooltip="Editar" @click="edit" />
+  <FzIconToolTip icon="mdi-pencil" tooltip="Editar" @click="edit" />
 </template>
 ```
 
@@ -84,8 +84,8 @@ For notifications, confirm dialogs, and loading overlay to work, include these i
 ```vue
 <script setup lang="ts">
 import { ref } from 'vue';
-import { ModalBase } from '@wallacesw11/base-lib';
-import type { ModalAction } from '@wallacesw11/base-lib';
+import { FzModalBase } from '@forizi/ui';
+import type { ModalAction } from '@forizi/ui';
 
 const open = ref(false);
 
@@ -96,7 +96,7 @@ const actions: ModalAction[] = [
 </script>
 
 <template>
-  <ModalBase v-model="open" title="Editar Produto" :actions="actions">
+  <FzModalBase v-model="open" title="Editar Produto" :actions="actions">
     <p>Conteúdo do modal</p>
   </ModalBase>
 </template>
@@ -106,7 +106,7 @@ const actions: ModalAction[] = [
 
 ```vue
 <script setup lang="ts">
-import { notify } from '@wallacesw11/base-lib';
+import { notify } from '@forizi/ui';
 
 notify.success('Salvo', 'Produto salvo com sucesso');
 notify.error('Erro', 'Falha ao salvar produto');
@@ -119,7 +119,7 @@ notify.info('Info', 'Produto atualizado');
 
 ```vue
 <script setup lang="ts">
-import { confirm } from '@wallacesw11/base-lib';
+import { confirm } from '@forizi/ui';
 
 async function handleDelete() {
   const ok = await confirm.show('Excluir', 'Esta ação não pode ser desfeita.');
@@ -132,7 +132,7 @@ async function handleDelete() {
 
 ```vue
 <script setup lang="ts">
-import { loading } from '@wallacesw11/base-lib';
+import { loading } from '@forizi/ui';
 
 loading.show('Salvando...');
 await doSomething();
@@ -143,7 +143,7 @@ loading.hide();
 ## Composables
 
 ```ts
-import { useBreakpoint, useGlobals, useLoading } from '@wallacesw11/base-lib';
+import { useBreakpoint, useGlobals, useLoading } from '@forizi/ui';
 
 // Responsive breakpoints
 const { isMobile, isMobileOrTablet } = useBreakpoint();
@@ -158,7 +158,7 @@ const { isActive, message, show, hide } = useLoading();
 ## API (HTTP Client)
 
 ```ts
-import api, { configureApi } from '@wallacesw11/base-lib/utils';
+import api, { configureApi } from '@forizi/ui/utils';
 
 configureApi({ baseURL: 'https://api.example.com', timeout: 15000 });
 
@@ -169,19 +169,19 @@ const response = await api.get('/items');
 
 ```ts
 // Main — all components + composables + utilities
-import { MoneyField, useBreakpoint, notify } from '@wallacesw11/base-lib';
+import { FzMoneyField, useBreakpoint, notify } from '@forizi/ui';
 
 // Components only (tree-shakeable)
-import { MoneyField } from '@wallacesw11/base-lib/components';
+import { FzMoneyField } from '@forizi/ui/components';
 
 // Composables only
-import { useBreakpoint } from '@wallacesw11/base-lib/composables';
+import { useBreakpoint } from '@forizi/ui/composables';
 
 // Utilities only
-import { notify, confirm, loading } from '@wallacesw11/base-lib/utils';
+import { notify, confirm, loading } from '@forizi/ui/utils';
 
 // Plugin (for manual registration)
-import { globalsPlugin } from '@wallacesw11/base-lib/plugins';
+import { globalsPlugin } from '@forizi/ui/plugins';
 ```
 
 ## Development

@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeAll, beforeEach, afterEach, vi } from 'vitest';
 import { createComponent } from '@/testutils';
-import ModalBase, { type ModalAction } from '../ModalBase.vue';
+import FzModalBase, { type ModalAction } from '../FzModalBase.vue';
 
 beforeAll(() => {
   vi.stubGlobal('visualViewport', {
@@ -12,7 +12,7 @@ beforeAll(() => {
   });
 });
 
-describe('ModalBase', () => {
+describe('FzModalBase', () => {
   let wrapper: ReturnType<typeof createComponent>;
 
   const cancelHandler = vi.fn();
@@ -26,7 +26,7 @@ describe('ModalBase', () => {
   beforeEach(() => {
     vi.clearAllMocks();
 
-    wrapper = createComponent(ModalBase, {
+    wrapper = createComponent(FzModalBase, {
       attachTo: document.body,
       props: {
         modelValue: false,
@@ -115,7 +115,7 @@ describe('ModalBase', () => {
     it('should render default slot content over message', () => {
       wrapper.unmount();
 
-      wrapper = createComponent(ModalBase, {
+      wrapper = createComponent(FzModalBase, {
         attachTo: document.body,
         props: { modelValue: true, message: 'Mensagem padrão' },
         slots: { default: '<span class="custom-slot">Conteúdo personalizado</span>' },
@@ -293,7 +293,7 @@ describe('ModalBase', () => {
     it('should not trigger primary action on Enter when target is a textarea', () => {
       wrapper.unmount();
 
-      wrapper = createComponent(ModalBase, {
+      wrapper = createComponent(FzModalBase, {
         attachTo: document.body,
         props: {
           modelValue: true,
@@ -377,7 +377,7 @@ describe('ModalBase', () => {
     it('should combine custom contentClass with theme class', () => {
       wrapper.unmount();
 
-      wrapper = createComponent(ModalBase, {
+      wrapper = createComponent(FzModalBase, {
         attachTo: document.body,
         props: { modelValue: false, contentClass: 'custom-dialog-class' },
       });

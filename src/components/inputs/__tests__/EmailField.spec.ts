@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { createComponent } from '@/testutils';
-import EmailField from '../EmailField.vue';
+import FzEmailField from '../FzEmailField.vue';
 
 const VALIDATION_CASES = [
   { value: '', required: false, expected: true },
@@ -13,11 +13,11 @@ const VALIDATION_CASES = [
   { value: 'email@sub.domain.com.br', required: false, expected: true },
 ] as const;
 
-describe('EmailField', () => {
+describe('FzEmailField', () => {
   let wrapper: ReturnType<typeof createComponent>;
 
   beforeEach(() => {
-    wrapper = createComponent(EmailField);
+    wrapper = createComponent(FzEmailField);
   });
 
   afterEach(() => {
@@ -182,7 +182,7 @@ describe('EmailField', () => {
   });
 
   it('should render prepend slot content instead of default icon', () => {
-    wrapper = createComponent(EmailField, {
+    wrapper = createComponent(FzEmailField, {
       slots: { prepend: '<span class="custom-prepend">Custom</span>' },
     });
 
@@ -191,7 +191,7 @@ describe('EmailField', () => {
   });
 
   it('should render append slot content', () => {
-    wrapper = createComponent(EmailField, {
+    wrapper = createComponent(FzEmailField, {
       slots: { append: '<span class="custom-append">Appended</span>' },
     });
 
@@ -205,7 +205,7 @@ describe('EmailField', () => {
   });
 
   it('should render with custom label', async () => {
-    wrapper = createComponent(EmailField, {
+    wrapper = createComponent(FzEmailField, {
       props: { label: 'Seu Email' },
     });
 

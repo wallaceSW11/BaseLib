@@ -2,20 +2,20 @@ import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import type { VueWrapper } from '@vue/test-utils';
 import { createComponent } from '@/testutils';
 import type { ConfirmOptions } from '@/utils/types';
-import ConfirmDialog from '../ConfirmDialog.vue';
+import FzConfirmDialog from '../FzConfirmDialog.vue';
 
-type ConfirmDialogWrapper = VueWrapper<{
+type FzConfirmDialogWrapper = VueWrapper<{
   confirmDialog: (title: string, message: string, options?: ConfirmOptions) => Promise<boolean>;
 }>;
 
-function createWrapper(): ConfirmDialogWrapper {
-  return createComponent(ConfirmDialog, {
+function createWrapper(): FzConfirmDialogWrapper {
+  return createComponent(FzConfirmDialog, {
     attachTo: document.body,
-  }) as ConfirmDialogWrapper;
+  }) as FzConfirmDialogWrapper;
 }
 
-describe('ConfirmDialog', () => {
-  let wrapper: ConfirmDialogWrapper;
+describe('FzConfirmDialog', () => {
+  let wrapper: FzConfirmDialogWrapper;
 
   beforeEach(() => {
     wrapper = createWrapper();
@@ -45,8 +45,8 @@ describe('ConfirmDialog', () => {
     return all.length > 0 ? all[0] : undefined;
   };
 
-  it('should render CustomConfirmDialog component', () => {
-    const innerDialog = wrapper.findComponent({ name: 'CustomConfirmDialog' });
+  it('should render FzCustomConfirmDialog component', () => {
+    const innerDialog = wrapper.findComponent({ name: 'FzCustomConfirmDialog' });
 
     expect(innerDialog.exists()).toBe(true);
   });

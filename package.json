@@ -1,7 +1,7 @@
 {
-  "name": "@wallacesw11/base-lib",
-  "version": "1.0.0",
-  "description": "Reusable Vue 3 + TypeScript + Vuetify 3 component library",
+  "name": "@forizi/ui",
+  "version": "0.1.0",
+  "description": "Forizi UI — Vue 3 + TypeScript + Vuetify 3 component library",
   "publishConfig": {
     "access": "public"
   },
@@ -17,7 +17,7 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
-    "./style.css": "./dist/base-lib.css",
+    "./style.css": "./dist/ui.css",
     "./components": {
       "types": "./dist/components/index.d.ts",
       "import": "./dist/components/index.js"
@@ -63,13 +63,13 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/wallaceSW11/BaseLib.git"
+    "url": "git+https://github.com/forizi/ui.git"
   },
   "bugs": {
-    "url": "https://github.com/wallaceSW11/BaseLib/issues"
+    "url": "https://github.com/forizi/ui/issues"
   },
-  "homepage": "https://github.com/wallaceSW11/BaseLib#readme",
-  "author": "wallaceSW11",
+  "homepage": "https://github.com/forizi/ui#readme",
+  "author": "forizi",
   "license": "MIT",
   "peerDependencies": {
     "axios": "^1.0.0",

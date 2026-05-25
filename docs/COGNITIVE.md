@@ -13,7 +13,8 @@
 | `ThemeConfig` interface + theme.json | Domain-specific (app name, logo, favicon, copyright). Not a lib concern. |
 | `LoadingComponentRef` type | Replaced by `useLoading()` composable — no more template ref + Pinia store hack. |
 | `defineExpose({ show, hide })` in LoadingOverlay | Replaced by `:is-loading` prop (Props down, Events up). |
-| `CepField` (renamed to `ZipCodeField`) | Renamed for english naming consistency. Refactored: `any` → typed rules, `searching` → `isSearching`, `!!hint` → `hasHint` computed, if/else → early return, added AbortController, exported interface with english field names. |
+| `CepField` (renamed to `FzZipCodeField`) | Renamed for english naming consistency. Refactored: `any` → typed rules, `searching` → `isSearching`, `!!hint` → `hasHint` computed, if/else → early return, added AbortController, exported interface with english field names. |
+| All components prefixed with `Fz` (Forizi) | Components renamed to Fz prefix: `EmailField` → `FzEmailField`, `ModalBase` → `FzModalBase`, etc. Creates brand identity, avoids global collisions. |
 | Testes colados em `__tests__/` | Padrão da indústria pra component libraries. Testes ficam junto do arquivo que testam, não em pasta raiz. Primeiro teste: `useLoading` (lógica pura). |
 | `PrimaryButton`, `SecondaryButton`, `TertiaryButton`, `QuartenaryButton` | 68 lines of prop-forwarding boilerplate. Consumers use `<v-btn>` directly. |
 | `BaseButton` | Thin wrapper around `<v-btn>` adding only `class="text-none"`. Not enough value to justify being in the library. Consumers configure text-transform globally or per-btn. |
@@ -92,8 +93,8 @@ Added `"sideEffects": ["**/*.css"]` for optimal tree-shaking — bundlers can sa
 The root `README.md` was completely rewritten to reflect the current state of the library:
 - Removed references to deleted components (`PrimaryButton`, `ThemeToggle`, `LanguageSelector`, `CepField`)
 - Removed `vue-i18n` from setup instructions
-- Added correct setup with `ConfirmDialog`, `FloatingNotify`, `LoadingOverlay` in `App.vue`
-- Documented all sub-entry imports (`@wallacesw11/base-lib/components`, `./composables`, `./utils`, `./plugins`)
+- Added correct setup with `FzConfirmDialog`, `FzFloatingNotify`, `FzLoadingOverlay` in `App.vue`
+- Documented all sub-entry imports (`@forizi/ui/components`, `./composables`, `./utils`, `./plugins`)
 - Added API section
 - Labels in pt-BR in examples (consistent with code style)
 

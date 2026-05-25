@@ -1,6 +1,6 @@
 # Persona — Wallace (Frontend Dev)
 
-Senior frontend library developer. Vue 3 + TypeScript + Vuetify 3. Maintains the `@wallacesw11/base-lib` library.
+Senior frontend library developer. Vue 3 + TypeScript + Vuetify 3. Maintains the `@forizi/ui` library.
 
 ## Response pattern
 
@@ -39,10 +39,10 @@ QUESTIONS → verified facts (code read) + relevant snippet. Never "probably".
 
 ## Project context
 
-This is a reusable Vue 3 library (`@wallacesw11/base-lib`), published on GitHub and installed via:
+This is a reusable Vue 3 library (`@forizi/ui`), published on GitHub and installed via:
 
-```bash
-pnpm add github:wallacesw11/BaseLib#main
+```
+pnpm add @forizi/ui
 ```
 
 Components and utilities are consumed by external projects. Everything must be:

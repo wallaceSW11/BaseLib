@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { createComponent } from '@/testutils';
-import PhoneField from '../PhoneField.vue';
+import FzPhoneField from '../FzPhoneField.vue';
 
 const MASK_CASES = [
   { value: '', expected: '' },
@@ -12,11 +12,11 @@ const MASK_CASES = [
   { value: '11999999999', expected: '(11) 99999-9999' },
 ] as const;
 
-describe('PhoneField', () => {
+describe('FzPhoneField', () => {
   let wrapper: ReturnType<typeof createComponent>;
 
   beforeEach(() => {
-    wrapper = createComponent(PhoneField);
+    wrapper = createComponent(FzPhoneField);
   });
 
   afterEach(() => {
@@ -59,19 +59,19 @@ describe('PhoneField', () => {
   });
 
   it('should render with custom label', () => {
-    wrapper = createComponent(PhoneField, { props: { label: 'Celular' } });
+    wrapper = createComponent(FzPhoneField, { props: { label: 'Celular' } });
 
     expect(wrapper.text()).toContain('Celular');
   });
 
   it('should render with custom icon', () => {
-    wrapper = createComponent(PhoneField, { props: { icon: 'mdi-cellphone' } });
+    wrapper = createComponent(FzPhoneField, { props: { icon: 'mdi-cellphone' } });
 
     expect(wrapper.find('.v-icon').classes()).toContain('mdi-cellphone');
   });
 
   it('should render with custom variant', () => {
-    wrapper = createComponent(PhoneField, { props: { variant: 'outlined' } });
+    wrapper = createComponent(FzPhoneField, { props: { variant: 'outlined' } });
 
     expect(wrapper.find('input').exists()).toBe(true);
   });
@@ -117,7 +117,7 @@ describe('PhoneField', () => {
   });
 
   it('should render prepend slot content', () => {
-    wrapper = createComponent(PhoneField, {
+    wrapper = createComponent(FzPhoneField, {
       slots: { prepend: '<span class="custom-prepend">Custom</span>' },
     });
 
@@ -125,7 +125,7 @@ describe('PhoneField', () => {
   });
 
   it('should render append slot content', () => {
-    wrapper = createComponent(PhoneField, {
+    wrapper = createComponent(FzPhoneField, {
       slots: { append: '<span class="custom-append">Appended</span>' },
     });
 

@@ -1,23 +1,23 @@
-export { default as IconToolTip } from './buttons/IconToolTip.vue';
+export { default as FzIconToolTip } from './buttons/FzIconToolTip.vue';
 
-export { default as ModalBase, type ModalAction } from './modals/ModalBase.vue';
+export { default as FzModalBase, type ModalAction } from './modals/FzModalBase.vue';
 
-export { default as ConfirmDialog } from './messages/ConfirmDialog.vue';
+export { default as FzConfirmDialog } from './messages/FzConfirmDialog.vue';
 
-export { default as CustomConfirmDialog } from './messages/CustomConfirmDialog.vue';
+export { default as FzCustomConfirmDialog } from './messages/FzCustomConfirmDialog.vue';
 
-export { default as FloatingNotify } from './messages/FloatingNotify.vue';
+export { default as FzFloatingNotify } from './messages/FzFloatingNotify.vue';
 
-export { default as LoadingOverlay } from './layout/LoadingOverlay.vue';
+export { default as FzLoadingOverlay } from './layout/FzLoadingOverlay.vue';
 
-export { default as MoneyField } from './inputs/MoneyField.vue';
+export { default as FzMoneyField } from './inputs/FzMoneyField.vue';
 
-export { default as EmailField } from './inputs/EmailField.vue';
+export { default as FzEmailField } from './inputs/FzEmailField.vue';
 
-export { default as NumberField } from './inputs/NumberField.vue';
+export { default as FzNumberField } from './inputs/FzNumberField.vue';
 
-export { default as PhoneField } from './inputs/PhoneField.vue';
+export { default as FzPhoneField } from './inputs/FzPhoneField.vue';
 
-export { default as ZipCodeField, type ZipCodeResponse } from './inputs/ZipCodeField.vue';
+export { default as FzZipCodeField, type ZipCodeResponse } from './inputs/FzZipCodeField.vue';
 
-export { default as FullAddress, type Address, type AddressLabels } from './inputs/FullAddress.vue';
+export { default as FzFullAddress, type Address, type AddressLabels } from './inputs/FzFullAddress.vue';

@@ -318,4 +318,4 @@ it.each(VALIDATION_CASES)('returns "$expected" for "$value"', ({ value, expected
 - Build: `pnpm build`
 - Format: ES modules only (`"type": "module"`)
 - Peer dependencies NEVER in the bundle — configured as external in vite.config.ts
-- CSS included separately: `@wallacesw11/base-lib/style.css`
+- CSS included separately: `@forizi/ui/style.css`
