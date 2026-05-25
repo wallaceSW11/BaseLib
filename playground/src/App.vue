@@ -61,7 +61,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed, watch, onMounted } from 'vue';
 import { useTheme } from 'vuetify';
 import { useLoadingRefs } from '@/utils';
 import ButtonsPlayground from './views/ButtonsPlayground.vue';
@@ -70,7 +70,10 @@ import ModalPlayground from './views/ModalPlayground.vue';
 import MessagesPlayground from './views/MessagesPlayground.vue';
 import LayoutPlayground from './views/LayoutPlayground.vue';
 
-const activeTab = ref('botoes');
+const STORAGE_THEME = 'playground-theme';
+const STORAGE_TAB = 'playground-tab';
+
+const activeTab = ref(localStorage.getItem(STORAGE_TAB) || 'botoes');
 
 const { isActive, message } = useLoadingRefs();
 
@@ -84,7 +87,21 @@ function toggleTheme() {
   const next = isDark.value ? 'light' : 'dark';
 
   (theme as unknown as { change: (name: string) => void }).change(next);
+
+  localStorage.setItem(STORAGE_THEME, next);
 }
+
+watch(activeTab, (tab) => {
+  localStorage.setItem(STORAGE_TAB, tab);
+});
+
+onMounted(() => {
+  const saved = localStorage.getItem(STORAGE_THEME);
+
+  if (saved === 'dark' && !isDark.value) toggleTheme();
+
+  if (saved === 'light' && isDark.value) toggleTheme();
+});
 </script>
 
 <style>
