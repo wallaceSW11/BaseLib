@@ -76,7 +76,7 @@
               <FzIconToolTip
                 icon="mdi-pencil"
                 tooltip="Clique para editar"
-                :as-button="true"
+                as-button
                 color="primary"
                 @click="onClick('Editar (botão)')"
               />
@@ -84,7 +84,7 @@
               <FzIconToolTip
                 icon="mdi-delete"
                 tooltip="Clique para excluir"
-                :as-button="true"
+                as-button
                 color="error"
                 @click="onClick('Excluir (botão)')"
               />
@@ -92,7 +92,7 @@
               <FzIconToolTip
                 icon="mdi-content-save"
                 tooltip="Salvar alterações"
-                :as-button="true"
+                as-button
                 color="success"
                 @click="onClick('Salvar (botão)')"
               />
@@ -100,9 +100,9 @@
 
             <v-divider class="my-4" />
 
-            <div class="text-subtitle-2 mb-2">Desabilitado</div>
+            <div class="text-subtitle-2 mb-2">Desabilitado sem tooltip</div>
 
-            <div class="d-flex flex-wrap ga-4">
+            <div class="d-flex flex-wrap ga-4 mb-4">
               <FzIconToolTip
                 icon="mdi-pencil"
                 text="Editar"
@@ -120,8 +120,37 @@
               <FzIconToolTip
                 icon="mdi-pencil"
                 tooltip="Editar (desabilitado)"
-                :as-button="true"
+                as-button
                 disabled
+                color="primary"
+              />
+            </div>
+
+            <div class="text-subtitle-2 mb-2">Desabilitado com motivo (disabledTooltip)</div>
+
+            <div class="d-flex flex-wrap ga-4">
+              <FzIconToolTip
+                icon="mdi-pencil"
+                text="Editar"
+                disabled
+                disabled-tooltip="Sem permissão para editar"
+                color="primary"
+              />
+
+              <FzIconToolTip
+                icon="mdi-delete"
+                text="Excluir"
+                disabled
+                disabled-tooltip="Exclusão bloqueada"
+                color="error"
+              />
+
+              <FzIconToolTip
+                icon="mdi-content-save"
+                tooltip="Salvar alterações"
+                as-button
+                disabled
+                disabled-tooltip="Preencha todos os campos obrigatórios"
                 color="primary"
               />
             </div>

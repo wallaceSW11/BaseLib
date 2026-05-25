@@ -132,4 +132,62 @@ describe('FzIconToolTip', () => {
 
     expect(emitted![0][0]).toBeInstanceOf(MouseEvent);
   });
+
+  it('should disable the button when disabled prop is true', () => {
+    wrapper = createComponent(FzIconToolTip, {
+      props: { icon: 'mdi-pencil', disabled: true },
+    });
+
+    const btn = wrapper.findComponent({ name: 'v-btn' });
+
+    expect(btn.props('disabled')).toBe(true);
+  });
+
+  it('should not disable the button when disabled prop is not provided', () => {
+    const btn = wrapper.findComponent({ name: 'v-btn' });
+
+    expect(btn.props('disabled')).toBe(false);
+  });
+
+  it('should show disabledTooltip when button is disabled and disabledTooltip is provided', () => {
+    wrapper = createComponent(FzIconToolTip, {
+      props: { icon: 'mdi-pencil', disabled: true, disabledTooltip: 'Motivo de estar desabilitado' },
+    });
+
+    const tooltip = wrapper.findComponent({ name: 'v-tooltip' });
+
+    expect(tooltip.props('text')).toBe('Motivo de estar desabilitado');
+  });
+
+  it('should disable tooltip when disabled is true but disabledTooltip is not provided', () => {
+    wrapper = createComponent(FzIconToolTip, {
+      props: { icon: 'mdi-pencil', disabled: true, text: 'Editar' },
+    });
+
+    const tooltip = wrapper.findComponent({ name: 'v-tooltip' });
+
+    expect(tooltip.props('disabled')).toBe(true);
+  });
+
+  it('should not enable tooltip from disabledTooltip when disabled is false', () => {
+    wrapper = createComponent(FzIconToolTip, {
+      props: { icon: 'mdi-pencil', disabledTooltip: 'Nao deve aparecer' },
+    });
+
+    const tooltip = wrapper.findComponent({ name: 'v-tooltip' });
+
+    expect(tooltip.props('disabled')).toBe(true);
+  });
+
+  it('should wrap v-btn in a span when disabled', () => {
+    wrapper = createComponent(FzIconToolTip, {
+      props: { icon: 'mdi-pencil', disabled: true, disabledTooltip: 'Desabilitado' },
+    });
+
+    const tooltip = wrapper.findComponent({ name: 'v-tooltip' });
+    const activatorSlot = tooltip.find('span');
+
+    expect(activatorSlot.exists()).toBe(true);
+    expect(activatorSlot.findComponent({ name: 'v-btn' }).exists()).toBe(true);
+  });
 });
