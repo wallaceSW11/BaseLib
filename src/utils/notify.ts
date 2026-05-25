@@ -51,6 +51,10 @@ export const useNotifyStore = defineStore('notify', () => {
 });
 
 export const notify = {
+  show: (type: NotifyType, title: string, message?: string) => {
+    const store = useNotifyStore();
+    store.show(type, title, message);
+  },
   success: (title: string, message?: string) => {
     const store = useNotifyStore();
     store.show('success', title, message);
