@@ -2,7 +2,9 @@
 
 Forizi UI — Vue 3 + TypeScript + Vuetify 3 component library.
 
-Componentes e utilitários reutilizáveis para projetos Vue 3 com Vuetify.
+Reusable components and utilities for Vue 3 projects with Vuetify.
+
+> 📚 **Full documentation**: visit the [Storybook](https://forizi.github.io/ui) for interactive examples of every component.
 
 ## Installation
 
@@ -76,6 +78,7 @@ For notifications, confirm dialogs, and loading overlay to work, include these i
 ```vue
 <template>
   <FzIconToolTip icon="mdi-pencil" tooltip="Editar" @click="edit" />
+  <FzIconToolTip icon="mdi-delete" tooltip="Excluir" disabled disabled-tooltip="Sem permissão" />
 </template>
 ```
 
@@ -98,11 +101,15 @@ const actions: ModalAction[] = [
 <template>
   <FzModalBase v-model="open" title="Editar Produto" :actions="actions">
     <p>Conteúdo do modal</p>
-  </ModalBase>
+  </FzModalBase>
 </template>
 ```
 
 ### Notifications
+
+Notifications appear at the top-right with a colored card, progress bar, and auto-hide.
+Colors follow your Vuetify theme automatically — change `success`/`error` in your theme config
+and the notifications follow.
 
 ```vue
 <script setup lang="ts">
@@ -115,14 +122,25 @@ notify.info('Info', 'Produto atualizado');
 </script>
 ```
 
+**Features:**
+- Decremental progress bar tracking the auto-hide timer
+- Hover the card to **pause** the timer (read at your own pace)
+- Move the mouse away to **resume**
+- Theme-aware: border, title, icon and progress fill use the type color from your Vuetify theme
+
 ### Confirm Dialog
+
+No manual setup required — just place `<FzConfirmDialog />` in `App.vue` and use `confirm.show()`.
 
 ```vue
 <script setup lang="ts">
 import { confirm } from '@forizi/ui';
 
 async function handleDelete() {
-  const ok = await confirm.show('Excluir', 'Esta ação não pode ser desfeita.');
+  const ok = await confirm.show('Excluir', 'Esta ação não pode ser desfeita.', {
+    confirmText: 'Sim, excluir',
+    confirmColor: 'error',
+  });
   if (ok) deleteItem();
 }
 </script>
@@ -193,6 +211,8 @@ pnpm lint            # eslint --fix
 pnpm test            # vitest run
 pnpm check           # lint + test
 pnpm dev:playground  # visual test environment
+pnpm storybook       # Storybook dev server on port 6006
+pnpm build:storybook # static Storybook build → storybook-static/
 ```
 
 ## License
