@@ -5,6 +5,7 @@
     "dist",
     "**/*.spec.ts",
     "**/*.test.ts",
+    "**/*.stories.ts",
     "src/testutils.ts"
   ]
 }
