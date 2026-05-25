@@ -1,14 +1,21 @@
 <template>
   <v-tooltip :text="tooltipText" location="top" :disabled="!hasTooltip">
     <template #activator="{ props: tooltipProps }">
-      <span v-bind="tooltipProps" class="d-inline-flex">
+      <span v-bind="tooltipProps" class="d-inline-flex" :class="{ 'opacity-50': disabled && !asButton }">
         <v-btn
+          v-if="asButton"
           :icon="icon"
           :color="color"
-          :variant="asButton ? 'text' : 'plain'"
-          :density="asButton ? 'default' : 'compact'"
+          variant="text"
           :disabled="disabled"
           @click="(e: MouseEvent) => $emit('click', e)"
+        />
+        <v-icon
+          v-else
+          :icon="icon"
+          :color="color"
+          :class="{ 'cursor-pointer': !disabled }"
+          @click="handleIconClick"
         />
       </span>
     </template>
@@ -37,7 +44,7 @@ const props = withDefaults(defineProps<Props>(), {
   disabledTooltip: undefined,
 });
 
-defineEmits<{
+const emit = defineEmits<{
   (e: 'click', event: MouseEvent): void;
 }>();
 
@@ -52,4 +59,10 @@ const tooltipText = computed(() => {
 
   return props.tooltip ?? props.text ?? '';
 });
+
+function handleIconClick(e: MouseEvent) {
+  if (props.disabled) return;
+
+  emit('click', e);
+}
 </script>
