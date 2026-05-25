@@ -95,6 +95,65 @@ describe('useNotifyStore', () => {
     expect(store.type).toBe('error');
   });
 
+  describe('pause / resume', () => {
+    it('should pause the auto-hide timer and keep notification visible', () => {
+      const store = useNotifyStore();
+
+      store.show('info', 'Test');
+
+      vi.advanceTimersByTime(NOTIFY_DURATION / 2);
+
+      store.pause();
+
+      vi.advanceTimersByTime(NOTIFY_DURATION);
+
+      expect(store.isVisible).toBe(true);
+    });
+
+    it('should resume the auto-hide timer from where it was paused', () => {
+      const store = useNotifyStore();
+
+      store.show('info', 'Test');
+
+      vi.advanceTimersByTime(NOTIFY_DURATION / 2);
+
+      store.pause();
+      store.resume();
+
+      vi.advanceTimersByTime(NOTIFY_DURATION / 2 - 100);
+
+      expect(store.isVisible).toBe(true);
+
+      vi.advanceTimersByTime(200);
+
+      expect(store.isVisible).toBe(false);
+    });
+
+    it('should hide immediately if remaining time is 0 when pausing', () => {
+      const store = useNotifyStore();
+
+      store.show('info', 'Test');
+
+      vi.advanceTimersByTime(NOTIFY_DURATION);
+
+      store.pause();
+
+      expect(store.isVisible).toBe(false);
+    });
+
+    it('should not throw when pausing without visible notification', () => {
+      const store = useNotifyStore();
+
+      expect(() => store.pause()).not.toThrow();
+    });
+
+    it('should not throw when resuming without paused notification', () => {
+      const store = useNotifyStore();
+
+      expect(() => store.resume()).not.toThrow();
+    });
+  });
+
   describe('cleanup', () => {
     it('should clear timeout and make no changes to visibility', () => {
       const store = useNotifyStore();

@@ -17,6 +17,7 @@ describe('FzFloatingNotify', () => {
   });
 
   const findAlert = () => wrapper.findComponent({ name: 'v-alert' });
+  const findProgressFill = () => wrapper.find('.progress-fill');
   const getStore = () => useNotifyStore();
 
   it('should be hidden by default', () => {
@@ -83,6 +84,18 @@ describe('FzFloatingNotify', () => {
     await wrapper.vm.$nextTick();
 
     expect(findAlert().exists()).toBe(false);
+  });
+
+  it('should render progress bar at 100% when notification appears', async () => {
+    const store = getStore();
+    store.show('success', 'Título');
+
+    await wrapper.vm.$nextTick();
+
+    const fill = findProgressFill();
+
+    expect(fill.exists()).toBe(true);
+    expect(fill.attributes('style')).toContain('width: 100%');
   });
 
   it('should call cleanup when component unmounts', () => {

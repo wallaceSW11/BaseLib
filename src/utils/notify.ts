@@ -9,6 +9,16 @@ export const useNotifyStore = defineStore('notify', () => {
   const title = ref('');
   const message = ref('');
   let timeoutId: ReturnType<typeof setTimeout> | null = null;
+  let deadline = 0;
+  let remainingMs = NOTIFY_DURATION;
+
+  function scheduleTimeout(delay: number) {
+    deadline = Date.now() + delay;
+
+    timeoutId = setTimeout(() => {
+      hide();
+    }, delay);
+  }
 
   function show(notifyType: NotifyType, notifyTitle: string, notifyMessage = '') {
     if (timeoutId) clearTimeout(timeoutId);
@@ -17,10 +27,9 @@ export const useNotifyStore = defineStore('notify', () => {
     title.value = notifyTitle;
     message.value = notifyMessage;
     isVisible.value = true;
+    remainingMs = NOTIFY_DURATION;
 
-    timeoutId = setTimeout(() => {
-      hide();
-    }, NOTIFY_DURATION);
+    scheduleTimeout(NOTIFY_DURATION);
   }
 
   function hide() {
@@ -30,6 +39,27 @@ export const useNotifyStore = defineStore('notify', () => {
 
     clearTimeout(timeoutId);
     timeoutId = null;
+  }
+
+  function pause() {
+    if (!timeoutId) return;
+
+    remainingMs = deadline - Date.now();
+
+    if (remainingMs <= 0) {
+      hide();
+
+      return;
+    }
+
+    clearTimeout(timeoutId);
+    timeoutId = null;
+  }
+
+  function resume() {
+    if (timeoutId || remainingMs <= 0) return;
+
+    scheduleTimeout(remainingMs);
   }
 
   function cleanup() {
@@ -46,6 +76,8 @@ export const useNotifyStore = defineStore('notify', () => {
     message,
     show,
     hide,
+    pause,
+    resume,
     cleanup,
   };
 });

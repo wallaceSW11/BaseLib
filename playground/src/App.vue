@@ -4,6 +4,14 @@
       <v-app-bar-title class="text-body-1 font-weight-bold">
         Forizi UI — Playground
       </v-app-bar-title>
+
+      <template #append>
+        <v-btn
+          :icon="themeIcon"
+          variant="text"
+          @click="toggleTheme"
+        />
+      </template>
     </v-app-bar>
 
     <v-main>
@@ -53,7 +61,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
+import { useTheme } from 'vuetify';
 import { useLoadingRefs } from '@/utils';
 import ButtonsPlayground from './views/ButtonsPlayground.vue';
 import InputsPlayground from './views/InputsPlayground.vue';
@@ -64,6 +73,18 @@ import LayoutPlayground from './views/LayoutPlayground.vue';
 const activeTab = ref('botoes');
 
 const { isActive, message } = useLoadingRefs();
+
+const theme = useTheme();
+
+const isDark = computed(() => theme.global.current.value.dark);
+
+const themeIcon = computed(() => isDark.value ? 'mdi-weather-sunny' : 'mdi-weather-night');
+
+function toggleTheme() {
+  const next = isDark.value ? 'light' : 'dark';
+
+  (theme as unknown as { change: (name: string) => void }).change(next);
+}
 </script>
 
 <style>
