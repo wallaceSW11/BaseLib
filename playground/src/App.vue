@@ -554,8 +554,8 @@ const defaultActions: ModalAction[] = [
 ];
 
 const largeModalActions: ModalAction[] = [
+  { text: 'Salvar', color: 'primary', variant: 'elevated', handler: () => { openModalLarge.value = false; } },
   { text: 'Fechar', color: 'secondary', handler: () => { openModalLarge.value = false; } },
-  { text: 'Salvar', color: 'primary', handler: () => { openModalLarge.value = false; } },
 ];
 
 function onClick(action: string) {

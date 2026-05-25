@@ -139,9 +139,45 @@ describe('FzModalBase', () => {
       expect(buttons[1].text()).toContain('Confirmar');
     });
 
-    it('should use default variant "text" when not specified', async () => {
+    it('should use default variant "elevated" for primary action when not specified', async () => {
       const actions: ModalAction[] = [
         { text: 'OK', color: 'primary' },
+      ];
+
+      await wrapper.setProps({ modelValue: true, actions });
+
+      const button = findActionButtons()[0];
+
+      expect(button.props('variant')).toBe('elevated');
+    });
+
+    it('should use default variant "outlined" for secondary action when not specified', async () => {
+      const actions: ModalAction[] = [
+        { text: 'Cancelar', color: 'secondary' },
+      ];
+
+      await wrapper.setProps({ modelValue: true, actions });
+
+      const button = findActionButtons()[0];
+
+      expect(button.props('variant')).toBe('outlined');
+    });
+
+    it('should use default variant "outlined" for error action when not specified', async () => {
+      const actions: ModalAction[] = [
+        { text: 'Excluir', color: 'error' },
+      ];
+
+      await wrapper.setProps({ modelValue: true, actions });
+
+      const button = findActionButtons()[0];
+
+      expect(button.props('variant')).toBe('outlined');
+    });
+
+    it('should use default variant "text" for other colors when not specified', async () => {
+      const actions: ModalAction[] = [
+        { text: 'Info', color: 'info' },
       ];
 
       await wrapper.setProps({ modelValue: true, actions });

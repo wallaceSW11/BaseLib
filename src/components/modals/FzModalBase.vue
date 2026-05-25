@@ -31,7 +31,7 @@
           :key="index"
           :color="action.color || 'primary'"
           :prepend-icon="action.icon"
-          :variant="action.variant || 'text'"
+          :variant="action.variant || getDefaultVariant(action.color)"
           type="button"
           class="text-none"
           @click="handleAction(action)"
@@ -118,6 +118,14 @@ function findPrimaryAction(): ModalAction | undefined {
 
 function isInteractiveElement(target: HTMLElement): boolean {
   return target.tagName === 'TEXTAREA';
+}
+
+function getDefaultVariant(color?: string): 'elevated' | 'outlined' | 'text' {
+  if (!color || color === 'primary') return 'elevated';
+
+  if (color === 'secondary' || color === 'error') return 'outlined';
+
+  return 'text';
 }
 
 async function handleAction(action: ModalAction): Promise<void> {
