@@ -54,8 +54,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import { useLoading } from '@/composables/useLoading';
-import { useConfirmStore } from '@/utils';
+import { useConfirmStore, useLoadingRefs } from '@/utils';
 import type { ConfirmComponentRef } from '@/utils/types';
 import ButtonsPlayground from './views/ButtonsPlayground.vue';
 import InputsPlayground from './views/InputsPlayground.vue';
@@ -65,7 +64,7 @@ import LayoutPlayground from './views/LayoutPlayground.vue';
 
 const activeTab = ref('botoes');
 
-const { isActive, message } = useLoading();
+const { isActive, message } = useLoadingRefs();
 
 const confirmRef = ref<ConfirmComponentRef | null>(null);
 

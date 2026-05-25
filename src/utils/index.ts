@@ -1,6 +1,6 @@
 export { notify, useNotifyStore } from './notify';
 
-export { loading } from './loading';
+export { loading, useLoadingRefs } from './loading';
 
 export { confirm, useConfirmStore } from './confirm';
 
